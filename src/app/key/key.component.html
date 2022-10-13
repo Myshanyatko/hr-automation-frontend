@@ -1,0 +1,5 @@
+<p>Введите код, отправленный на почту</p>
+<form [formGroup]="keyForm" (ngSubmit)="submitKey()">
+    <input type="text" formControlName="key" id='typeKeyX'>
+    <button type="submit">Sign in</button>
+</form>
