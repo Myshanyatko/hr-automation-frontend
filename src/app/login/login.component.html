@@ -1,7 +1,9 @@
 <h1>authorization </h1>
 <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
     <label for="typeEmailX">Email</label>
+    <div>
     <input type="email" formControlName="email" id='typeEmailX' />
+</div>
     <p *ngIf="this.loginForm.get('email')?.invalid && this.loginForm.get('email')?.touched">Email is invalid</p>
     <div>
         <button type="submit" [disabled]="loginForm.invalid">next</button>

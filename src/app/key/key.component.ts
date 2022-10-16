@@ -24,7 +24,7 @@ export class KeyComponent implements OnInit {
    
 
     submitKey(){
-      this.authService.getKey(this.keyForm.value)
+      this.authService.getAPIKey(this.keyForm.value)
     }
 
 }
