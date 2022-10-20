@@ -1,4 +1,5 @@
-import { AuthService } from './../auth.service';
+import { TokenService } from './../services/token.service';
+import { AuthService } from '../services/auth.service';
 
 import { Injectable } from '@angular/core';
 import {
@@ -12,18 +13,18 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export class RefreshTokenInterceptor implements HttpInterceptor {
 
  
   refresh = false;
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService, private tokenService: TokenService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
     const req = request.clone(
       {
         setHeaders: {
-          Authorization: `Bearer ${this.authService.getToken()}`
+          Authorization: `Bearer ${this.tokenService.getAccessToken()}`
         }
       }
     )
