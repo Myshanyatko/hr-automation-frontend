@@ -1,5 +1,6 @@
 import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
-import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from "@taiga-ui/core";
+import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER, TuiButtonModule } from "@taiga-ui/core";
+import {TuiInputModule, TuiFieldErrorPipeModule} from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RefreshTokenInterceptor } from './interceptors/refreshToken.interceptor';
@@ -28,8 +29,11 @@ import { MainComponent } from './main/main.component'
     HttpClientModule,
     BrowserAnimationsModule,
     TuiRootModule,
+    TuiInputModule,
     TuiDialogModule,
-    TuiAlertModule
+    TuiAlertModule,
+    TuiButtonModule,
+    TuiFieldErrorPipeModule
   ],
   providers: [
     {

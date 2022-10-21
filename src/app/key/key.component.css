@@ -1,0 +1,22 @@
+form{
+    margin: 0 auto;
+    display: block;
+    width: 400px;
+}
+h1, h3{
+    text-align: center;
+    
+}
+h1{
+    
+    margin: 50px;
+}
+
+button{
+    margin: 10px 30px;
+}
+.buttons-key{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 auto;
+}
