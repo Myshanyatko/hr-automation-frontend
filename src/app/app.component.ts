@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy{
   isLoggedIn = false;
   username?: string;
 
-  constructor(private tokenService: TokenService, private eventBusService: EventBusService, private authService: AuthService) { }
+  constructor(public router: Router, private tokenService: TokenService, private eventBusService: EventBusService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenService.getAccessToken();

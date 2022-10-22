@@ -1,1 +1,55 @@
-<p>user works!</p>
+<div class="tui-container">
+    
+    <tui-avatar *ngIf="!user.photo" text="alex inkin" size="l" avatarUrl="tuiIconUser"></tui-avatar>
+    <img *ngIf="user.photo" src="{{user.photo}}">
+    <div *ngIf="!isEdit" class="user-information">
+        <h2>{{user.name}}</h2>
+        <label tuiLabel="email">{{user.email}}</label>
+        <label tuiLabel="project">{{user.project}}</label>
+        <label tuiLabel="post">{{user.post}}</label>
+        <label tuiLabel="information">{{user.information}}</label>
+        <label tuiLabel="role">{{user.admin? "admin" : "staff"}}</label>
+     
+        <button tuiButton (click)="submitEditUser()">
+            Edit
+        </button>
+    </div>
+
+    <form *ngIf="isEdit" class="b-form" [formGroup]="userForm" (ngSubmit)="submitSaveUser()">
+        <div class="user-form">
+            <div class="user-inputs">
+                <tui-input formControlName="name">
+                    name
+                    <input tuiTextfield type="text" />
+                </tui-input>
+                <tui-input formControlName="email">
+                    email
+                    <input tuiTextfield type="email" />
+                </tui-input>
+                <tui-input formControlName="project">
+                    project
+                    <input tuiTextfield type="text" />
+                </tui-input>
+                <tui-input formControlName="post">
+                    post
+                    <input tuiTextfield type="text" />
+                </tui-input>
+                <!-- <tui-input formControlName="information">
+                information
+                <input tuiTextfield type="text" />
+            </tui-input> -->
+            </div>
+            <div class="tui-space_left-1">
+                <label tuiLabel="Admin">
+                    <tui-toggle formControlName="admin" class="tui-space_left-1" size="l"></tui-toggle>
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <button tuiButton [disabled]="userForm.invalid" class="--tui-height-l">
+                Save
+            </button>
+        </div>
+    </form>
+</div>
