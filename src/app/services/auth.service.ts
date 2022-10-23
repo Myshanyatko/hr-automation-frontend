@@ -38,7 +38,7 @@ export class AuthService {
     if(window.sessionStorage.getItem('email')){
       const email = window.sessionStorage.getItem('email');
        //разкомментить, когда подключишь сервер
-      // this.http.get(AUTH_API+`/users/confirm?email=${email}.ru&code=${key}`).subscribe(
+      // this.http.get(AUTH_API+`/authorization/confirm?email=${{email}}&code=${{key}}`).subscribe(
       this.http.get(`assets/resKey.json`).subscribe({
         next: (res: any) => this.signIn(res),
         error: (err) => alert(err)
@@ -61,7 +61,7 @@ export class AuthService {
     return this.router.navigate(['login']);
   }
   refreshToken(token: string) {
-    return this.http.post(AUTH_API + 'refreshtoken', {
+    return this.http.post(AUTH_API + 'refresh', {
       refreshToken: token
     }, httpOptions);
   }

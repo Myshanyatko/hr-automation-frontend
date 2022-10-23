@@ -7,3 +7,13 @@ img, tui-avatar {
 h1{
     margin: 10px;
 }
+.tui-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+form{
+    margin-right: 20px;
+}
+tui-accordion{
+    width: 350px;
+}

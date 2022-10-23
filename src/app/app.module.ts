@@ -1,6 +1,6 @@
 import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
 import { TuiRootModule, TuiLabelModule,TuiDialogModule, TuiAlertModule, TUI_SANITIZER, TuiButtonModule } from "@taiga-ui/core";
-import {TuiInputModule, TuiActionModule, TuiToggleModule, TuiAvatarModule, TuiFieldErrorPipeModule} from '@taiga-ui/kit';
+import {TuiInputModule, TuiPushModule, TuiAccordionModule, TuiActionModule, TuiToggleModule, TuiAvatarModule, TuiFieldErrorPipeModule} from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RefreshTokenInterceptor } from './interceptors/refreshToken.interceptor';
@@ -15,7 +15,8 @@ import { KeyComponent } from './key/key.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { MainComponent } from './main/main.component';
 import { StaffComponent } from './staff/staff.component';
-import { UserComponent } from './staff/user/user.component'
+import { UserComponent } from './staff/user/user.component';
+import { NewUserComponent } from './staff/new-user/new-user.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { UserComponent } from './staff/user/user.component'
     KeyComponent,
     MainComponent,
     StaffComponent,
-    UserComponent
+    UserComponent,
+    NewUserComponent
   ],
   imports: [
     FormsModule,
@@ -41,7 +43,9 @@ import { UserComponent } from './staff/user/user.component'
     TuiAvatarModule,
     TuiToggleModule,
     TuiLabelModule,
-    TuiActionModule
+    TuiActionModule,
+    TuiAccordionModule,
+    TuiPushModule
   ],
   providers: [
     {

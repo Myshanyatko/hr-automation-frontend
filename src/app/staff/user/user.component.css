@@ -14,8 +14,9 @@ h1{
 
 
 button{
-    display: block;
+    display: inline-block;
     margin: 10px ;
+    padding: 0;
 }
 tui-input{
     margin-bottom: 10px;

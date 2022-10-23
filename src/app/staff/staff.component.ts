@@ -15,6 +15,9 @@ export class StaffComponent implements OnInit {
    this.usersService.getAPIUsers();
    this.users = this.usersService.getUsers()
   console.log(this.users);}
-  
+    
+  open(){
+    
+  }
   
 }

@@ -1,10 +1,29 @@
 <h1>Сотрудники</h1>
+<div class="tui-container">
 
-<button tuiAction *ngFor="let user of users" [routerLink]="['/user/', user.id]">
-    <tui-avatar *ngIf="!user.photo" text="alex inkin" size="l" avatarUrl="tuiIconUser"></tui-avatar>
-    <img *ngIf="user.photo" src="{{user.photo}}">
-    <section>
-        <p class="header tui-text_body-m">{{user.name}}</p>
-        <p class="description tui-text_body-s">{{user.post}}</p>
-    </section>
-</button>
+    <div class="staff-list">
+        <button tuiAction *ngFor="let user of users" [routerLink]="['/user/', user.id]">
+            <tui-avatar *ngIf="!user.photo" text="alex inkin" size="l" avatarUrl="tuiIconUser"></tui-avatar>
+            <img *ngIf="user.photo" src="{{user.photo}}">
+            <section>
+                <p class="header tui-text_body-m">{{user.name}}</p>
+                <p class="description tui-text_body-s">{{user.post}}</p>
+            </section>
+        </button>
+    </div>
+    <div class="new-user-button">
+        <tui-accordion class="container">
+            <tui-accordion-item>
+                Create new employee
+                <ng-template tuiAccordionItemContent>
+                    <app-new-user></app-new-user>
+                </ng-template>
+            </tui-accordion-item>
+        </tui-accordion>
+        <!-- <button tuiButton routerLink="/createEmployee" type="button" size="m" appearance="primary">
+           
+        </button> -->
+    </div>
+    
+
+</div>

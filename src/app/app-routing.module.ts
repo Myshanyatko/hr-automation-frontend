@@ -11,7 +11,6 @@ import { RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'users', component: StaffComponent, canActivate: [AuthGuard]},
-  
     {path: 'user/:id', component: UserComponent, canActivate: [AuthGuard]},
    {path: 'key', canActivate: [KeyGuard], component: KeyComponent},
    {path: '', canActivate: [AuthGuard], 

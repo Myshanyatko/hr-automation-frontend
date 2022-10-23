@@ -1,5 +1,5 @@
 <div class="tui-container">
-    
+
     <tui-avatar *ngIf="!user.photo" text="alex inkin" size="l" avatarUrl="tuiIconUser"></tui-avatar>
     <img *ngIf="user.photo" src="{{user.photo}}">
     <div *ngIf="!isEdit" class="user-information">
@@ -9,12 +9,31 @@
         <label tuiLabel="post">{{user.post}}</label>
         <label tuiLabel="information">{{user.information}}</label>
         <label tuiLabel="role">{{user.admin? "admin" : "staff"}}</label>
-     
-        <button tuiButton (click)="submitEditUser()">
-            Edit
+        <div class="user-buttons">
+            <button tuiButton size="m" (click)="submitEditUser()">
+                Edit
+            </button>
+            <button 
+            tuiButton
+            type="button"
+            size="m"
+            appearance="accent"
+            (click)="showDialogDelete(template)"
+        >
+            Delete
         </button>
+        </div>
     </div>
-
+    <ng-template #template let-observer>
+        <p >Вы точно хотите удалить сотрудника?</p>
+       <button  tuiButton type="button" size="m" (click)="observer.complete()" >
+            Cancel
+        </button>
+        <button appearance="accent" tuiButton type="button" size="m" (click)="deleteUser()" class="tui-space_right-3" (click)="observer.complete()">
+           Delete
+        </button>
+        
+    </ng-template>
     <form *ngIf="isEdit" class="b-form" [formGroup]="userForm" (ngSubmit)="submitSaveUser()">
         <div class="user-form">
             <div class="user-inputs">
@@ -47,9 +66,10 @@
         </div>
 
         <div>
-            <button tuiButton [disabled]="userForm.invalid" class="--tui-height-l">
+            <button tuiButton [disabled]="userForm.invalid" class="--tui-height-l" size="m">
                 Save
             </button>
+
         </div>
     </form>
 </div>

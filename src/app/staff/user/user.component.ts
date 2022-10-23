@@ -1,7 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsersService } from './../../services/users.service';
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Inject } from '@angular/core';
+import { TuiDialogService, TuiDialogContext} from '@taiga-ui/core';
+import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus';
+import { observable, Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -9,7 +13,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
   userForm!: FormGroup;
+  
   public user = {
+    
+    'id': 1,
     "email": null,
     "name": null,
     "project": null,
@@ -19,10 +26,14 @@ export class UserComponent implements OnInit {
     "admin": true
   };
   public isEdit = false;
-  constructor(private userService: UsersService) { }
+  constructor(@Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    private userService: UsersService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    this.userService.getAPIUser();
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.userService.getAPIUser(id);
 
     this.user = this.userService.getUser();
     this.userForm = new FormGroup(
@@ -32,13 +43,14 @@ export class UserComponent implements OnInit {
         'project': new FormControl(this.user.project, [Validators.required]),
         'post': new FormControl(this.user.post, [Validators.required]),
         // 'information': new FormControl(this.user.information, [Validators.required]),
-        'admin': new FormControl(this.user.admin)
+        'admin': new FormControl(this.user.admin),
+        
       }
     )
   }
 
   submitSaveUser() {
-    this.user = {...this.user, name: this.userForm.value.name, email: this.userForm.value.email, project: this.userForm.value.project, post: this.userForm.value.post, admin: this.userForm.value.admin}
+    this.user = { ...this.user, name: this.userForm.value.name, email: this.userForm.value.email, project: this.userForm.value.project, post: this.userForm.value.post, admin: this.userForm.value.admin }
     console.log(this.user)
     this.userService.putAPIUser(this.user)
     this.isEdit = false
@@ -46,5 +58,11 @@ export class UserComponent implements OnInit {
   submitEditUser() {
     this.isEdit = true
   }
-  
+  showDialogDelete(content: PolymorpheusContent<TuiDialogContext>): void {
+    this.dialogService.open(content).subscribe();
+}
+  deleteUser() {
+    console.log("Уволен!");
+    this.userService.deleteAPIUser(this.user.id)
+}
 }

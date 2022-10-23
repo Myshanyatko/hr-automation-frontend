@@ -1,0 +1,46 @@
+<form  class="b-form" [formGroup]="createUserForm" (ngSubmit)="submitSaveUser(template)">
+    <div class="user-form">
+        <div class="user-inputs">
+            <tui-input formControlName="name">
+                name
+                <input tuiTextfield type="text" />
+            </tui-input>
+            <tui-input formControlName="email">
+                email
+                <input tuiTextfield type="email" />
+            </tui-input>
+            <tui-input formControlName="project">
+                project
+                <input tuiTextfield type="text" />
+            </tui-input>
+            <tui-input formControlName="post">
+                post
+                <input tuiTextfield type="text" />
+            </tui-input>
+            <!-- <tui-input formControlName="information">
+            information
+            <input tuiTextfield type="text" />
+        </tui-input> -->
+        </div>
+        <div class="tui-space_left-1">
+            <label tuiLabel="Admin">
+                <tui-toggle formControlName="admin" class="tui-space_left-1" size="l"></tui-toggle>
+            </label>
+        </div>
+    </div>
+
+    <div>
+        <button tuiButton [disabled]="createUserForm.invalid" class="--tui-height-l" size="m">
+            Save
+        </button>
+
+    </div>
+</form>
+<ng-template #template let-observer>
+    <p>Новый сотрудник добавлен</p>
+    <button tuiButton type="button" size="m" (click)="observer.complete()">
+        Ok
+    </button>
+
+
+</ng-template>
