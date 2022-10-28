@@ -26,8 +26,10 @@ export class AuthService {
     window.sessionStorage.removeItem('email');
     window.sessionStorage.setItem('email', email)
     //разкомментить, когда подключишь сервер
-    // return this.http.get(AUTH_API+'authorization?email='+email).subscribe({
-    return this.http.get("assets/token.json").subscribe({
+    return this.http.get(AUTH_API+'authorization?email='+email, 
+     {headers: {'Access-Control-Allow-Origin': '*'}}
+     ).subscribe({
+    // return this.http.get("assets/token.json").subscribe({
       next: () => this.router.navigate(['key']),
       error: (err) => alert(err.message)
     })
