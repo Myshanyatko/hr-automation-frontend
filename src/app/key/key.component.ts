@@ -25,7 +25,8 @@ export class KeyComponent implements OnInit {
     }
 
     submitKey(){
-      this.authService.getAPIKey(this.keyForm.value)
+      this.authService.getAPIKey(Number(this.keyForm.value.key))
+      console.log(Number(this.keyForm.value.key))
     }
 
 }

@@ -36,16 +36,17 @@ export class AuthService {
    
   }
   //функция делающая get запрос после введения кода 
-  getAPIKey(key: string){
+  getAPIKey(key: number){
     if(window.sessionStorage.getItem('email')){
       const email = window.sessionStorage.getItem('email');
+      console.log(key)
        //разкомментить, когда подключишь сервер
-      // this.http.get(AUTH_API+`/authorization/confirm?email=${{email}}&code=${{key}}`).subscribe(
-      this.http.get(`assets/resKey.json`).subscribe({
+      this.http.get(AUTH_API+'authorization/confirm?email='+email+'&code='+key).subscribe({
+      // this.http.get(`assets/resKey.json`).subscribe({
         next: (res: any) => this.signIn(res),
-        error: (err) => alert(err)
+        error: (err) => alert(err.message)})
     }
-   )}
+   
     else alert('нет email')
     
   }
@@ -54,6 +55,7 @@ export class AuthService {
     this.router.navigate(['']); //переход в основное приложение
     this.tokenService.setAccessToken(data.accessToken);//засэтали временный токен
     this.tokenService.setRefreshToken(data.refreshToken); //засэтали рефреш токен
+   
     this.tokenService.setAuthUser(data.authUser); //засэтали данные пользователя
   }
 
@@ -63,9 +65,12 @@ export class AuthService {
     return this.router.navigate(['login']);
   }
   refreshToken(token: string) {
-    return this.http.post(AUTH_API + 'refresh', {
-      refreshToken: token
-    }, httpOptions);
+    console.log('отдаю '+token)
+    return this.http.post(AUTH_API + 'refresh', 
+       token
+    , httpOptions)
+
+    
   }
 
 }

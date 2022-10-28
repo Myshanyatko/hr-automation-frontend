@@ -44,7 +44,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private addTokenHeader(request: HttpRequest<any>, token: string) {
     return request.clone(
       {
-        headers: request.headers.set('Authorization', 'Bearer ' + token)
+        headers: request.headers.set('Authorization',  token)
         // headers: request.headers.set('Access-Control-Allow-Origin', '*')
         
       }
@@ -66,7 +66,7 @@ export class AuthInterceptor implements HttpInterceptor {
             this.isRefreshing = false;
             this.tokenService.setAccessToken(token.accessToken);
             this.refreshTokenSubject.next(token.accessToken);
-
+            this.tokenService.setRefreshToken(token.refreshToken);
             return next.handle(this.addTokenHeader(request, token.accessToken));
           }),
           catchError((err) => {

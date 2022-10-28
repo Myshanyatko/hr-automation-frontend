@@ -25,7 +25,8 @@ export class TokenService {
   }
   setRefreshToken(token : string) : void{
     window.sessionStorage.removeItem('refreshToken');
-    window.sessionStorage.setItem('refreshToken', token); //засэтали рефреш токен
+    window.sessionStorage.setItem('refreshToken', token);//засэтали рефреш токен
+    console.log('принимаю '+token) 
   }
   getRefreshToken(): string | null{
     return window.sessionStorage.getItem('refreshToken');

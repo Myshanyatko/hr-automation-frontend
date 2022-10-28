@@ -16,19 +16,19 @@ export class UsersService {
 
     // запрос на получение списка юзеров
   getAPIUsers() {
-    // this.http.get(API).subscribe({
-    this.http.get('https://jsonplaceholder.typicode.com/users')
-    .subscribe({
+    this.http.get(API).subscribe({
+    // this.http.get('https://jsonplaceholder.typicode.com/users')
+    // .subscribe({
       next: (res: any) => this.setUsers(res),
-      error: (err) => alert(err)
+      error: (err) => alert(err.message)
         })
   }
 
   // запрос на получение юзера по id
   getAPIUser(id: number) {
-    // this.http.get(API+id).subscribe({
-    this.http.get('assets/user.json')
-    .subscribe({
+    this.http.get(API+'/'+id).subscribe({
+    // this.http.get('assets/user.json')
+    // .subscribe({
       next: (res: any) => this.setUser(res),
       error: (err) => alert(err)
         })
@@ -36,16 +36,16 @@ export class UsersService {
 
   // запрос на изменение пользователя
   putAPIUser(user: any){
-    // this.http.put(API+user.id, user, {
-  //     email: user.email, 
-  //     username: user.name,
-  //     role: user.admin,
-  //     project: user.project,
-  //     post: user.post
-  // }, httpOptions)
-    this.http.put('assets/user.json', user)
+    this.http.put(API+user.id, {
+      email: user.email, 
+      username: user.name,
+      role: user.admin,
+      project: user.project,
+      post: user.post
+  }, httpOptions)
+    // this.http.put('assets/user.json', user)
     .subscribe({
-      error: (err) => alert(err)
+      error: (err) => alert(err.message)
         })
   }
 
@@ -56,9 +56,9 @@ export class UsersService {
     })
   }
 
-  // запрос на удаление сотрудника
+  // запрос на добавление сотрудника
   postAPIUser(user: any){
-    this.http.post(API+'users', {
+    this.http.post(API, {
       email: user.email, 
       username: user.name,
       role: user.admin,
@@ -66,7 +66,7 @@ export class UsersService {
       post: user.post
   }, httpOptions)
     .subscribe({
-      error: (err) => alert(err)
+      error: (err) => alert(err.message)
         })
   }
   setUsers(users: any): void{
