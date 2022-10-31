@@ -12,19 +12,19 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { KeyComponent } from './key/key.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { MainComponent } from './main/main.component';
 import { StaffComponent } from './staff/staff.component';
 import { UserComponent } from './staff/user/user.component';
-import { NewUserComponent } from './staff/new-user/new-user.component'
+import { NewUserComponent } from './staff/new-user/new-user.component';
+import { HeaderComponent } from './header/header.component'
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     KeyComponent,
-    MainComponent,
     StaffComponent,
     UserComponent,
-    NewUserComponent
+    NewUserComponent,
+    HeaderComponent
   ],
   imports: [
     FormsModule,
@@ -52,12 +52,7 @@ import { NewUserComponent } from './staff/new-user/new-user.component'
       useClass: AuthInterceptor,
       multi: true
     },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   // этим будем соответственно рефрешить
-    //   useClass: RefreshTokenInterceptor,
-    //   multi: true
-    // },
+   
     {
       provide: TUI_SANITIZER,
       useClass: NgDompurifySanitizer

@@ -13,8 +13,7 @@ export class StaffComponent implements OnInit {
 
   ngOnInit(): void {
    this.usersService.getAPIUsers();
-   this.users = this.usersService.getUsers()
-  console.log(this.users);}
+   this.users = this.usersService.getUsers();}
     
   open(){
     

@@ -16,7 +16,6 @@ export class TokenService {
   constructor(private router: Router, private http: HttpClient) { }
 
   setAccessToken(token : string) : void{
-    console.log('засэтали аккес токен '+token)
     window.sessionStorage.removeItem('accessToken');
     window.sessionStorage.setItem('accessToken', token); //засэтали временный токен
   }
@@ -26,7 +25,7 @@ export class TokenService {
   setRefreshToken(token : string) : void{
     window.sessionStorage.removeItem('refreshToken');
     window.sessionStorage.setItem('refreshToken', token);//засэтали рефреш токен
-    console.log('принимаю '+token) 
+    
   }
   getRefreshToken(): string | null{
     return window.sessionStorage.getItem('refreshToken');
@@ -40,10 +39,9 @@ export class TokenService {
     if (user) {
       return JSON.parse(user);
     }
-    return {};
+    return null;
   }
   isLoggedIn(){
-    console.log('сначала авторизуйтесь')
     return this.getRefreshToken() !== null 
   }
  

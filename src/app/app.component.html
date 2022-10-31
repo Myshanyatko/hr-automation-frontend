@@ -1,12 +1,5 @@
 <tui-root>
-    <header>
-        <a routerLink=""><h2>Admin panel</h2></a>
-        <div *ngIf="router.url != '/login' && router.url != '/key'" >
-        <button  tuiButton (click)="logout()" appearance="custom">
-            Logout
-        </button>
-    </div>
-    </header>
-<router-outlet></router-outlet>
+    
+<router-outlet><app-header></app-header></router-outlet>
 
 </tui-root>

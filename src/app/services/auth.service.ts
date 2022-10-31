@@ -39,7 +39,6 @@ export class AuthService {
   getAPIKey(key: number){
     if(window.sessionStorage.getItem('email')){
       const email = window.sessionStorage.getItem('email');
-      console.log(key)
        //разкомментить, когда подключишь сервер
       this.http.get(AUTH_API+'authorization/confirm?email='+email+'&code='+key).subscribe({
       // this.http.get(`assets/resKey.json`).subscribe({
@@ -52,10 +51,10 @@ export class AuthService {
   }
   //когда успешно введен код, выполняется функция
   signIn(data: any){
-    this.router.navigate(['']); //переход в основное приложение
+    this.router.navigate(['users']); //переход в основное приложение
     this.tokenService.setAccessToken(data.accessToken);//засэтали временный токен
     this.tokenService.setRefreshToken(data.refreshToken); //засэтали рефреш токен
-   
+    
     this.tokenService.setAuthUser(data.authUser); //засэтали данные пользователя
   }
 
@@ -64,8 +63,8 @@ export class AuthService {
     window.sessionStorage.clear()
     return this.router.navigate(['login']);
   }
+  //рефреш токена, когда протух
   refreshToken(token: string) {
-    console.log('отдаю '+token)
     return this.http.post(AUTH_API + 'refresh', 
        token
     , httpOptions)

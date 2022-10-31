@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -25,18 +26,32 @@ export class UsersService {
   }
 
   // запрос на получение юзера по id
+  // getAPIUser(id: number) {
+  //    return new Promise((resolve, reject)=>{
+  //  this.http.get(API+'/'+id).subscribe({
+  //     next: (res: object) => this.setUser(res),
+  //     error: (err) =>  alert(err)
+  //       })
+  //      resolve(true)
+  //      } )
+  // }
   getAPIUser(id: number) {
-    this.http.get(API+'/'+id).subscribe({
-    // this.http.get('assets/user.json')
-    // .subscribe({
-      next: (res: any) => this.setUser(res),
-      error: (err) => alert(err)
-        })
+     return new Observable(()=>{
+   this.http.get(API+'/'+id)
+   .subscribe({
+      next: (res: object) => this.setUser(res),
+      error: (err) =>  alert(err)
+        })  
+        // return this.getUser()   
+       })
+       
   }
+
 
   // запрос на изменение пользователя
   putAPIUser(user: any){
-    this.http.put(API+user.id, {
+    this.http.put(API, {
+      id: user.id,
       email: user.email, 
       username: user.name,
       role: user.admin,
@@ -51,8 +66,8 @@ export class UsersService {
 
    // запрос на удаление сотрудника
   deleteAPIUser(id: number){
-    this.http.delete(API+id).subscribe({
-      error: (err) => alert(err.error)
+    this.http.delete(API+ '/'+id).subscribe({
+      error: (err) => alert(err.message)
     })
   }
 
@@ -73,7 +88,7 @@ export class UsersService {
     
     localStorage.setItem('users', JSON.stringify(users));
   }
-  setUser(user: any): void{
+  setUser(user: object): void{
     
     localStorage.setItem('user', JSON.stringify(user));
   }
