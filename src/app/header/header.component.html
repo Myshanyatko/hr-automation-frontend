@@ -1,8 +1,10 @@
-<header>
-    <a routerLink="users"><h2>Admin panel</h2></a>
-    <div  >
-    <button  tuiButton (click)="logout()" >
-        {{username}}
+<header class="header">
+  <div class="header-title-block">
+   <li><a routerLink="users" class="header-title"> Административная панель </a></li> 
+  </div>
+  <div>
+    <button tuiButton (click)="logout()">
+      {{ username }}
     </button>
-</div>
+  </div>
 </header>

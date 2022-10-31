@@ -26,9 +26,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isLoggedIn = !!this.tokenService.getAccessToken();
     console.log(this.isLoggedIn);
 
-    const user = this.tokenService.getAuthUser();
-    this.username = user.email;
-    console.log(this.username);
+    if (this.isLoggedIn) {
+      this.username = this.tokenService.getAuthUserName();
+      console.log(this.username);
+    }
 
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
