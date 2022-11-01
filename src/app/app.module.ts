@@ -7,6 +7,9 @@ import {
   TUI_SANITIZER,
   TuiButtonModule,
   TuiSvgModule,
+  TuiDataListModule,
+  TuiHostedDropdownModule,
+  TuiDropdownModule,
 } from '@taiga-ui/core';
 import {
   TuiInputModule,
@@ -16,6 +19,7 @@ import {
   TuiToggleModule,
   TuiAvatarModule,
   TuiFieldErrorPipeModule,
+  TuiArrowModule,
 } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -62,6 +66,10 @@ import { HeaderComponent } from './header/header.component';
     TuiAccordionModule,
     TuiPushModule,
     TuiSvgModule,
+    TuiDataListModule,
+    TuiArrowModule,
+    TuiHostedDropdownModule,
+    TuiDropdownModule,
   ],
   providers: [
     {

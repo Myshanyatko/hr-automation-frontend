@@ -5,15 +5,32 @@
   border-bottom: 1px solid #292929;
   align-items: center;
 }
-.header-title {
+.header-title-text {
   text-decoration: none;
   color: #292929;
   font-size: 16px;
   font-weight: 100;
   font: var(--tui-font-text-l);
 }
-button {
-  display: block;
-  height: 50px;
-  margin: 0 auto;
+.header-title-circle {
+  display: inline-block;
+  align-items: center;
+  width: 12px;
+  height: 12px;
+  background: #ff6d2f;
+  border-radius: 50px;
+  margin-right: 3px;
+}
+.header-name-button {
+  font: var(--tui-font-text-l);
+  color: #292929;
+  font-size: 16px;
+  font-weight: 100;
+  display: inline;
+}
+.icon {
+  transition: transform;
+}
+.icon_rotated {
+  transform: rotate(180deg);
 }
