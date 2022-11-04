@@ -1,16 +1,12 @@
 .header {
   display: grid;
-  grid-template-columns: 5fr 1fr;
-  padding: 5px 40px;
-  border-bottom: 1px solid #292929;
+  grid-template-columns: 5fr 3fr;
+  padding: 5px 72px;
+  border-bottom: 1px solid #9b9b9b;
   align-items: center;
-}
-.header-title-text {
-  text-decoration: none;
-  color: #292929;
-  font-size: 16px;
-  font-weight: 100;
+  min-height: 65px;
   font: var(--tui-font-text-l);
+  font-weight: 100;
 }
 .header-title-circle {
   display: inline-block;
@@ -21,16 +17,31 @@
   border-radius: 50px;
   margin-right: 3px;
 }
-.header-name-button {
-  font: var(--tui-font-text-l);
+.header-title {
+  text-decoration: none;
   color: #292929;
   font-size: 16px;
-  font-weight: 100;
-  display: inline;
 }
+
+.header-menu {
+  text-align: right;
+}
+.header-menu-button {
+  font: var(--tui-font-text-l);
+  font-weight: 100;
+  color: #292929;
+  font-size: 16px;
+  font-style: normal;
+  padding: var(--tui-padding-l);
+  margin: 13px 0;
+}
+
 .icon {
   transition: transform;
 }
 .icon_rotated {
   transform: rotate(180deg);
+}
+.menu-dropdown {
+  background-color: #f2f2f2;
 }

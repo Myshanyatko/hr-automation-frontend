@@ -33,13 +33,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenService.getAccessToken();
-    console.log(this.isLoggedIn);
-
-    if (this.isLoggedIn) {
-      this.username = this.tokenService.getAuthUserName();
-      console.log(this.username);
+    if (this.tokenService.getAccessToken()) {
+      this.isLoggedIn = true;
+      console.log(this.isLoggedIn);
     }
+
+    // if (this.isLoggedIn) {
+    this.username = this.tokenService.getAuthUserName();
+    console.log(this.username);
+    // }
 
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();

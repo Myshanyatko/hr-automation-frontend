@@ -1,15 +1,19 @@
 <header class="header">
   <div class="header-title-block">
     <div class="header-title-circle"></div>
-    <a routerLink="users" class="header-title-text">
-      Административная панель
-    </a>
+    <a routerLink="users" class="header-title"> Административная панель </a>
   </div>
-  <div class="header-name-button-block">
-    <tui-hosted-dropdown [content]="dropdown" [(open)]="open">
+  <div class="header-menu" *ngIf="isLoggedIn">
+    <tui-hosted-dropdown
+      [content]="dropdown"
+      [(open)]="open"
+      tuiDropdownAlign="right"
+      tuiDropdownLimitWidth="min"
+    >
       <button
         tuiButton
-        class="header-name-button"
+        class="header-menu-button"
+        size="xs"
         appearance="custom"
         [iconRight]="icon"
       >
@@ -24,7 +28,7 @@
       ></tui-svg>
     </ng-template>
     <ng-template #dropdown>
-      <tui-data-list role="menu">
+      <tui-data-list role="menu" class="menu-dropdown">
         <button tuiOption (click)="logout()">Выйти</button>
         <button tuiOption (click)="OpenProfile()">Профиль</button>
       </tui-data-list>

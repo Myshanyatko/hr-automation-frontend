@@ -58,6 +58,7 @@ export class AuthService {
   //выход из аккаунта
   logout() {
     window.sessionStorage.clear();
+    window.localStorage.clear();
     return this.router.navigate(['login']);
   }
   //рефреш токена, когда протух

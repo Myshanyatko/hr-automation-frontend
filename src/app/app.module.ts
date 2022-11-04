@@ -36,6 +36,7 @@ import { StaffComponent } from './staff/staff.component';
 import { UserComponent } from './staff/user/user.component';
 import { NewUserComponent } from './staff/new-user/new-user.component';
 import { HeaderComponent } from './header/header.component';
+import { MenuComponent } from './menu/menu.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +46,7 @@ import { HeaderComponent } from './header/header.component';
     UserComponent,
     NewUserComponent,
     HeaderComponent,
+    MenuComponent,
   ],
   imports: [
     FormsModule,
