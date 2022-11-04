@@ -1,5 +1,11 @@
 <tui-root>
-    
-<router-outlet><app-header></app-header></router-outlet>
-
+  <app-header></app-header>
+  <div class="app-grid">
+    <div class="app-menu">
+      <app-menu></app-menu>
+    </div>
+    <div class="app-content">
+      <router-outlet> </router-outlet>
+    </div>
+  </div>
 </tui-root>

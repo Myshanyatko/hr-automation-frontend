@@ -4,7 +4,7 @@
   padding: 5px 72px;
   border-bottom: 1px solid #9b9b9b;
   align-items: center;
-  min-height: 65px;
+  min-height: 60px;
   font: var(--tui-font-text-l);
   font-weight: 100;
 }
@@ -43,5 +43,9 @@
   transform: rotate(180deg);
 }
 .menu-dropdown {
+  color: #292929;
   background-color: #f2f2f2;
+}
+.menu-dropdown-item {
+  color: #292929;
 }
