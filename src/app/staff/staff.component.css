@@ -1,19 +1,21 @@
-button{
-    cursor: pointer;
+.tui-container {
+  margin: 35px 0;
 }
-img, tui-avatar {
-    margin-right: 10px;
+.search-and-new-user-block {
+  display: grid;
+  grid-template-columns: 5fr 2fr;
+  width: 350px;
 }
-h1{
-    margin: 10px;
+
+.search-staff {
+  background-color: #eeeded;
+  border: none;
+  box-shadow: none;
 }
-.tui-container{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-form{
-    margin-right: 20px;
-}
-tui-accordion{
-    width: 350px;
+.staff-list {
+  display: block;
+  background-color: #eeeded;
+  border-radius: var(--tui-radius-l);
+  margin: 15px 0;
+  width: 500px;
 }

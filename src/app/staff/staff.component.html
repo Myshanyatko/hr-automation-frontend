@@ -1,4 +1,32 @@
 <div class="tui-container">
+  <div class="search-and-new-user-block">
+    <div class="search-staff-block">
+      <tui-input
+        tuiTextfieldIconLeft="tuiIconSearchLarge"
+        class="search-staff"
+        [(ngModel)]="search"
+      >
+        Поиск
+      </tui-input>
+    </div>
+    <div class="new-user-block">
+      <ng-template #icon>
+        <tui-avatar
+          size="xs"
+          [rounded]="true"
+          [avatarUrl]="urlNewUser"
+        ></tui-avatar>
+      </ng-template>
+      <button
+        tuiButton
+        tuiIconButton
+        type="button"
+        class="tui-space_right-3 tui-space_bottom-3"
+        [icon]="icon"
+        routerLink="new-user"
+      ></button>
+    </div>
+  </div>
   <div class="staff-list">
     <button
       tuiAction
@@ -18,7 +46,7 @@
       </section>
     </button>
   </div>
-  <div class="new-user-button">
+  <!-- <div class="new-user-button">
     <tui-accordion class="container">
       <tui-accordion-item>
         Create new employee
@@ -27,8 +55,6 @@
         </ng-template>
       </tui-accordion-item>
     </tui-accordion>
-    <!-- <button tuiButton routerLink="/createEmployee" type="button" size="m" appearance="primary">
-           
-        </button> -->
   </div>
+</div> -->
 </div>

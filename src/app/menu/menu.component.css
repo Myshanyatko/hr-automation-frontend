@@ -13,3 +13,6 @@
   list-style-type: none;
   width: 200px;
 }
+.menu-item-button :active {
+  color: #ff6d2f;
+}

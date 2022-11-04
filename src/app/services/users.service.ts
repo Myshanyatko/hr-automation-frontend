@@ -1,30 +1,41 @@
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { User } from '../staff/user';
+import { catchError, tap } from 'rxjs/operators';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
-const API = "http://localhost:8080/users";
+const API = 'http://localhost:8080/users';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class UsersService {
-  
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-    // запрос на получение списка юзеров
-  getAPIUsers() {
-    this.http.get(API).subscribe({
-    // this.http.get('https://jsonplaceholder.typicode.com/users')
-    // .subscribe({
-      next: (res: any) => this.setUsers(res),
-      error: (err) => alert(err.message)
-        })
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.log(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    };
   }
-
+  // запрос на получение списка юзеров
+  // getAPIUsers() {
+  //   this.http.get(API).subscribe({
+  //     // this.http.get('https://jsonplaceholder.typicode.com/users')
+  //     // .subscribe({
+  //     next: (res: any) => this.setUsers(res),
+  //     error: (err) => alert(err.message),
+  //   });
+  // }
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(API).pipe(
+      tap((_) => console.log('fetched heroes')),
+      catchError(this.handleError<User[]>('getHeroes', []))
+    );
+  }
   // запрос на получение юзера по id
   // getAPIUser(id: number) {
   //    return new Promise((resolve, reject)=>{
@@ -36,67 +47,69 @@ export class UsersService {
   //      } )
   // }
   getAPIUser(id: number) {
-     return new Observable(()=>{
-   this.http.get(API+'/'+id)
-   .subscribe({
-      next: (res: object) => this.setUser(res),
-      error: (err) =>  alert(err)
-        })  
-        // return this.getUser()   
-       })
-       
+    return new Observable(() => {
+      this.http.get(API + '/' + id).subscribe({
+        next: (res: object) => this.setUser(res),
+        error: (err) => alert(err),
+      });
+      // return this.getUser()
+    });
   }
-
 
   // запрос на изменение пользователя
-  putAPIUser(user: any){
-    this.http.put(API, {
-      id: user.id,
-      email: user.email, 
-      username: user.name,
-      role: user.admin,
-      project: user.project,
-      post: user.post
-  }, httpOptions)
-    // this.http.put('assets/user.json', user)
-    .subscribe({
-      error: (err) => alert(err.message)
-        })
+  putAPIUser(user: any) {
+    this.http
+      .put(
+        API,
+        {
+          id: user.id,
+          email: user.email,
+          username: user.name,
+          role: user.admin,
+          project: user.project,
+          post: user.post,
+        },
+        httpOptions
+      )
+      // this.http.put('assets/user.json', user)
+      .subscribe({
+        error: (err) => alert(err.message),
+      });
   }
 
-   // запрос на удаление сотрудника
-  deleteAPIUser(id: number){
-    this.http.delete(API+ '/'+id).subscribe({
-      error: (err) => alert(err.message)
-    })
+  // запрос на удаление сотрудника
+  deleteAPIUser(id: number) {
+    this.http.delete(API + '/' + id).subscribe({
+      error: (err) => alert(err.message),
+    });
   }
 
   // запрос на добавление сотрудника
-  postAPIUser(user: any){
-    this.http.post(API, {
-      email: user.email, 
-      username: user.name,
-      role: user.admin,
-      project: user.project,
-      post: user.post
-  }, httpOptions)
-    .subscribe({
-      error: (err) => alert(err.message)
-        })
+  postAPIUser(user: any) {
+    this.http
+      .post(
+        API,
+        {
+          email: user.email,
+          username: user.name,
+          role: user.admin,
+          project: user.project,
+          post: user.post,
+        },
+        httpOptions
+      )
+      .subscribe({
+        error: (err) => alert(err.message),
+      });
   }
-  setUsers(users: any): void{
-    
+  setUsers(users: any): void {
     localStorage.setItem('users', JSON.stringify(users));
   }
-  setUser(user: object): void{
-    
+  setUser(user: object): void {
     localStorage.setItem('user', JSON.stringify(user));
   }
-  getUsers(){
-    return JSON.parse(localStorage.getItem("users")  || '{}');
-  }
-  getUser(){
-   
-    return JSON.parse(localStorage.getItem("user")  || '{}');
+
+  getUser() {
+    return JSON.parse(localStorage.getItem('user') || '{}');
   }
 }
