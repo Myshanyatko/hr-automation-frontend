@@ -69,7 +69,7 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          
+
           "configurations": {
             "production": {
               "browserTarget": "hr-automation:build:production"
@@ -93,13 +93,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         }
@@ -109,5 +104,4 @@
   "cli": {
     "analytics": "0aebfc22-90ea-445f-8e36-1de43f57d714"
   }
-  
 }

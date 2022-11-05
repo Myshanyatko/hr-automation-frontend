@@ -22,18 +22,10 @@ export class UsersService {
     };
   }
   // запрос на получение списка юзеров
-  // getAPIUsers() {
-  //   this.http.get(API).subscribe({
-  //     // this.http.get('https://jsonplaceholder.typicode.com/users')
-  //     // .subscribe({
-  //     next: (res: any) => this.setUsers(res),
-  //     error: (err) => alert(err.message),
-  //   });
-  // }
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(API).pipe(
-      tap((_) => console.log('fetched heroes')),
-      catchError(this.handleError<User[]>('getHeroes', []))
+      tap((_) => console.log('fetched users')),
+      catchError(this.handleError<User[]>('getUsers', []))
     );
   }
   // запрос на получение юзера по id

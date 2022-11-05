@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.css'],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
+  showLoader = false;
+  public menuItems = [
+    { name: 'Сотрудники', url: 'users' },
+    { name: 'FAQ', url: 'faq' },
+    { name: 'Продукты', url: 'products' },
+    { name: 'Рестораны', url: 'products' },
+  ];
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor() {}
 }

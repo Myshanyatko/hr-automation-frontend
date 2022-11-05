@@ -1,18 +1,27 @@
 .menu-block {
+  overflow: hidden;
   display: block;
-  margin: 35px 50px;
-  background-color: #eeeded;
-  padding: 5px 10px;
+  margin: 35px 20px 0 0;
+  background-color: #fff;
   border-radius: var(--tui-radius-l);
+  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
 }
 .menu {
-  padding: 0 20px;
+  padding: 3px 0;
 }
 .menu-item {
-  margin: 35px 0;
   list-style-type: none;
-  width: 200px;
 }
-.menu-item-button :active {
-  color: #ff6d2f;
+.menu-item-button {
+  display: flex;
+  width: 100%;
+  border-radius: 0;
+}
+.accent {
+  background-color: #ff6d2f;
+  color: #fff;
+}
+/* оно не работает (((( */
+.menu-item-button .accent :hover {
+  color: #000;
 }

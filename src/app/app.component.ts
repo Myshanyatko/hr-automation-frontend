@@ -12,7 +12,7 @@ import { EventBusService } from './shared/event-bus.service';
 export class AppComponent implements OnDestroy {
   title = 'hr-automation';
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, public tokenService: TokenService) {}
   ngOnDestroy(): void {
     sessionStorage.clear();
   }

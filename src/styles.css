@@ -5,14 +5,19 @@ a {
   background-color: #f2f2f2;
   color: #292929;
 }
+p {
+  margin: 0;
+  padding: 0;
+}
 [data-appearance="custom"] {
-  font: var(--tui-font-text-l);
   font-weight: 100;
-  color: #292929;
-  font-size: 16px;
   font-style: normal;
   padding: var(--tui-padding-l);
 }
 [data-appearance="custom"] :hover {
   color: #ff6d2f;
+}
+[tuiWrapper][data-appearance="textfield"]._focused._focused {
+  box-shadow: none;
+  --tui-focus: #ff6d2f;
 }

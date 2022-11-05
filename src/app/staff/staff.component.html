@@ -10,51 +10,47 @@
       </tui-input>
     </div>
     <div class="new-user-block">
-      <ng-template #icon>
-        <tui-avatar
-          size="xs"
-          [rounded]="true"
-          [avatarUrl]="urlNewUser"
-        ></tui-avatar>
-      </ng-template>
       <button
         tuiButton
-        tuiIconButton
         type="button"
-        class="tui-space_right-3 tui-space_bottom-3"
-        [icon]="icon"
+        appearance="custom"
+        class="new-user-button"
         routerLink="new-user"
-      ></button>
+      >
+        Создать
+      </button>
     </div>
   </div>
-  <div class="staff-list">
-    <button
-      tuiAction
-      *ngFor="let user of users"
-      [routerLink]="['/user/', user.id]"
-    >
-      <tui-avatar
-        *ngIf="!user.photo"
-        text="alex inkin"
-        size="l"
-        avatarUrl="tuiIconUser"
-      ></tui-avatar>
-      <img *ngIf="user.photo" src="{{ user.photo }}" />
-      <section>
-        <p class="header tui-text_body-m">{{ user.username }}</p>
-        <p class="description tui-text_body-s">{{ user.post }}</p>
-      </section>
-    </button>
+  <div class="staff-list-block">
+    <ul class="staff-list">
+      <li *ngFor="let user of users" class="staff-list-item">
+        <button
+          tuiButton
+          appearance="custom"
+          class="staff-list-button"
+          [routerLink]="['/user/', user.id]"
+        >
+          <tui-avatar
+            *ngIf="!user.photo"
+            class="icon-user-avatar"
+            [rounded]="true"
+            text="avatar"
+            size="l"
+            avatarUrl="tuiIconUser"
+          ></tui-avatar>
+          <tui-avatar
+            class="icon8"
+            *ngIf="user.photo"
+            text="avatar"
+            size="l"
+            avatarUrl="{{ user.photo }}"
+          ></tui-avatar>
+          <section>
+            <p class="staff-user-name">{{ user.username }}</p>
+            <p class="staff-user-post">{{ user.post }}</p>
+          </section>
+        </button>
+      </li>
+    </ul>
   </div>
-  <!-- <div class="new-user-button">
-    <tui-accordion class="container">
-      <tui-accordion-item>
-        Create new employee
-        <ng-template tuiAccordionItemContent>
-          <app-new-user></app-new-user>
-        </ng-template>
-      </tui-accordion-item>
-    </tui-accordion>
-  </div>
-</div> -->
 </div>
