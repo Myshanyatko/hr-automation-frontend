@@ -1,3 +1,4 @@
+import { NewUserComponent } from './staff/new-user/new-user.component';
 import { UserComponent } from './staff/user/user.component';
 import { StaffComponent } from './staff/staff.component';
 import { KeyGuard } from './guards/key.guard';
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'restorans', redirectTo: 'users', pathMatch: 'full' },
   { path: 'faq', redirectTo: 'users', pathMatch: 'full' },
   { path: 'products', redirectTo: 'users', pathMatch: 'full' },
+  { path: 'new-user', component: NewUserComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

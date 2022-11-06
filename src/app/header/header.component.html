@@ -28,12 +28,12 @@
       ></tui-svg>
     </ng-template>
     <ng-template #dropdown>
-      <tui-data-list role="menu" class="menu-dropdown">
+      <tui-data-list role="menu" class="menu-dropdown"
+        ><button tuiOption class="menu-dropdown-item" (click)="OpenProfile()">
+          Профиль
+        </button>
         <button tuiOption class="menu-dropdown-item" (click)="logout()">
           Выйти
-        </button>
-        <button tuiOption class="menu-dropdown-item" (click)="OpenProfile()">
-          Профиль
         </button>
       </tui-data-list>
     </ng-template>

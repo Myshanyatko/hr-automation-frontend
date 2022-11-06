@@ -14,9 +14,8 @@
 .new-user-button {
   width: 100%;
   font: var(--tui-font-text-m);
-  background-color: #ff6d2f;
+  background-color: #ff7043;
   color: #fff;
-  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
 }
 .staff-list-block {
   overflow: hidden;
@@ -37,7 +36,7 @@
   margin: 20px 0;
 }
 .icon-user-avatar {
-  --tui-avatar-color: #ff6d2f;
+  --tui-avatar-color: #ff7043;
   --tui-avatar-background: #f2f2f2;
 }
 

@@ -7,7 +7,8 @@
   box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
 }
 .menu {
-  padding: 3px 0;
+  padding: 0;
+  margin: 0;
 }
 .menu-item {
   list-style-type: none;
@@ -18,10 +19,6 @@
   border-radius: 0;
 }
 .accent {
-  background-color: #ff6d2f;
+  background-color: #ff7043;
   color: #fff;
-}
-/* оно не работает (((( */
-.menu-item-button .accent :hover {
-  color: #000;
 }

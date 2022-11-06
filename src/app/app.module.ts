@@ -37,6 +37,7 @@ import { UserComponent } from './staff/user/user.component';
 import { NewUserComponent } from './staff/new-user/new-user.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
+import { EditUserComponent } from './staff/edit-user/edit-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +48,7 @@ import { MenuComponent } from './menu/menu.component';
     NewUserComponent,
     HeaderComponent,
     MenuComponent,
+    EditUserComponent,
   ],
   imports: [
     FormsModule,

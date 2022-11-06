@@ -23,10 +23,10 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  userForm!: FormGroup;
   user: userInfo = {
     id: 1,
-    name: '',
+    username: '',
+    date: '',
     email: '',
     post: '',
     project: '',
@@ -57,36 +57,9 @@ export class UserComponent implements OnInit {
   }
   ngOnInit() {
     this.getUser();
-    this.userForm = new FormGroup({
-      email: new FormControl(this.user.email, [
-        Validators.required,
-        Validators.email,
-      ]),
-      name: new FormControl(this.user.name, [Validators.required]),
-      project: new FormControl(this.user.project, [Validators.required]),
-      post: new FormControl(this.user.post, [Validators.required]),
-      information: new FormControl(this.user.information, [
-        Validators.required,
-      ]),
-      admin: new FormControl(this.user.admin),
-    });
   }
 
-  submitSaveUser() {
-    this.user = {
-      ...this.user,
-      id: this.user.id,
-      name: this.userForm.value.name,
-      email: this.userForm.value.email,
-      project: this.userForm.value.project,
-      post: this.userForm.value.post,
-      admin: this.userForm.value.admin,
-    };
-    console.log(this.user);
-    this.userService.putAPIUser(this.user);
-    this.isEdit = false;
-  }
-  submitEditUser() {
+  editUser() {
     this.isEdit = true;
   }
   showDialogDelete(content: PolymorpheusContent<TuiDialogContext>): void {
