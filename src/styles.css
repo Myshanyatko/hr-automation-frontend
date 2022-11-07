@@ -44,6 +44,10 @@ h3 {
   box-shadow: none;
   --tui-focus: #ff7043;
 }
+tui-toggle [tuiWrapper][data-appearance="primary"] {
+  background: #ff7043;
+  color: var(--tui-primary-text);
+}
 /* оно не работает (((( */
 [data-appearance="menu"] .accent :hover {
   color: #000;
