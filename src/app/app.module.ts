@@ -38,6 +38,9 @@ import { NewUserComponent } from './staff/new-user/new-user.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { EditUserComponent } from './staff/edit-user/edit-user.component';
+import { StoreModule } from '@ngrx/store';
+import { usersReducer } from './store/reducers/users.reducer';
+import { EffectsModule } from '@ngrx/effects';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +77,8 @@ import { EditUserComponent } from './staff/edit-user/edit-user.component';
     TuiArrowModule,
     TuiHostedDropdownModule,
     TuiDropdownModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     {

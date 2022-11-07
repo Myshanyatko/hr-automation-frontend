@@ -1,4 +1,4 @@
-import { userInfo } from './userInfo';
+import { userInfo } from '../../models/userInfo';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -8,21 +8,16 @@ import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { observable, Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-//что с этим делать...
-//  interface UserForm<T> {
-//   name: T;
-//   project: T;
-//   post: T;
-//   information: T;
-//   admin: FormControl<boolean>;
-//   email: T;
-// }
+import { Store } from '@ngrx/store';
+import { usersReducer } from 'src/app/store/reducers/users.reducer';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
+  // user$: Observable<userInfo>;
   user: userInfo = {
     id: 1,
     username: '',
@@ -39,8 +34,9 @@ export class UserComponent implements OnInit {
   private subscription: Subscription;
 
   constructor(
-    private readonly dialogService: TuiDialogService,
     private route: ActivatedRoute,
+    private store: Store<{ user: userInfo }>,
+    private readonly dialogService: TuiDialogService,
     private userService: UsersService
   ) {
     this.subscription = route.params.subscribe(

@@ -1,6 +1,7 @@
+import { User } from '../models/user';
+import { Store } from '@ngrx/store';
 import { UsersService } from './../services/users.service';
 import { Component, OnInit } from '@angular/core';
-import { User } from './user';
 @Component({
   selector: 'app-staff',
   templateUrl: './staff.component.html',

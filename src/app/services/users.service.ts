@@ -38,7 +38,7 @@ export class UsersService {
   //      resolve(true)
   //      } )
   // }
-  getAPIUser(id: number) {
+  public getAPIUser(id: number) {
     return new Observable(() => {
       this.http.get(API + '/' + id).subscribe({
         next: (res: object) => this.setUser(res),
