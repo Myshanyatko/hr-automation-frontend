@@ -59,6 +59,5 @@ export class NewUserComponent implements OnInit {
     this.userService.postAPIUser(this.user);
     console.log('new user is created');
     this.dialogService.open(content).subscribe();
-    this.ngOnInit();
   }
 }
