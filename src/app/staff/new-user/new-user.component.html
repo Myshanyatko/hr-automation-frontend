@@ -47,7 +47,12 @@
   </form>
   <ng-template #template let-observer>
     <p>Новый сотрудник добавлен</p>
-    <button tuiButton type="button" size="m" (click)="observer.complete()">
+    <button
+      tuiButton
+      appearance="accent"
+      size="m"
+      (click)="observer.complete()"
+    >
       Ок
     </button>
   </ng-template>

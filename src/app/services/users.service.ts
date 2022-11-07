@@ -43,7 +43,7 @@ export class UsersService {
       .put(API, {
         id: user.id,
         email: user.email,
-        username: user.name,
+        username: user.username,
         role: user.admin,
         project: user.project,
         post: user.post,

@@ -1,0 +1,12 @@
+.user-form-block {
+  margin: 40px 20px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 15px;
+}
+.user-form-item {
+  margin-bottom: 15px;
+}
+.save-user-button {
+  margin-top: 23px;
+}

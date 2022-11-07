@@ -1,39 +1,45 @@
-<form class="b-form" [formGroup]="userForm" (ngSubmit)="saveUser()">
-  <div class="user-form">
-    <div class="user-inputs">
-      <tui-input formControlName="name">
-        name
+<form [formGroup]="userForm" (ngSubmit)="saveUser()">
+  <div class="user-form-block">
+    <div class="user-form-col1">
+      <tui-input formControlName="name" class="user-form-item">
+        имя
         <input tuiTextfield type="text" />
       </tui-input>
-      <tui-input formControlName="email">
-        email
+      <tui-input formControlName="email" class="user-form-item">
+        почта
         <input tuiTextfield type="email" />
       </tui-input>
-      <tui-input formControlName="project">
-        project
+      <tui-input formControlName="date" class="user-form-item">
+        дата рождения
         <input tuiTextfield type="text" />
       </tui-input>
-      <tui-input formControlName="post">
-        post
-        <input tuiTextfield type="text" />
-      </tui-input>
-      <tui-input formControlName="information">
-        information
-        <input tuiTextfield type="text" />
+      <tui-input formControlName="project" class="user-form-item">
+        поект
+        <input tuiTextfield type="text" class="user-form-item" />
       </tui-input>
     </div>
-    <div class="tui-space_left-1">
-      <label tuiLabel="Admin">
-        <tui-toggle
-          formControlName="admin"
-          class="tui-space_left-1"
-          size="l"
-        ></tui-toggle>
-      </label>
-    </div>
-  </div>
+    <div class="user-form-col2">
+      <tui-input formControlName="post" class="user-form-item">
+        должность
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <tui-input formControlName="information" class="user-form-item">
+        информация
+        <input tuiTextfield type="text" />
+      </tui-input>
 
-  <div>
-    <button tuiButton [disabled]="userForm.invalid" size="m">Save</button>
+      <div class="user-form-item">
+        <label tuiLabel="Admin">
+          <tui-toggle
+            formControlName="admin"
+            size="l"
+            data-appearance="accent"
+          ></tui-toggle>
+        </label>
+      </div>
+      <button tuiButton size="m" appearance="accent" class="save-user-button">
+        Сохранить
+      </button>
+    </div>
   </div>
 </form>

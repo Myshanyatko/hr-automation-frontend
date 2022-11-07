@@ -7,7 +7,7 @@ import { Component, OnInit, Inject, SimpleChanges } from '@angular/core';
 import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { observable, Observable, Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { usersReducer } from 'src/app/store/reducers/users.reducer';
 
@@ -35,8 +35,8 @@ export class UserComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<{ user: userInfo }>,
     private readonly dialogService: TuiDialogService,
+    private http: Router,
     private userService: UsersService
   ) {
     this.subscription = route.params.subscribe(
@@ -62,7 +62,8 @@ export class UserComponent implements OnInit {
     this.dialogService.open(content).subscribe();
   }
   deleteUser() {
-    console.log('Уволен!');
     this.userService.deleteAPIUser(this.user.id);
+
+    this.http.navigate(['users']);
   }
 }

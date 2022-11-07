@@ -18,7 +18,7 @@
         size="xxl"
         avatarUrl="{{ user.photo }}"
       ></tui-avatar>
-      <ul class="user-buttons">
+      <ul class="user-buttons" *ngIf="!isEdit">
         <li>
           <button
             class="user-edit-button"
@@ -43,22 +43,31 @@
           </button>
         </li>
       </ul>
-      <ng-template #template let-observer>
-        <p>Вы точно хотите удалить сотрудника?</p>
-        <button tuiButton type="button" size="m" (click)="observer.complete()">
-          Cancel
-        </button>
-        <button
-          appearance="accent"
-          tuiButton
-          type="button"
-          size="m"
-          (click)="deleteUser()"
-          class="tui-space_right-3"
-          (click)="observer.complete()"
-        >
-          Delete
-        </button>
+      <ng-template #template let-observer class="dialog-delete-users">
+        <h4>Вы точно хотите удалить сотрудника?</h4>
+        <div class="dialog-buttons-block">
+          <button
+            tuiButton
+            class="dialog-button"
+            appearance="second"
+            size="m"
+            (click)="observer.complete()"
+          >
+            Отмена
+          </button>
+          <button
+            class="dialog-button"
+            appearance="accent"
+            tuiButton
+            type="button"
+            size="m"
+            (click)="deleteUser()"
+            (click)="observer.complete()"
+            class="tui-space_right-3"
+          >
+            Удалить
+          </button>
+        </div>
       </ng-template>
     </div>
 
