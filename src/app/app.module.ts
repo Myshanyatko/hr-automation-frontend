@@ -1,3 +1,6 @@
+import { environment } from './../environments/environment';
+import { appReducers } from './store/reducers/app.reducers';
+import { USersEffects } from './store/effects/users.effects';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import {
   TuiRootModule,
@@ -39,8 +42,9 @@ import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { EditUserComponent } from './staff/edit-user/edit-user.component';
 import { StoreModule } from '@ngrx/store';
-import { usersReducer } from './store/reducers/users.reducer';
+import { userReducer } from './store/reducers/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,8 +81,14 @@ import { EffectsModule } from '@ngrx/effects';
     TuiArrowModule,
     TuiHostedDropdownModule,
     TuiDropdownModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot(appReducers),
+    // StoreModule.forFeature('[Users Page] Get Users', usersReducer),
+    EffectsModule.forRoot([USersEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+    }),
   ],
   providers: [
     {

@@ -9,7 +9,6 @@ import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { observable, Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { usersReducer } from 'src/app/store/reducers/users.reducer';
 
 @Component({
   selector: 'app-user',

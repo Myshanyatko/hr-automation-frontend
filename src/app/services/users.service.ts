@@ -1,8 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../staff/user';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 
 const API = 'http://localhost:8080/users';
 @Injectable({
@@ -19,22 +18,21 @@ export class UsersService {
     };
   }
   // запрос на получение списка юзеров
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(API).pipe(
-      tap((_) => console.log('fetched users')),
-      catchError(this.handleError<User[]>('getUsers', []))
-    );
+  // getUsers(): Observable<User[]> {
+  //   return this.http.get<User[]>(API).pipe(
+  //     tap((_) => console.log('fetched users')),
+  //     catchError(this.handleError<User[]>('getUsers', []))
+  //   );
+  // }
+  getUsers() {
+    const res = this.http.get(API + '?pageNumber=0&size=10&sortBy=id');
+    console.log(res);
+    return res;
   }
   // запрос на получение юзера по id
 
   public getAPIUser(id: number) {
-    return new Observable(() => {
-      this.http.get(API + '/' + id).subscribe({
-        next: (res: object) => this.setUser(res),
-        error: (err) => alert(err),
-      });
-      // return this.getUser()
-    });
+    return this.http.get(API + '/' + id);
   }
 
   // запрос на изменение пользователя

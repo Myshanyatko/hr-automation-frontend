@@ -1,20 +1,18 @@
+import { userInfo } from './../../models/userInfo';
 import { User } from '../../models/user';
-import { Action } from '@ngrx/store';
+import { Action, createAction, props } from '@ngrx/store';
 
-import { userInfo } from '../../models/userInfo';
-export enum EUsersActions {
-  GET_USERS = '[Users] Get Users',
-
-  ADD_NEW_USER = '[Users] Add One',
+export const getUsers = createAction('[Users Page] Get Users');
+// export const setUsers = createAction(
+//   '[Users Page] Set Users',
+//   props<{ userList: User[] }>()
+// );
+class setUsers implements Action {
+  readonly type = '[Users Page] Set Users';
+  constructor(public payload: User[]) { }
 }
-
-export class GetUsers implements Action {
-  public readonly type = EUsersActions.GET_USERS;
-  constructor(public payload: User[]) {}
-}
-// export class GetUser implements Action {
-//   public readonly type = EUsersActions.GET_USERS;
-//   constructor(public payload: User) {}
-// }
-
-export type UsersActions = GetUsers;
+export const setUsersError = createAction(
+  '[Users Page] Set Users Error',
+  props<{ userList: [{ id: 3; username: 'error'; post: 'error' }] }>()
+);
+export type userActions  = setUsers
