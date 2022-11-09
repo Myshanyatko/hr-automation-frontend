@@ -1,34 +1,26 @@
-import { map } from 'rxjs/operators';
-import { User } from './../../models/user';
-import { AppState } from './../state/app.state';
-import { Store, select } from '@ngrx/store';
-// import { getUsers, setUsers } from './../actions/users.actions';
-import { UsersService } from './../../services/users.service';
+import { getUser, userActions, getUsers } from './../actions/users.actions';
+import { EffectsUsersService } from './../../services/effects-users.service';
 import { Injectable } from '@angular/core';
-import { EMPTY, switchMap, of } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { mergeMap, catchError } from 'rxjs';
+import { exhaustMap, mergeMap } from 'rxjs';
 @Injectable()
 export class USersEffects {
   getUsers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType('[Users Page] Get Users'),
-      mergeMap(() =>
-        this.usersService.getUsers().pipe(
-          map((users) => ({
-            type: '[Users Page] Set Users',
-            payload: users,
-          })),
-          catchError(() => of({ type: '[Users Page] Set Users Error' }))
-        )
-      )
+      ofType(getUsers),
+      mergeMap(() => this.effectsService.getUsers())
+    )
+  );
+  getUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getUser),
+      exhaustMap((action) => this.effectsService.getUser(action.userId))
     )
   );
 
   constructor(
     private actions$: Actions,
-    private store: Store<AppState>,
-    private usersService: UsersService
+    private effectsService: EffectsUsersService
   ) {
     console.log('effect');
   }

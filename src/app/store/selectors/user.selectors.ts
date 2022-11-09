@@ -7,3 +7,7 @@ export const selectUserList = createSelector(
   selectUsers,
   (state: UserState) => state.users
 );
+export const selectUser = createSelector(
+  selectUsers,
+  (state: UserState) => state.selectedUser
+);

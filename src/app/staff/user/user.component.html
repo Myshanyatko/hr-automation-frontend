@@ -1,23 +1,15 @@
 <div class="tui-container">
   <div class="user-info-block">
     <div class="avatar-and-buttons-block">
-      <!-- <tui-avatar
+      <tui-avatar
         new
-        *ngIf="!user.photo"
         class="icon-user-avatar"
         [rounded]="false"
         text="avatar"
         size="xxl"
         avatarUrl="tuiIconUser"
       ></tui-avatar>
-      <tui-avatar
-        [rounded]="false"
-        class="icon-user-avatar"
-        *ngIf="user.photo"
-        text="avatar"
-        size="xxl"
-        avatarUrl="{{ user.photo }}"
-      ></tui-avatar> -->
+
       <ul class="user-buttons" *ngIf="!isEdit">
         <li>
           <button
@@ -72,7 +64,7 @@
     </div>
 
     <div *ngIf="!isEdit" class="user-info">
-      <h2 class="info-name">{{ user.username }}</h2>
+      <h2 class="info-name" *ngIf="user$">{{ user.username }}</h2>
       <div class="user-info-item-block" *ngIf="user.date">
         <p class="info-label">дата рождения</p>
         <p class="info-item">{{ user.date }}</p>

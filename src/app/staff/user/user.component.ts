@@ -1,3 +1,7 @@
+import { initialUserState } from './../../store/state/users.state';
+import { getUser } from './../../store/actions/users.actions';
+import { AppState } from './../../store/state/app.state';
+
 import { userInfo } from '../../models/userInfo';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -6,52 +10,36 @@ import { UsersService } from './../../services/users.service';
 import { Component, OnInit, Inject, SimpleChanges } from '@angular/core';
 import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { observable, Observable, Subscription } from 'rxjs';
+import { observable, Observable, Subscription, take } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
+import { selectUser } from '../../store/selectors/user.selectors';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  // user$: Observable<userInfo>;
-  user: userInfo = {
-    id: 1,
-    username: '',
-    date: '',
-    email: '',
-    post: '',
-    project: '',
-    photo: '',
-    information: '',
-    admin: false,
-  };
+  user$: Observable<userInfo>;
   public isEdit = false;
   id: number | undefined;
   private subscription: Subscription;
-
+  user: userInfo = initialUserState.selectedUser;
   constructor(
-    private route: ActivatedRoute,
-    private readonly dialogService: TuiDialogService,
     private http: Router,
+    private readonly dialogService: TuiDialogService,
+    private route: ActivatedRoute,
+    private store$: Store<AppState>,
     private userService: UsersService
   ) {
     this.subscription = route.params.subscribe(
       (params) => (this.id = params['id'])
     );
-  }
-  //оно здесь временно живет
-  getUser() {
-    this.userService.getAPIUser(Number(this.id)).subscribe({
-      next: (res: any) => (this.user = res),
-      error: (err) => alert(err.message),
-    });
-    this.user = this.userService.getUser();
+    this.user$ = this.store$.select(selectUser);
+    this.user$.subscribe((user) => (this.user = user));
   }
   ngOnInit() {
-    this.getUser();
+    this.store$.dispatch(getUser({ userId: Number(this.id) }));
   }
 
   editUser() {
@@ -61,7 +49,7 @@ export class UserComponent implements OnInit {
     this.dialogService.open(content).subscribe();
   }
   deleteUser() {
-    this.userService.deleteAPIUser(this.user.id);
+    this.userService.deleteAPIUser(Number(this.user$.pipe(take(1)).subscribe));
 
     this.http.navigate(['users']);
   }

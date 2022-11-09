@@ -31,7 +31,7 @@ export class UsersService {
   }
   // запрос на получение юзера по id
 
-  public getAPIUser(id: number) {
+  public getUser(id: number) {
     return this.http.get(API + '/' + id);
   }
 
@@ -78,9 +78,5 @@ export class UsersService {
   }
   setUser(user: object): void {
     localStorage.setItem('user', JSON.stringify(user));
-  }
-
-  getUser() {
-    return JSON.parse(localStorage.getItem('user') || '{}');
   }
 }
