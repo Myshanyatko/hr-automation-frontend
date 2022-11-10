@@ -1,8 +1,11 @@
+import { initialUserState } from './../../store/state/users.state';
+import { UserInfo } from './../../models/userInfo';
+import { addNewUser } from './../../store/actions/users.actions';
+import { AppState } from 'src/app/store/state/app.state';
+import { Store } from '@ngrx/store';
 import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UsersService } from './../../services/users.service';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -18,20 +21,10 @@ import {
 })
 export class NewUserComponent implements OnInit {
   createUserForm!: FormGroup;
-  user = {
-    id: 1,
-    date: null,
-    email: null,
-    name: null,
-    project: null,
-    post: null,
-    photo: null,
-    information: null,
-    admin: true,
-  };
+  user: UserInfo = initialUserState.selectedUser;
   constructor(
-    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
-    private userService: UsersService
+    private store$: Store<AppState>,
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +41,7 @@ export class NewUserComponent implements OnInit {
   saveUser(content: PolymorpheusContent<TuiDialogContext>) {
     this.user = {
       ...this.user,
-      name: this.createUserForm.value.name,
+      username: this.createUserForm.value.name,
       date: this.createUserForm.value.date,
       email: this.createUserForm.value.email,
       project: this.createUserForm.value.project,
@@ -56,8 +49,7 @@ export class NewUserComponent implements OnInit {
       admin: this.createUserForm.value.admin,
       information: this.createUserForm.value.admin,
     };
-    this.userService.postAPIUser(this.user);
-    console.log('new user is created');
+    this.store$.dispatch(addNewUser({ user: this.user }));
     this.dialogService.open(content).subscribe();
   }
 }

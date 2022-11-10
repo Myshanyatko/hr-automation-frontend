@@ -1,8 +1,11 @@
+import { editUser } from './../../store/actions/users.actions';
+import { Store } from '@ngrx/store';
 import { UserComponent } from './../user/user.component';
 import { UsersService } from './../../services/users.service';
-import { userInfo } from '../../models/userInfo';
+import { UserInfo } from '../../models/userInfo';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
   selector: 'app-edit-user',
@@ -11,7 +14,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditUserComponent implements OnInit {
   userForm!: FormGroup;
-  user: userInfo = {
+  user: UserInfo = {
     id: 1,
     username: '',
     date: '',
@@ -23,8 +26,8 @@ export class EditUserComponent implements OnInit {
     admin: false,
   };
   constructor(
-    private userComponent: UserComponent,
-    private userService: UsersService
+    private store$: Store<AppState>,
+    private userComponent: UserComponent
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +54,7 @@ export class EditUserComponent implements OnInit {
       admin: this.userForm.value.admin,
       information: this.userForm.value.information,
     };
-    this.userService.putAPIUser(this.user);
+    this.store$.dispatch(editUser({ user: this.user }));
     this.userComponent.isEdit = false;
   }
 }

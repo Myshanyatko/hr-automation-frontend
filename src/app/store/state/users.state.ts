@@ -1,8 +1,8 @@
-import { userInfo } from './../../models/userInfo';
+import { UserInfo } from './../../models/userInfo';
 import { User } from './../../models/user';
 export interface UserState {
   users: User[];
-  selectedUser: userInfo;
+  selectedUser: UserInfo;
 }
 
 export const initialUserState: UserState = {

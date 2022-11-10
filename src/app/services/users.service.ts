@@ -1,7 +1,7 @@
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, tap, map } from 'rxjs/operators';
+import { User } from '../models/user';
+import { UserInfo } from '../models/userInfo';
 
 const API = 'http://localhost:8080/users';
 @Injectable({
@@ -10,73 +10,48 @@ const API = 'http://localhost:8080/users';
 export class UsersService {
   constructor(private http: HttpClient) {}
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      console.log(`${operation} failed: ${error.message}`);
-      return of(result as T);
-    };
-  }
-  // запрос на получение списка юзеров
-  // getUsers(): Observable<User[]> {
-  //   return this.http.get<User[]>(API).pipe(
-  //     tap((_) => console.log('fetched users')),
-  //     catchError(this.handleError<User[]>('getUsers', []))
-  //   );
-  // }
+  // запрос на поучение списка юзеров
   getUsers() {
-    const res = this.http.get(API + '?pageNumber=0&size=10&sortBy=id');
-    console.log(res);
-    return res;
+    return this.http.get<User[]>(API, {
+      params: { pageNumber: 0, size: 10, sortBy: 'id' },
+    });
   }
   // запрос на получение юзера по id
 
-  public getUser(id: number) {
-    return this.http.get(API + '/' + id);
+  getUser(id: number) {
+    return this.http.get<UserInfo>(API + '/' + id);
   }
 
   // запрос на изменение пользователя
-  putAPIUser(user: any) {
-    this.http
-      .put(API, {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        role: user.admin,
-        project: user.project,
-        post: user.post,
-      })
-      // this.http.put('assets/user.json', user)
-      .subscribe({
-        error: (err) => alert(err.message),
-      });
-  }
-
-  // запрос на удаление сотрудника
-  deleteAPIUser(id: number) {
-    this.http.delete(API + '/' + id).subscribe({
-      error: (err) => alert(err.message),
+  putUser(user: UserInfo) {
+    return this.http.put(API, {
+      id: user.id,
+      email: user.email,
+      birthDate: user.date,
+      username: user.username,
+      role: user.admin,
+      project: user.project,
+      post: user.post,
+      about: user.information,
     });
   }
 
+  // запрос на удаление сотрудника
+  deleteUser(id: number) {
+    return this.http.delete(API + '/' + id);
+  }
+
   // запрос на добавление сотрудника
-  postAPIUser(user: any) {
-    this.http
-      .post(API, {
-        email: user.email,
-        username: user.name,
-        role: user.admin,
-        project: user.project,
-        post: user.post,
-      })
-      .subscribe({
-        error: (err) => alert(err.message),
-      });
-  }
-  setUsers(users: any): void {
-    localStorage.setItem('users', JSON.stringify(users));
-  }
-  setUser(user: object): void {
-    localStorage.setItem('user', JSON.stringify(user));
+  postUser(user: UserInfo) {
+    return this.http.post(API, {
+      id: user.id,
+      email: user.email,
+      birthDate: user.date,
+      username: user.username,
+      role: user.admin,
+      project: user.project,
+      post: user.post,
+      about: user.information,
+    });
   }
 }

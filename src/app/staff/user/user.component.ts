@@ -1,16 +1,12 @@
 import { initialUserState } from './../../store/state/users.state';
-import { getUser } from './../../store/actions/users.actions';
+import { getUser, deleteUser } from './../../store/actions/users.actions';
 import { AppState } from './../../store/state/app.state';
-
-import { userInfo } from '../../models/userInfo';
-import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UserInfo } from '../../models/userInfo';
 import { UsersService } from './../../services/users.service';
-import { Component, OnInit, Inject, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { observable, Observable, Subscription, take } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../../store/selectors/user.selectors';
@@ -20,11 +16,11 @@ import { selectUser } from '../../store/selectors/user.selectors';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  user$: Observable<userInfo>;
+  user$: Observable<UserInfo>;
   public isEdit = false;
   id: number | undefined;
   private subscription: Subscription;
-  user: userInfo = initialUserState.selectedUser;
+  user: UserInfo = initialUserState.selectedUser;
   constructor(
     private http: Router,
     private readonly dialogService: TuiDialogService,
@@ -49,7 +45,7 @@ export class UserComponent implements OnInit {
     this.dialogService.open(content).subscribe();
   }
   deleteUser() {
-    this.userService.deleteAPIUser(Number(this.user$.pipe(take(1)).subscribe));
+    this.store$.dispatch(deleteUser({ id: Number(this.id) }));
 
     this.http.navigate(['users']);
   }
