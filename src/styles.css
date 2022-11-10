@@ -12,6 +12,7 @@ h3 {
   margin: 0;
   padding: 0;
 }
+/* здесь попытки изменить элементы тайги */
 [data-appearance="custom"] {
   font-weight: 100;
   font-style: normal;
@@ -52,4 +53,7 @@ tui-toggle [tuiWrapper][data-appearance="primary"] {
 [data-appearance="menu"] .accent :hover {
   color: #000;
   background-color: #ff7043;
+}
+.error-message {
+  color: red;
 }

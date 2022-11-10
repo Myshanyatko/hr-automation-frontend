@@ -1,6 +1,6 @@
 import { UserInfo } from './../../models/userInfo';
 import { User } from '../../models/user';
-import { Action, createAction, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
 // список всех пользователей
 export const getUsers = createAction('[Users Page] Get Users');

@@ -5,17 +5,42 @@
         имя
         <input tuiTextfield type="text" />
       </tui-input>
+      <div
+        class="error-message"
+        *ngIf="
+          userForm.get('name')?.invalid &&
+          (userForm.get('name')?.dirty || userForm.get('name')?.touched)
+        "
+      >
+        <span *ngIf="userForm.get('name')?.errors?.['required']"
+          >Обязательное поле</span
+        >
+      </div>
       <tui-input formControlName="email" class="user-form-item">
         почта
         <input tuiTextfield type="email" />
       </tui-input>
+      <div
+        class="error-message"
+        *ngIf="
+          userForm.get('email')?.invalid &&
+          (userForm.get('email')?.dirty || userForm.get('email')?.touched)
+        "
+      >
+        <span *ngIf="userForm.get('email')?.errors?.['required']"
+          >Обязательное поле</span
+        >
+        <span *ngIf="userForm.get('email')?.errors?.['email']"
+          >Невалидное значение почты</span
+        >
+      </div>
       <tui-input formControlName="date" class="user-form-item">
         дата рождения
         <input tuiTextfield type="text" />
       </tui-input>
       <tui-input formControlName="project" class="user-form-item">
-        поект
-        <input tuiTextfield type="text" class="user-form-item" />
+        проект
+        <input tuiTextfield type="text" />
       </tui-input>
     </div>
     <div class="user-form-col2">

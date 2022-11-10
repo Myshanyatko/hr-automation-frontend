@@ -5,13 +5,8 @@ import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
 import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  Inject,
-} from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-new-user',
@@ -19,25 +14,26 @@ import {
   styleUrls: ['./new-user.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewUserComponent implements OnInit {
-  createUserForm!: FormGroup;
+export class NewUserComponent {
+  createUserForm: FormGroup;
   user: UserInfo = initialUserState.selectedUser;
+
   constructor(
     private store$: Store<AppState>,
-    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService
-  ) {}
-
-  ngOnInit(): void {
-    this.createUserForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      name: new FormControl('', [Validators.required]),
-      date: new FormControl(''),
-      project: new FormControl(''),
-      post: new FormControl(''),
-      information: new FormControl(''),
-      admin: new FormControl(false),
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    private fb: FormBuilder
+  ) {
+    this.createUserForm = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      date: [''],
+      project: [''],
+      post: [''],
+      information: [''],
+      admin: [false],
     });
   }
+
   saveUser(content: PolymorpheusContent<TuiDialogContext>) {
     this.user = {
       ...this.user,

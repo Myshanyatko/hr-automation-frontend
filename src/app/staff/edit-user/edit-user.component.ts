@@ -3,7 +3,12 @@ import { Store } from '@ngrx/store';
 import { UserComponent } from './../user/user.component';
 import { UsersService } from './../../services/users.service';
 import { UserInfo } from '../../models/userInfo';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from 'src/app/store/state/app.state';
 
@@ -26,20 +31,21 @@ export class EditUserComponent implements OnInit {
     admin: false,
   };
   constructor(
+    private fb: FormBuilder,
     private store$: Store<AppState>,
     private userComponent: UserComponent
   ) {}
 
   ngOnInit(): void {
     this.user = this.userComponent.user;
-    this.userForm = new FormGroup({
-      email: new FormControl(this.user.email, [Validators.email]),
-      name: new FormControl(this.user.username),
-      date: new FormControl(this.user.date),
-      project: new FormControl(this.user.project),
-      post: new FormControl(this.user.post),
-      information: new FormControl(this.user.information),
-      admin: new FormControl(this.user.admin),
+    this.userForm = this.fb.group({
+      email: [this.user.email, [Validators.email, Validators.required]],
+      name: [this.user.username, [Validators.required]],
+      date: [this.user.date],
+      project: [this.user.project],
+      post: [this.user.post],
+      information: [this.user.information],
+      admin: [this.user.admin],
     });
   }
   saveUser() {
