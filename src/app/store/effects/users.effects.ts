@@ -24,7 +24,10 @@ export class USersEffects {
       mergeMap(() =>
         this.usersService.getUsers().pipe(
           map((users) => setUsers({ userList: users })),
-          catchError(() => EMPTY)
+          catchError((err) => {
+            this.dialogService.showDialog(err.message).subscribe();
+            return EMPTY;
+          })
         )
       )
     )
@@ -35,7 +38,10 @@ export class USersEffects {
       exhaustMap((action) =>
         this.usersService.getUser(action.userId).pipe(
           map((user) => setUser({ user })),
-          catchError(() => EMPTY)
+          catchError((err) => {
+            this.dialogService.showDialog(err.message).subscribe();
+            return EMPTY;
+          })
         )
       )
     )
@@ -52,7 +58,10 @@ export class USersEffects {
             return setUser({ user: action.user });
           }),
 
-          catchError(() => EMPTY)
+          catchError((err) => {
+            this.dialogService.showDialog(err.message).subscribe();
+            return EMPTY;
+          })
         )
       )
     )
@@ -69,7 +78,10 @@ export class USersEffects {
             this.router.navigate(['users']);
             return addNewUserSuccess({ user: action.user });
           }),
-          catchError(() => EMPTY)
+          catchError((err) => {
+            this.dialogService.showDialog(err.message).subscribe();
+            return EMPTY;
+          })
         )
       )
     )
@@ -85,7 +97,10 @@ export class USersEffects {
             this.router.navigate(['users']);
             return deleteUserSuccess({ id: action.id });
           }),
-          catchError(() => EMPTY)
+          catchError((err) => {
+            this.dialogService.showDialog(err.message).subscribe();
+            return EMPTY;
+          })
         )
       )
     )
