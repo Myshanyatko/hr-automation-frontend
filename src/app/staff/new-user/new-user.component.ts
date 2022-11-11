@@ -46,6 +46,5 @@ export class NewUserComponent {
       information: this.createUserForm.value.admin,
     };
     this.store$.dispatch(addNewUser({ user: this.user }));
-    this.dialogService.open(content).subscribe();
   }
 }

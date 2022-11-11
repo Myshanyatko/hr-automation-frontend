@@ -29,7 +29,7 @@
             type="button"
             size="m"
             appearance="accent"
-            (click)="showDialogDelete(template)"
+            (click)="deleteUser(user)"
           >
             Удалить
           </button>
@@ -54,7 +54,6 @@
             type="button"
             size="m"
             (click)="deleteUser(user)"
-            (click)="observer.complete()"
             class="tui-space_right-3"
           >
             Удалить

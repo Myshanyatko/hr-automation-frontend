@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { DialogService } from './../../services/dialog.service';
 import { UsersService } from './../../services/users.service';
 import { map } from 'rxjs/operators';
 import {
@@ -42,9 +44,14 @@ export class USersEffects {
   editUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(editUser),
-      exhaustMap((action) =>
+
+      mergeMap((action) =>
         this.usersService.putUser(action.user).pipe(
-          map(() => setUser({ user: action.user })),
+          map(() => {
+            this.dialogService.showDialog('Изменения сохранены').subscribe();
+            return setUser({ user: action.user });
+          }),
+
           catchError(() => EMPTY)
         )
       )
@@ -55,7 +62,13 @@ export class USersEffects {
       ofType(addNewUser),
       exhaustMap((action) =>
         this.usersService.postUser(action.user).pipe(
-          map(() => addNewUserSuccess({ user: action.user })),
+          map(() => {
+            this.dialogService
+              .showDialog('Новый сотрудник добавлен')
+              .subscribe();
+            this.router.navigate(['users']);
+            return addNewUserSuccess({ user: action.user });
+          }),
           catchError(() => EMPTY)
         )
       )
@@ -67,11 +80,20 @@ export class USersEffects {
       ofType(deleteUser),
       exhaustMap((action) =>
         this.usersService.deleteUser(action.id).pipe(
-          map(() => deleteUserSuccess({ id: action.id })),
+          map(() => {
+            this.dialogService.showDialog('Сотрудник удален').subscribe();
+            this.router.navigate(['users']);
+            return deleteUserSuccess({ id: action.id });
+          }),
           catchError(() => EMPTY)
         )
       )
     )
   );
-  constructor(private actions$: Actions, private usersService: UsersService) {}
+  constructor(
+    private actions$: Actions,
+    private dialogService: DialogService,
+    private router: Router,
+    private usersService: UsersService
+  ) {}
 }

@@ -1,3 +1,4 @@
+import { DialogService } from './../../services/dialog.service';
 import { initialUserState } from './../../store/state/users.state';
 import {
   getUser,
@@ -27,11 +28,9 @@ export class UserComponent implements OnInit {
   public isEdit = false;
 
   constructor(
-    private router: Router,
-    private readonly dialogService: TuiDialogService,
     private destroy$: TuiDestroyService,
-    private route: ActivatedRoute,
-    private store$: Store<AppState>
+    private store$: Store<AppState>,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -49,13 +48,8 @@ export class UserComponent implements OnInit {
     this.isEdit = true;
   }
 
-  showDialogDelete(content: PolymorpheusContent<TuiDialogContext>): void {
-    this.dialogService.open(content).subscribe();
-  }
-
   deleteUser(user: UserInfo) {
     this.store$.dispatch(deleteUser({ id: user.id }));
-    this.router.navigate(['users']);
   }
   saveUser(user: UserInfo) {
     this.store$.dispatch(editUser({ user: user }));
