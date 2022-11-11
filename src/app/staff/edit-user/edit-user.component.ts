@@ -9,7 +9,7 @@ import {
   Validators,
   FormBuilder,
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
@@ -18,40 +18,33 @@ import { AppState } from 'src/app/store/state/app.state';
   styleUrls: ['./edit-user.component.css'],
 })
 export class EditUserComponent implements OnInit {
+  @Input()
+  user: UserInfo | null = null;
+
+  @Output()
+  userEdited = new EventEmitter<UserInfo>();
+
   userForm!: FormGroup;
-  user: UserInfo = {
-    id: 1,
-    username: '',
-    date: '',
-    email: '',
-    post: '',
-    project: '',
-    photo: '',
-    information: '',
-    admin: false,
-  };
-  constructor(
-    private fb: FormBuilder,
-    private store$: Store<AppState>,
-    private userComponent: UserComponent
-  ) {}
+
+  constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.user = this.userComponent.user;
     this.userForm = this.fb.group({
-      email: [this.user.email, [Validators.email, Validators.required]],
-      name: [this.user.username, [Validators.required]],
-      date: [this.user.date],
-      project: [this.user.project],
-      post: [this.user.post],
-      information: [this.user.information],
-      admin: [this.user.admin],
+      email: [this.user?.email, [Validators.email, Validators.required]],
+      name: [this.user?.username, [Validators.required]],
+      date: [this.user?.date],
+      project: [this.user?.project],
+      post: [this.user?.post],
+      information: [this.user?.information],
+      admin: [this.user?.admin],
     });
   }
   saveUser() {
-    this.user = {
+    if (this.user == null) {
+      return;
+    }
+    const user = {
       ...this.user,
-      id: this.user.id,
       username: this.userForm.value.name,
       date: this.userForm.value.date,
       email: this.userForm.value.email,
@@ -60,7 +53,7 @@ export class EditUserComponent implements OnInit {
       admin: this.userForm.value.admin,
       information: this.userForm.value.information,
     };
-    this.store$.dispatch(editUser({ user: this.user }));
-    this.userComponent.isEdit = false;
+
+    this.userEdited.emit(user);
   }
 }

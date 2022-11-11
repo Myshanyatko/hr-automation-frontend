@@ -45,6 +45,7 @@ import { StoreModule } from '@ngrx/store';
 import { userReducer } from './store/reducers/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { TuiLetContext, TuiLetModule } from '@taiga-ui/cdk';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,6 +82,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     TuiArrowModule,
     TuiHostedDropdownModule,
     TuiDropdownModule,
+    TuiLetModule,
     StoreModule.forRoot(appReducers),
     // StoreModule.forFeature('[Users Page] Get Users', usersReducer),
     EffectsModule.forRoot([USersEffects]),
