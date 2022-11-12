@@ -1,3 +1,4 @@
+import { FaqEffects } from './store/effects/faq.effects';
 import { environment } from './../environments/environment';
 import { appReducers } from './store/reducers/app.reducers';
 import { USersEffects } from './store/effects/users.effects';
@@ -14,6 +15,7 @@ import {
   TuiHostedDropdownModule,
   TuiDropdownModule,
   TuiNotificationModule,
+  TuiTextfieldControllerModule,
 } from '@taiga-ui/core';
 import {
   TuiInputModule,
@@ -24,6 +26,8 @@ import {
   TuiAvatarModule,
   TuiFieldErrorPipeModule,
   TuiArrowModule,
+  TuiSelectModule,
+  TuiDataListWrapperModule,
 } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -46,6 +50,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TuiLetModule } from '@taiga-ui/cdk';
+import { FaqNewComponent } from './faq/faq-new/faq-new.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +62,7 @@ import { TuiLetModule } from '@taiga-ui/cdk';
     HeaderComponent,
     MenuComponent,
     EditUserComponent,
+    FaqNewComponent,
   ],
   imports: [
     FormsModule,
@@ -84,8 +90,11 @@ import { TuiLetModule } from '@taiga-ui/cdk';
     TuiDropdownModule,
     TuiLetModule,
     TuiNotificationModule,
+    TuiSelectModule,
+    TuiTextfieldControllerModule,
+    TuiDataListWrapperModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([USersEffects]),
+    EffectsModule.forRoot([USersEffects, FaqEffects]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,
       autoPause: true,

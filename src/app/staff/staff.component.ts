@@ -26,8 +26,4 @@ export class StaffComponent implements OnInit {
   ngOnInit(): void {
     this.store$.dispatch(getUsers());
   }
-
-  showD() {
-    this.dialogService.showDialog('aaaaaaaaaa');
-  }
 }

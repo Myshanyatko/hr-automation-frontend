@@ -1,3 +1,4 @@
+import { FaqNewComponent } from './faq/faq-new/faq-new.component';
 import { NewUserComponent } from './staff/new-user/new-user.component';
 import { UserComponent } from './staff/user/user.component';
 import { StaffComponent } from './staff/staff.component';
@@ -15,7 +16,7 @@ const routes: Routes = [
   { path: 'key', canActivate: [KeyGuard], component: KeyComponent },
   { path: '', redirectTo: 'users', pathMatch: 'full' },
   { path: 'restorans', redirectTo: 'users', pathMatch: 'full' },
-  { path: 'faq', redirectTo: 'users', pathMatch: 'full' },
+  { path: 'faq', component: FaqNewComponent, canActivate: [AuthGuard] },
   { path: 'products', redirectTo: 'users', pathMatch: 'full' },
   { path: 'new-user', component: NewUserComponent, canActivate: [AuthGuard] },
 ];

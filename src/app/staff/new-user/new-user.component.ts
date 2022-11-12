@@ -18,11 +18,7 @@ export class NewUserComponent {
   createUserForm: FormGroup;
   user: UserInfo = initialUserState.selectedUser;
 
-  constructor(
-    private store$: Store<AppState>,
-    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
-    private fb: FormBuilder
-  ) {
+  constructor(private store$: Store<AppState>, private fb: FormBuilder) {
     this.createUserForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
