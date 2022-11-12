@@ -3,7 +3,7 @@ import { Faq } from './../models/faq';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-const API = 'https://localhost:8080/faq';
+const API = 'http://localhost:8080/faq';
 
 @Injectable({
   providedIn: 'root',
