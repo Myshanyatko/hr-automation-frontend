@@ -1,4 +1,7 @@
+import { Faq } from './faq';
+
 export interface Category {
   id: number;
-  category: string;
+  name: string;
+  questions: Faq[];
 }

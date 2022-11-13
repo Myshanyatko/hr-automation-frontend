@@ -1,3 +1,5 @@
+import { NewCategoryComponent } from './faq/new-category/new-category.component';
+import { FaqListComponent } from './faq/faq-list/faq-list.component';
 import { FaqNewComponent } from './faq/faq-new/faq-new.component';
 import { NewUserComponent } from './staff/new-user/new-user.component';
 import { UserComponent } from './staff/user/user.component';
@@ -17,8 +19,14 @@ const routes: Routes = [
   { path: '', redirectTo: 'users', pathMatch: 'full' },
   { path: 'restorans', redirectTo: 'users', pathMatch: 'full' },
   { path: 'faq', component: FaqNewComponent, canActivate: [AuthGuard] },
+  { path: 'faq-list', component: FaqListComponent, canActivate: [AuthGuard] },
   { path: 'products', redirectTo: 'users', pathMatch: 'full' },
   { path: 'new-user', component: NewUserComponent, canActivate: [AuthGuard] },
+  {
+    path: 'new-category',
+    component: NewCategoryComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

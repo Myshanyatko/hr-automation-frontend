@@ -1,5 +1,14 @@
 import { FaqService } from './../../services/faq.service';
-import { addNewFaq, getFaq, setFaq } from './../actions/faq.actions';
+import {
+  addNewFaq,
+  getFaq,
+  setFaq,
+  getCategories,
+  setCategories,
+  addNewCategory,
+  addNewCategorySuccess,
+  addNewFaqSuccess,
+} from './../actions/faq.actions';
 import { Router } from '@angular/router';
 import { DialogService } from './../../services/dialog.service';
 import { map } from 'rxjs/operators';
@@ -22,6 +31,20 @@ export class FaqEffects {
       )
     )
   );
+  getCategories$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getCategories),
+      mergeMap(() =>
+        this.faqService.getCategories().pipe(
+          map((category) => setCategories({ categories: category })),
+          catchError((err) => {
+            this.dialogService.showDialog(err.message).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
 
   AddNewFaq$ = createEffect(() =>
     this.actions$.pipe(
@@ -30,8 +53,29 @@ export class FaqEffects {
         this.faqService.postFaq(action.faq).pipe(
           map(() => {
             this.dialogService.showDialog('Новый вопрос добавлен').subscribe();
+            this.router.navigate(['faq-list']);
+            return addNewFaqSuccess({ faq: action.faq });
+          }),
+          catchError((err) => {
+            this.dialogService.showDialog(err.message).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  AddNewCategory$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addNewCategory),
+      exhaustMap((action) =>
+        this.faqService.postCategory(action.name).pipe(
+          map(() => {
+            this.dialogService
+              .showDialog('Новая категория добавлена')
+              .subscribe();
+
             this.router.navigate(['faq']);
-            return addNewFaq({ faq: action.faq });
+            return addNewCategorySuccess({ name: action.name });
           }),
           catchError((err) => {
             this.dialogService.showDialog(err.message).subscribe();

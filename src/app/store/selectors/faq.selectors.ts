@@ -7,3 +7,14 @@ export const selectFaqList = createSelector(
   selectFaq,
   (state: FaqState) => state.faqList
 );
+export const selectCategories = createSelector(
+  selectFaq,
+  (state: FaqState) => state.categories
+);
+export const selectCategoriesName = createSelector(
+  selectFaq,
+  (state: FaqState) => state.categories.map((category) => category.name)
+);
+export const selectCategoriesId = createSelector(selectFaq, (state: FaqState) =>
+  state.categories.map((category) => category.id)
+);

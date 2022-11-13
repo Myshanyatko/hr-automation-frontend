@@ -51,6 +51,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TuiLetModule } from '@taiga-ui/cdk';
 import { FaqNewComponent } from './faq/faq-new/faq-new.component';
+import { FaqListComponent } from './faq/faq-list/faq-list.component';
+import { NewCategoryComponent } from './faq/new-category/new-category.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +65,8 @@ import { FaqNewComponent } from './faq/faq-new/faq-new.component';
     MenuComponent,
     EditUserComponent,
     FaqNewComponent,
+    FaqListComponent,
+    NewCategoryComponent,
   ],
   imports: [
     FormsModule,

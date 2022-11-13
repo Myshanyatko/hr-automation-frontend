@@ -1,0 +1,12 @@
+<div class="tui-container">
+  <h2 class="title-faq">FAQ</h2>
+  <div class="category-block" *ngFor="let category of categories$ | async">
+    <div class="category-block-for-if" *ngIf="category.questions != []">
+      <h3 class="category">{{ category.name }}</h3>
+      <div class="questions-block" *ngFor="let question of category.questions">
+        <h4>{{ question.title }}</h4>
+        <p>{{ question.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>
