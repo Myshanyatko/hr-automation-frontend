@@ -1,3 +1,4 @@
+import { AlertService } from './../../services/alert.service';
 import { Router } from '@angular/router';
 import { DialogService } from './../../services/dialog.service';
 import { UsersService } from './../../services/users.service';
@@ -54,12 +55,14 @@ export class USersEffects {
       mergeMap((action) =>
         this.usersService.putUser(action.user).pipe(
           map(() => {
-            this.dialogService.showDialog('Изменения сохранены').subscribe();
+            this.alert
+              .showNotificationSuccess('Изменения сохранены')
+              .subscribe();
             return setUser({ user: action.user });
           }),
 
           catchError((err) => {
-            this.dialogService.showDialog(err.message).subscribe();
+            this.alert.showNotificationError(err.message).subscribe();
             return EMPTY;
           })
         )
@@ -72,14 +75,14 @@ export class USersEffects {
       exhaustMap((action) =>
         this.usersService.postUser(action.user).pipe(
           map(() => {
-            this.dialogService
-              .showDialog('Новый сотрудник добавлен')
+            this.alert
+              .showNotificationSuccess('Новый сотрудник добавлен')
               .subscribe();
             this.router.navigate(['users']);
             return addNewUserSuccess({ user: action.user });
           }),
           catchError((err) => {
-            this.dialogService.showDialog(err.message).subscribe();
+            this.alert.showNotificationError(err.message).subscribe();
             return EMPTY;
           })
         )
@@ -93,12 +96,12 @@ export class USersEffects {
       exhaustMap((action) =>
         this.usersService.deleteUser(action.id).pipe(
           map(() => {
-            this.dialogService.showDialog('Сотрудник удален').subscribe();
+            this.alert.showNotificationSuccess('Сотрудник удален').subscribe();
             this.router.navigate(['users']);
             return deleteUserSuccess({ id: action.id });
           }),
           catchError((err) => {
-            this.dialogService.showDialog(err.message).subscribe();
+            this.alert.showNotificationError(err.message).subscribe();
             return EMPTY;
           })
         )
@@ -108,6 +111,7 @@ export class USersEffects {
   constructor(
     private actions$: Actions,
     private dialogService: DialogService,
+    private alert: AlertService,
     private router: Router,
     private usersService: UsersService
   ) {}

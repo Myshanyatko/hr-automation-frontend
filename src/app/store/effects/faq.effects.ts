@@ -1,3 +1,4 @@
+import { AlertService } from './../../services/alert.service';
 import { FaqService } from './../../services/faq.service';
 import {
   addNewFaq,
@@ -24,7 +25,7 @@ export class FaqEffects {
         this.faqService.getFaqList().pipe(
           map((faqList) => setFaq({ faqList: faqList })),
           catchError((err) => {
-            this.dialogService.showDialog(err.message).subscribe();
+            this.alert.showNotificationError(err.message).subscribe();
             return EMPTY;
           })
         )
@@ -38,7 +39,7 @@ export class FaqEffects {
         this.faqService.getCategories().pipe(
           map((category) => setCategories({ categories: category })),
           catchError((err) => {
-            this.dialogService.showDialog(err.message).subscribe();
+            this.alert.showNotificationError(err.message).subscribe();
             return EMPTY;
           })
         )
@@ -52,12 +53,12 @@ export class FaqEffects {
       exhaustMap((action) =>
         this.faqService.postFaq(action.faq).pipe(
           map(() => {
-            this.dialogService.showDialog('Новый вопрос добавлен').subscribe();
+            this.alert.showNotificationSuccess('Ответ добавлен').subscribe();
             this.router.navigate(['faq-list']);
             return addNewFaqSuccess({ faq: action.faq });
           }),
           catchError((err) => {
-            this.dialogService.showDialog(err.message).subscribe();
+            this.alert.showNotificationError(err.message).subscribe();
             return EMPTY;
           })
         )
@@ -70,15 +71,15 @@ export class FaqEffects {
       exhaustMap((action) =>
         this.faqService.postCategory(action.name).pipe(
           map(() => {
-            this.dialogService
-              .showDialog('Новая категория добавлена')
+            this.alert
+              .showNotificationSuccess('Новая категория добавлена')
               .subscribe();
 
             this.router.navigate(['faq']);
             return addNewCategorySuccess({ name: action.name });
           }),
           catchError((err) => {
-            this.dialogService.showDialog(err.message).subscribe();
+            this.alert.showNotificationError(err.message).subscribe();
             return EMPTY;
           })
         )
@@ -87,8 +88,8 @@ export class FaqEffects {
   );
   constructor(
     private actions$: Actions,
-    private dialogService: DialogService,
     private router: Router,
-    private faqService: FaqService
+    private faqService: FaqService,
+    private alert: AlertService
   ) {}
 }
