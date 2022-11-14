@@ -7,10 +7,19 @@
   width: 500px;
 }
 .save-category-button,
+.back-category-button,
 .category-form-item,
 .category-form {
   margin-top: 20px;
+  display: block;
 }
 .title-new-category {
   margin: 10px 0 34px 0;
+}
+
+.category-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 70px;
+  grid-gap: 20px;
 }

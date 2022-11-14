@@ -1,20 +1,24 @@
 .tui-container {
-  background-color: #fff;
   margin: 35px 0;
+  width: 500px;
+}
+.search-and-new-faq-block {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: 500px;
+  grid-gap: 10px;
+}
+.category-block {
+  margin-top: 15px;
+  background-color: #fff;
   border-radius: var(--tui-radius-l);
   box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
   padding: 20px;
-  width: 500px;
 }
-.title-faq {
-  margin: 0 0 20px 10px;
+.new-faq-button {
+  width: 100%;
+  font: var(--tui-font-text-m);
 }
-.category {
-  color: #fff;
-  background-color: #ff7043;
-  padding: 10px 10px;
-  border-radius: var(--tui-radius-l);
-}
-.questions-block {
-  margin: 20px 15px;
+.question-block {
+  margin-bottom: 15px;
 }

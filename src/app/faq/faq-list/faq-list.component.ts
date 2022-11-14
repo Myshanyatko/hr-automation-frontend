@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqListComponent implements OnInit {
   categories$ = this.store$.select(selectCategories);
+  search = '';
   constructor(private store$: Store<AppState>) {}
 
   ngOnInit(): void {

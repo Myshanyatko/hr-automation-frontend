@@ -1,12 +1,48 @@
 <div class="tui-container">
-  <h2 class="title-faq">FAQ</h2>
-  <div class="category-block" *ngFor="let category of categories$ | async">
-    <div class="category-block-for-if" *ngIf="category.questions != []">
-      <h3 class="category">{{ category.name }}</h3>
-      <div class="questions-block" *ngFor="let question of category.questions">
-        <h4>{{ question.title }}</h4>
-        <p>{{ question.description }}</p>
-      </div>
+  <div class="search-and-new-faq-block">
+    <div class="search-faq-block">
+      <tui-input
+        tuiTextfieldIconLeft="tuiIconSearchLarge"
+        class="search-faq"
+        [(ngModel)]="search"
+      >
+        Поиск
+      </tui-input>
     </div>
+    <div class="new-faq-block">
+      <button
+        tuiButton
+        type="button"
+        appearance="accent"
+        class="new-faq-button"
+        [routerLink]="['/faq']"
+      >
+        Создать
+      </button>
+    </div>
+  </div>
+  <div class="category-block">
+    <tui-accordion
+      [closeOthers]="false"
+      *ngFor="let category of categories$ | async"
+    >
+      <tui-accordion-item
+        *ngIf="category.questions.length != 0"
+        class="category-item"
+      >
+        {{ category.name }}
+
+        <ng-template tuiAccordionItemContent>
+          <div
+            class="question-block"
+            *ngFor="let question of category.questions"
+          >
+            <h4>{{ question.title }}</h4>
+            <p>{{ question.description }}</p>
+          </div>
+        </ng-template>
+        <ng-template tuiAccordionItemContent> </ng-template>
+      </tui-accordion-item>
+    </tui-accordion>
   </div>
 </div>
