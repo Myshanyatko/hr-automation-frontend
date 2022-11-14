@@ -1,0 +1,56 @@
+.tui-container {
+  margin: 35px 0;
+}
+.search-and-new-user-block {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: 500px;
+  grid-gap: 10px;
+}
+
+.new-user-block {
+  overflow: hidden;
+}
+.new-user-button {
+  width: 100%;
+  font: var(--tui-font-text-m);
+  background-color: #ff7043;
+  color: #fff;
+}
+.staff-list-block {
+  overflow: hidden;
+  display: block;
+  background-color: #fff;
+  border-radius: var(--tui-radius-l);
+  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+  margin: 15px 0;
+  width: 500px;
+}
+.staff-list {
+  list-style-type: none;
+  width: 100%;
+  padding: 0;
+}
+
+.staff-list-button {
+  text-align: left;
+  margin: 20px 0;
+}
+.icon-user-avatar {
+  --tui-avatar-color: #ff7043;
+  --tui-avatar-background: #f2f2f2;
+}
+
+.staff-user-name,
+.staff-user-post {
+  margin-left: 15px;
+  text-align: left;
+}
+
+.staff-user-name {
+  font: var(--tui-font-text-m);
+  font-weight: bold;
+}
+.staff-user-post {
+  color: #a6a2a2;
+}

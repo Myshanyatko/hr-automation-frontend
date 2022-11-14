@@ -1,0 +1,32 @@
+<div class="tui-container">
+  <h2 class="title-new-category">Новая категория</h2>
+  <form
+    class="category-form"
+    [formGroup]="categoryForm"
+    (ngSubmit)="saveCategory()"
+  >
+    <tui-input
+      formControlName="name"
+      class="category-form-item"
+      required
+      id="name"
+    >
+      Название категории
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <div
+      class="error-message"
+      *ngIf="
+        categoryForm.get('name')?.invalid &&
+        (categoryForm.get('name')?.dirty || categoryForm.get('name')?.touched)
+      "
+    >
+      <span *ngIf="categoryForm.get('name')?.errors?.['required']"
+        >Обязательное поле</span
+      >
+    </div>
+    <button tuiButton size="m" appearance="accent" class="save-category-button">
+      Сохранить
+    </button>
+  </form>
+</div>

@@ -1,0 +1,98 @@
+<div *ngIf="user$ | async as user" class="tui-container">
+  <div class="user-info-block">
+    <div class="avatar-and-buttons-block">
+      <tui-avatar
+        new
+        class="icon-user-avatar"
+        [rounded]="false"
+        text="avatar"
+        size="xxl"
+        avatarUrl="tuiIconUser"
+      ></tui-avatar>
+
+      <ul class="user-buttons" *ngIf="!isEdit">
+        <li>
+          <button
+            class="user-edit-button"
+            tuiButton
+            size="m"
+            appearance="second"
+            (click)="editUser()"
+          >
+            Изменить
+          </button>
+        </li>
+        <li>
+          <button
+            tuiButton
+            class="user-delete-button"
+            type="button"
+            size="m"
+            appearance="accent"
+            (click)="deleteUser(user)"
+          >
+            Удалить
+          </button>
+        </li>
+      </ul>
+      <ng-template #template let-observer class="dialog-delete-users">
+        <h4>Вы точно хотите удалить сотрудника?</h4>
+        <div class="dialog-buttons-block">
+          <button
+            tuiButton
+            class="dialog-button"
+            appearance="second"
+            size="m"
+            (click)="observer.complete()"
+          >
+            Отмена
+          </button>
+          <button
+            class="dialog-button"
+            appearance="accent"
+            tuiButton
+            type="button"
+            size="m"
+            (click)="deleteUser(user)"
+            class="tui-space_right-3"
+          >
+            Удалить
+          </button>
+        </div>
+      </ng-template>
+    </div>
+
+    <div *ngIf="!isEdit" class="user-info">
+      <h2 class="info-name">{{ user.username }}</h2>
+      <div class="user-info-item-block" *ngIf="user.date">
+        <p class="info-label">дата рождения</p>
+        <p class="info-item">{{ user.date }}</p>
+      </div>
+      <div class="user-info-item-block">
+        <p class="info-label">почта</p>
+        <p class="info-item">{{ user.email }}</p>
+      </div>
+      <div class="user-info-item-block" *ngIf="user.project">
+        <p class="info-label">проект</p>
+        <p class="info-item">{{ user.project }}</p>
+      </div>
+      <div class="user-info-item-block" *ngIf="user.post">
+        <p class="info-label">должность</p>
+        <p class="info-item">{{ user.post }}</p>
+      </div>
+      <div class="user-info-item-block" *ngIf="user.information">
+        <p class="info-label">информация</p>
+        <p class="info-item">{{ user.information }}</p>
+      </div>
+      <div class="user-info-item-block">
+        <p class="info-label">роль</p>
+        <p class="info-item">{{ user.admin ? "Админ" : "Сотрудник" }}</p>
+      </div>
+    </div>
+    <app-edit-user
+      *ngIf="isEdit"
+      [user]="user"
+      (userEdited)="saveUser($event)"
+    ></app-edit-user>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+.new-user-block {
+  margin: 35px 0;
+  background-color: #fff;
+  border-radius: var(--tui-radius-l);
+  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+  padding: 20px;
+  width: 600px;
+}
+.user-form-block {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+.user-form-item {
+  margin-top: 15px;
+}
+.save-user-button {
+  margin-top: 23px;
+}

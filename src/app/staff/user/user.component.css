@@ -1,0 +1,53 @@
+.tui-container {
+  background-color: #fff;
+  margin: 35px 0;
+  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+  border-radius: var(--tui-radius-l);
+  width: 700px;
+}
+.user-info-block {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 20px;
+}
+.avatar-and-buttons-block {
+  padding: 38px;
+}
+.user-info {
+  padding: 38px 20px 20px 0;
+}
+.icon-user-avatar {
+  --tui-avatar-color: #ff7043;
+  --tui-avatar-background: #f2f2f2;
+}
+
+.user-buttons {
+  list-style-type: none;
+  padding: 0;
+}
+
+.user-edit-button,
+.user-delete-button {
+  margin-bottom: 10px;
+  width: 144px;
+}
+.info-name,
+.user-info-item-block {
+  margin-bottom: 10px;
+}
+
+.info-label {
+  color: #a6a2a2;
+}
+.info-item {
+  font-size: 15px;
+}
+.dialog-buttons-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 50px;
+}
+.dialog-delete-users {
+  text-align: center;
+  justify-content: center;
+}

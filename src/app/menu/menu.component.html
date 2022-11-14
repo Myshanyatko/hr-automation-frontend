@@ -1,0 +1,19 @@
+<div class="menu-block">
+  <div class="tui-container">
+    <ul class="menu">
+      <li class="menu-item" *ngFor="let item of menuItems">
+        <button
+          size="l"
+          tuiButton
+          routerLink="{{ item.url }}"
+          appearance="menu"
+          class="menu-item-button"
+          routerLinkActive="accent"
+          [pseudoActive]="true"
+        >
+          {{ item.name }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

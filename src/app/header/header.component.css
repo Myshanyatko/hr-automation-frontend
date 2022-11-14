@@ -1,0 +1,51 @@
+.header {
+  display: grid;
+  grid-template-columns: 5fr 3fr;
+  padding: 5px 72px;
+  border-bottom: 1px solid #9b9b9b;
+  align-items: center;
+  min-height: 60px;
+  font: var(--tui-font-text-l);
+  font-weight: 100;
+}
+.header-title-circle {
+  display: inline-block;
+  align-items: center;
+  width: 12px;
+  height: 12px;
+  background: #ff7043;
+  border-radius: 50px;
+  margin-right: 3px;
+}
+.header-title {
+  text-decoration: none;
+  color: #292929;
+  font-size: 16px;
+}
+
+.header-menu {
+  text-align: right;
+}
+.header-menu-button {
+  font: var(--tui-font-text-l);
+  font-weight: 100;
+  color: #292929;
+  font-size: 16px;
+  font-style: normal;
+  padding: var(--tui-padding-l);
+  margin: 13px 0;
+}
+
+.icon {
+  transition: transform;
+}
+.icon_rotated {
+  transform: rotate(180deg);
+}
+.menu-dropdown {
+  color: #292929;
+  background-color: #f2f2f2;
+}
+.menu-dropdown-item {
+  color: #292929;
+}

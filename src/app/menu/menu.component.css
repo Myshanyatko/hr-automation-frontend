@@ -1,0 +1,24 @@
+.menu-block {
+  overflow: hidden;
+  display: block;
+  margin: 35px 20px 0 0;
+  background-color: #fff;
+  border-radius: var(--tui-radius-l);
+  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+}
+.menu {
+  padding: 0;
+  margin: 0;
+}
+.menu-item {
+  list-style-type: none;
+}
+.menu-item-button {
+  display: flex;
+  width: 100%;
+  border-radius: 0;
+}
+.accent {
+  background-color: #ff7043;
+  color: #fff;
+}

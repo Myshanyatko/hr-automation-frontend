@@ -1,1 +1,60 @@
-/* You can add global styles to this file, and also import other style files */
+body,
+html,
+button,
+a {
+  background-color: #f2f2f2;
+  color: #292929;
+}
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  padding: 0;
+}
+/* здесь попытки изменить элементы тайги */
+[data-appearance="custom"] {
+  font-weight: 100;
+  font-style: normal;
+  padding: var(--tui-padding-l);
+}
+[data-appearance="menu"] {
+  font-weight: 100;
+  font-style: normal;
+  text-align: left;
+  justify-content: start;
+  padding: var(--tui-padding-l);
+}
+[data-appearance="menu"] :hover {
+  background-color: #f5f5f5;
+  transition: var(--tui-focus);
+  color: #1b1f3b;
+}
+[data-appearance="second"] {
+  padding: var(--tui-padding-s);
+  background-color: #f2f2f2;
+}
+[data-appearance="second"] :hover {
+  background-color: #e8e8e8;
+  transition: var(--tui-focus);
+}
+[data-appearance="custom"] :hover {
+  color: #ff7043;
+}
+[tuiWrapper][data-appearance="textfield"]._focused._focused {
+  box-shadow: none;
+  --tui-focus: #ff7043;
+}
+tui-toggle [tuiWrapper][data-appearance="primary"] {
+  background: #ff7043;
+  color: var(--tui-primary-text);
+}
+/* оно не работает (((( */
+[data-appearance="menu"] .accent :hover {
+  color: #000;
+  background-color: #ff7043;
+}
+.error-message {
+  color: red;
+}
