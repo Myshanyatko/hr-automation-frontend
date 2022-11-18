@@ -9,6 +9,8 @@ import {
   addNewCategory,
   addNewCategorySuccess,
   addNewFaqSuccess,
+  deleteFaq,
+  deleteFaqSuccess,
 } from './../actions/faq.actions';
 import { Router } from '@angular/router';
 import { DialogService } from './../../services/dialog.service';
@@ -77,6 +79,27 @@ export class FaqEffects {
 
             this.router.navigate(['faq']);
             return addNewCategorySuccess({ name: action.name });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.message).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  deleteFaq$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteFaq),
+      exhaustMap((action) =>
+        this.faqService.deleteFaq(action.faqId).pipe(
+          map(() => {
+            this.alert.showNotificationSuccess('Ответ удален').subscribe();
+
+            return deleteFaqSuccess({
+              faqId: action.faqId,
+              categoryId: action.categoryId,
+            });
           }),
           catchError((err) => {
             this.alert.showNotificationError(err.message).subscribe();

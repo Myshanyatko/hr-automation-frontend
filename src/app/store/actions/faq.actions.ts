@@ -21,7 +21,7 @@ export const addNewFaq = createAction(
   props<{ faq: Faq }>()
 );
 export const addNewFaqSuccess = createAction(
-  '[Faq Page] Add New Faq Succes',
+  '[Faq Page] Add New Faq Success',
   props<{ faq: Faq }>()
 );
 //добавить новую категорию
@@ -30,6 +30,15 @@ export const addNewCategory = createAction(
   props<{ name: string }>()
 );
 export const addNewCategorySuccess = createAction(
-  '[Faq Page] Add New Category Succes',
+  '[Faq Page] Add New Category Success',
   props<{ name: string }>()
+);
+// удаление вопроса
+export const deleteFaq = createAction(
+  '[Faq Page] Delete Faq',
+  props<{ faqId: number; categoryId: number }>()
+);
+export const deleteFaqSuccess = createAction(
+  '[Faq Page] Delete Faq Success',
+  props<{ faqId: number; categoryId: number }>()
 );

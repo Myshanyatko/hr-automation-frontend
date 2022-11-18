@@ -21,4 +21,12 @@
 }
 .question-block {
   margin-bottom: 15px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+.icons-faq {
+  cursor: pointer;
+}
+.icon-faq:hover {
+  color: #ff7043;
 }

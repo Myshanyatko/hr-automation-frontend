@@ -33,4 +33,7 @@ export class FaqService {
   getCategories() {
     return this.http.get<Category[]>(API + '/categories');
   }
+  deleteFaq(id: number) {
+    return this.http.delete(API + '/' + id);
+  }
 }

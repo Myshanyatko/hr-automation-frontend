@@ -1,4 +1,5 @@
-import { getCategories } from './../../store/actions/faq.actions';
+import { DialogService } from './../../services/dialog.service';
+import { deleteFaq, getCategories } from './../../store/actions/faq.actions';
 import { selectCategories } from './../../store/selectors/faq.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
@@ -16,5 +17,10 @@ export class FaqListComponent implements OnInit {
 
   ngOnInit(): void {
     this.store$.dispatch(getCategories());
+  }
+  deleteFaq(faqId: number, categoryId: number) {
+    console.log('delete faq');
+
+    this.store$.dispatch(deleteFaq({ faqId: faqId, categoryId: categoryId }));
   }
 }

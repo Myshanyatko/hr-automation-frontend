@@ -37,8 +37,22 @@
             class="question-block"
             *ngFor="let question of category.questions"
           >
-            <h4>{{ question.title }}</h4>
-            <p>{{ question.description }}</p>
+            <div class="question">
+              <h4>{{ question.title }}</h4>
+              <p>{{ question.description }}</p>
+            </div>
+            <div class="icons-faq">
+              <tui-svg
+                class="icon-faq"
+                src="tuiIconTrash"
+                (click)="deleteFaq(question.id, category.id)"
+              ></tui-svg>
+              <tui-svg
+                class="icon-faq"
+                src="tuiIconTrash"
+                (click)="deleteFaq(question.id, category.id)"
+              ></tui-svg>
+            </div>
           </div>
         </ng-template>
         <ng-template tuiAccordionItemContent> </ng-template>
