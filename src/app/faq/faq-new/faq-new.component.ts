@@ -22,7 +22,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqNewComponent implements OnInit {
   faq!: Faq;
-
+  category = '';
   faqForm!: FormGroup;
   categoriesName$ = this.store$.select(selectCategoriesName);
   categoriesId$ = this.store$.select(selectCategoriesId);
@@ -30,14 +30,12 @@ export class FaqNewComponent implements OnInit {
   constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
 
   ngOnInit(): void {
-    var categoryName = 'aaaaaaaaaaaaaaaaaaaaaaaaaaa';
     this.store$.dispatch(getCategories());
-    this.categoriesName$.subscribe((el) => (categoryName = el[0]));
-
+    this.categoriesName$.subscribe((category) => (this.category = category[0]));
     this.faqForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      category: new FormControl(categoryName),
+      category: new FormControl(this.category),
     });
   }
   saveFaq() {

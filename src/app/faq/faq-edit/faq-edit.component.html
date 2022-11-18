@@ -1,0 +1,70 @@
+<div class="tui-container">
+  <h2 class="title-edit-faq">Редактирование вопроса</h2>
+
+  <form [formGroup]="faqForm" (ngSubmit)="saveFaq()">
+    <div class="faq-form-block">
+      <tui-input
+        formControlName="title"
+        class="faq-form-item"
+        required
+        id="title"
+      >
+        Заголовок
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <div
+        class="error-message"
+        *ngIf="
+          faqForm.get('title')?.invalid &&
+          (faqForm.get('title')?.dirty || faqForm.get('title')?.touched)
+        "
+      >
+        <span *ngIf="faqForm.get('title')?.errors?.['required']"
+          >Обязательное поле</span
+        >
+      </div>
+
+      <tui-input
+        formControlName="description"
+        class="faq-form-item"
+        required
+        id="description"
+      >
+        Ответ
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <div
+        class="error-message"
+        *ngIf="
+          faqForm.get('description')?.invalid &&
+          (faqForm.get('description')?.dirty ||
+            faqForm.get('description')?.touched)
+        "
+      >
+        <span *ngIf="faqForm.get('description')?.errors?.['required']"
+          >Обязательное поле</span
+        >
+      </div>
+      <div class="faq-form-buttons">
+        <button
+          tuiButton
+          size="m"
+          appearance="custom"
+          class="save-faq-button"
+          routerLink="/faq-list"
+        >
+          Назад
+        </button>
+        <button
+          tuiButton
+          type="submit"
+          size="m"
+          appearance="accent"
+          class="save-faq-button"
+        >
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

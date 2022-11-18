@@ -11,6 +11,9 @@ import {
   addNewFaqSuccess,
   deleteFaq,
   deleteFaqSuccess,
+  editFaq,
+  putFaq,
+  putFaqSuccess,
 } from './../actions/faq.actions';
 import { Router } from '@angular/router';
 import { DialogService } from './../../services/dialog.service';
@@ -109,6 +112,27 @@ export class FaqEffects {
       )
     )
   );
+  putFaq$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(putFaq),
+      exhaustMap((action) =>
+        this.faqService.editFaq(action.faq).pipe(
+          map(() => {
+            this.alert.showNotificationSuccess('Данные сохранены').subscribe();
+            this.router.navigate(['/faq-list']);
+            return putFaqSuccess({
+              faq: action.faq,
+            });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.message).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private router: Router,

@@ -42,3 +42,13 @@ export const deleteFaqSuccess = createAction(
   '[Faq Page] Delete Faq Success',
   props<{ faqId: number; categoryId: number }>()
 );
+// изменение вопроса
+export const editFaq = createAction(
+  '[Faq Page] Edit Faq',
+  props<{ faq: Faq }>()
+);
+export const putFaq = createAction('[Faq Page] Put Faq', props<{ faq: Faq }>());
+export const putFaqSuccess = createAction(
+  '[Faq Page] Put Faq Success',
+  props<{ faq: Faq }>()
+);

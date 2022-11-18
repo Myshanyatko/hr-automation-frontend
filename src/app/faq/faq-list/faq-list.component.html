@@ -44,9 +44,17 @@
             <div class="icons-faq">
               <tui-svg
                 class="icon-faq"
-                src="tuiIconTrash"
-                (click)="deleteFaq(question.id, category.id)"
+                src="tuiIconEdit"
+                (click)="
+                  editFaq(
+                    question.id,
+                    question.title,
+                    question.description,
+                    category.id
+                  )
+                "
               ></tui-svg>
+
               <tui-svg
                 class="icon-faq"
                 src="tuiIconTrash"

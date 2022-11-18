@@ -36,4 +36,11 @@ export class FaqService {
   deleteFaq(id: number) {
     return this.http.delete(API + '/' + id);
   }
+  editFaq(faq: Faq) {
+    return this.http.put(API + '/category/' + faq.categoryId, {
+      id: faq.id,
+      title: faq.title,
+      description: faq.description,
+    });
+  }
 }

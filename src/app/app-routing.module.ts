@@ -1,3 +1,4 @@
+import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
 import { NewCategoryComponent } from './faq/new-category/new-category.component';
 import { FaqListComponent } from './faq/faq-list/faq-list.component';
 import { FaqNewComponent } from './faq/faq-new/faq-new.component';
@@ -25,6 +26,11 @@ const routes: Routes = [
   {
     path: 'new-category',
     component: NewCategoryComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'edit-faq',
+    component: FaqEditComponent,
     canActivate: [AuthGuard],
   },
 ];

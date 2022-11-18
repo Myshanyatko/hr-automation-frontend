@@ -53,6 +53,7 @@ import { TuiLetModule } from '@taiga-ui/cdk';
 import { FaqNewComponent } from './faq/faq-new/faq-new.component';
 import { FaqListComponent } from './faq/faq-list/faq-list.component';
 import { NewCategoryComponent } from './faq/new-category/new-category.component';
+import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +68,7 @@ import { NewCategoryComponent } from './faq/new-category/new-category.component'
     FaqNewComponent,
     FaqListComponent,
     NewCategoryComponent,
+    FaqEditComponent,
   ],
   imports: [
     FormsModule,

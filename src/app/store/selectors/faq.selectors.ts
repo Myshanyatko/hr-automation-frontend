@@ -18,3 +18,7 @@ export const selectCategoriesName = createSelector(
 export const selectCategoriesId = createSelector(selectFaq, (state: FaqState) =>
   state.categories.map((category) => category.id)
 );
+export const selectEditedFaq = createSelector(
+  selectFaq,
+  (state: FaqState) => state.editedFaq
+);
