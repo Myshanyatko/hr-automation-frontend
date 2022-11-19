@@ -5,13 +5,14 @@ import { Observable, take, tap } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppState } from './../../store/state/app.state';
 import { Store } from '@ngrx/store';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { putFaq } from 'src/app/store/actions/faq.actions';
 
 @Component({
   selector: 'app-faq-edit',
   templateUrl: './faq-edit.component.html',
   styleUrls: ['./faq-edit.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FaqEditComponent implements OnInit {
   faq$ = this.store$.select(selectEditedFaq);

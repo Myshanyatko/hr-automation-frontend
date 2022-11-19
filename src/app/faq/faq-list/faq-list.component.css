@@ -25,6 +25,11 @@
   grid-template-columns: 3fr 1fr;
 }
 .icons-faq {
+  padding: 0 5px;
+  text-align: center;
+}
+.icon-faq {
+  padding: 0 5px;
   cursor: pointer;
 }
 .icon-faq:hover {

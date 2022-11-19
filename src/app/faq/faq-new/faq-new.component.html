@@ -48,15 +48,9 @@
         Добавить новую категорию...
       </button>
 
-      <tui-input
-        formControlName="description"
-        class="faq-form-item"
-        required
-        id="description"
-      >
+      <tui-text-area formControlName="description" class="faq-form-item">
         Ответ
-        <input tuiTextfield type="text" />
-      </tui-input>
+      </tui-text-area>
       <div
         class="error-message"
         *ngIf="

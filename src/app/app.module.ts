@@ -28,6 +28,7 @@ import {
   TuiArrowModule,
   TuiSelectModule,
   TuiDataListWrapperModule,
+  TuiTextAreaModule,
 } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -99,6 +100,7 @@ import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
     TuiSelectModule,
     TuiTextfieldControllerModule,
     TuiDataListWrapperModule,
+    TuiTextAreaModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([USersEffects, FaqEffects]),
     StoreDevtoolsModule.instrument({
