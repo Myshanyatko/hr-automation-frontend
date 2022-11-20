@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category } from '../models/category';
 
-const API = 'http://localhost:8080/faq';
+const API = 'https://hr-automation-backend.onrender.com/faq';
 
 @Injectable({
   providedIn: 'root',
@@ -26,12 +26,14 @@ export class FaqService {
     });
   }
   getFaqList() {
-    return this.http.get<Faq[]>(API, {
+    return this.http.get<any>(API, {
       params: { pageNumber: 1, size: 5, sortBy: 'id' },
     });
   }
   getCategories() {
-    return this.http.get<Category[]>(API + '/categories');
+    return this.http.get<Category[]>(
+      'https://hr-automation-backend.onrender.com/faq/categories'
+    );
   }
   deleteFaq(id: number) {
     return this.http.delete(API + '/' + id);

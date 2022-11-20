@@ -1,11 +1,16 @@
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { observable, Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { DialogService } from './../../services/dialog.service';
 import {
   deleteFaq,
   editFaq,
   getCategories,
+  getFiltredFaq,
 } from './../../store/actions/faq.actions';
-import { selectCategories } from './../../store/selectors/faq.selectors';
+import {
+  selectCategories,
+  selectFiltredFaq,
+} from './../../store/selectors/faq.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
@@ -18,10 +23,19 @@ import { Component, OnInit } from '@angular/core';
 export class FaqListComponent implements OnInit {
   categories$ = this.store$.select(selectCategories);
   search = '';
-  isEdited = false;
-  constructor(private router: Router, private store$: Store<AppState>) {}
+  faqForm!: FormGroup;
+
+  filtredFaq$ = this.store$.select(selectFiltredFaq);
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private store$: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
+    this.faqForm = this.fb.group({
+      name: ['', []],
+    });
     this.store$.dispatch(getCategories());
   }
   deleteFaq(faqId: number, categoryId: number) {
@@ -36,5 +50,12 @@ export class FaqListComponent implements OnInit {
       })
     );
     this.router.navigate(['edit-faq']);
+  }
+  searchFaq() {
+    if (this.faqForm.value.name != '') {
+    }
+    console.log(this.faqForm.value.name);
+    // отдать вопросы, удовлетворяющие поиску по слову в заголовке
+    this.store$.dispatch(getFiltredFaq({ name: 'name' }));
   }
 }

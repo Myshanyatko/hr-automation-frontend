@@ -11,7 +11,7 @@ import {
   addNewFaqSuccess,
   deleteFaq,
   deleteFaqSuccess,
-  editFaq,
+  getFiltredFaq,
   putFaq,
   putFaqSuccess,
 } from './../actions/faq.actions';
@@ -25,10 +25,10 @@ import { exhaustMap, mergeMap, catchError, EMPTY } from 'rxjs';
 export class FaqEffects {
   getfaqList$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(getFaq),
+      ofType(getFiltredFaq),
       mergeMap(() =>
         this.faqService.getFaqList().pipe(
-          map((faqList) => setFaq({ faqList: faqList })),
+          map((res) => setFaq({ faqList: res.content })),
           catchError((err) => {
             this.alert.showNotificationError(err.message).subscribe();
             return EMPTY;

@@ -14,13 +14,16 @@ export const faqReducer = createReducer(
     return { ...state, faqList: faqList };
   }),
   on(setCategories, (state, { categories }) => {
-    return { ...state, categories: categories };
+    return {
+      ...state,
+      categories: categories,
+    };
   }),
-  on(addNewFaqSuccess, (state, { faq }) => {
-    return { ...state, faqList: [...state.faqList, faq] };
-  }),
+  // on(addNewFaqSuccess, (state, { faq }) => {
+  //   return { ...state, categories: [...state.categories, ] };
+  // }),
   on(deleteFaqSuccess, (state, { faqId, categoryId }) => {
-    var category = state.categories.find((cat) => cat.id === categoryId) || {
+    const category = state.categories.find((cat) => cat.id === categoryId) || {
       id: -1,
       name: '',
       questions: [],
@@ -35,7 +38,17 @@ export const faqReducer = createReducer(
           name: category.name,
           questions: questions,
         },
-      ],
+      ].sort((a, b) => {
+        if (a.name > b.name) {
+          return 1;
+        }
+
+        if (a.name < b.name) {
+          return -1;
+        }
+
+        return 0;
+      }),
     };
   }),
   on(editFaq, (state, { faq }) => {

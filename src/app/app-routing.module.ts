@@ -1,3 +1,4 @@
+import { ProductsComponent } from './products/products.component';
 import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
 import { NewCategoryComponent } from './faq/new-category/new-category.component';
 import { FaqListComponent } from './faq/faq-list/faq-list.component';
@@ -21,7 +22,7 @@ const routes: Routes = [
   { path: 'restorans', redirectTo: 'users', pathMatch: 'full' },
   { path: 'faq', component: FaqNewComponent, canActivate: [AuthGuard] },
   { path: 'faq-list', component: FaqListComponent, canActivate: [AuthGuard] },
-  { path: 'products', redirectTo: 'users', pathMatch: 'full' },
+  { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] },
   { path: 'new-user', component: NewUserComponent, canActivate: [AuthGuard] },
   {
     path: 'new-category',

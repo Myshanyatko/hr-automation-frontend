@@ -55,6 +55,7 @@ import { FaqNewComponent } from './faq/faq-new/faq-new.component';
 import { FaqListComponent } from './faq/faq-list/faq-list.component';
 import { NewCategoryComponent } from './faq/new-category/new-category.component';
 import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
+import { ProductsComponent } from './products/products.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +71,7 @@ import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
     FaqListComponent,
     NewCategoryComponent,
     FaqEditComponent,
+    ProductsComponent,
   ],
   imports: [
     FormsModule,

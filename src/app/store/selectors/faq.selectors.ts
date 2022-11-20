@@ -22,3 +22,7 @@ export const selectEditedFaq = createSelector(
   selectFaq,
   (state: FaqState) => state.editedFaq
 );
+export const selectFiltredFaq = createSelector(
+  selectFaq,
+  (state: FaqState) => state.faqList
+);

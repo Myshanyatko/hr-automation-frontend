@@ -1,70 +1,118 @@
 <div class="tui-container">
-  <div class="search-and-new-faq-block">
+  <form
+    [formGroup]="faqForm"
+    (ngSubmit)="searchFaq()"
+    class="search-and-new-faq-block"
+  >
     <div class="search-faq-block">
       <tui-input
-        tuiTextfieldIconLeft="tuiIconSearchLarge"
+        [tuiTextfieldCleaner]="true"
         class="search-faq"
         [(ngModel)]="search"
+        formControlName="name"
       >
         Поиск
       </tui-input>
     </div>
-    <div class="new-faq-block">
+    <div class="search-faq-button">
       <button
-        tuiButton
-        type="button"
+        tuiIconButton
+        type="submit"
+        icon="tuiIconSearch"
         appearance="accent"
-        class="new-faq-button"
-        [routerLink]="['/faq']"
-      >
-        Создать
-      </button>
+        class="search-faq-button"
+      ></button>
     </div>
-  </div>
+  </form>
+
   <div class="category-block">
-    <tui-accordion
-      [closeOthers]="false"
-      *ngFor="let category of categories$ | async"
-    >
-      <tui-accordion-item
-        *ngIf="category.questions.length != 0"
-        class="category-item"
+    <div class="categories-list">
+      <tui-accordion [closeOthers]="false">
+        >
+        <tui-accordion-item
+          *ngFor="let category of categories$ | async"
+          class="category-item"
+        >
+          {{ category.name }}
+
+          <ng-template tuiAccordionItemContent
+            ><!-- *ngIf="category.questions.length != 0"  -->
+            <div
+              class="question-block"
+              *ngFor="let question of category.questions"
+            >
+              <div class="question">
+                <h4 class="question-title">{{ question.title }}</h4>
+                <p>{{ question.description }}</p>
+              </div>
+              <div class="icons-faq">
+                <tui-svg
+                  class="icon-faq"
+                  src="tuiIconEdit"
+                  (click)="
+                    editFaq(
+                      question.id,
+                      question.title,
+                      question.description,
+                      category.id
+                    )
+                  "
+                ></tui-svg>
+
+                <tui-svg
+                  class="icon-faq"
+                  src="tuiIconTrash"
+                  (click)="deleteFaq(question.id, category.id)"
+                ></tui-svg>
+              </div>
+            </div>
+          </ng-template>
+        </tui-accordion-item>
+      </tui-accordion>
+    </div>
+
+    <div class="filtred-faq-block">
+      <div
+        class="filtred-faq-item"
+        *ngFor="let question of filtredFaq$ | async"
       >
-        {{ category.name }}
+        <div class="question">
+          <h4 class="question-title">{{ question.title }}</h4>
+          <p>{{ question.description }}</p>
+        </div>
+        <div class="icons-faq">
+          <tui-svg
+            class="icon-faq"
+            src="tuiIconEdit"
+            (click)="
+              editFaq(
+                question.id,
+                question.title,
+                question.description,
+                question.categoryId
+              )
+            "
+          ></tui-svg>
 
-        <ng-template tuiAccordionItemContent>
-          <div
-            class="question-block"
-            *ngFor="let question of category.questions"
-          >
-            <div class="question">
-              <h4>{{ question.title }}</h4>
-              <p>{{ question.description }}</p>
-            </div>
-            <div class="icons-faq">
-              <tui-svg
-                class="icon-faq"
-                src="tuiIconEdit"
-                (click)="
-                  editFaq(
-                    question.id,
-                    question.title,
-                    question.description,
-                    category.id
-                  )
-                "
-              ></tui-svg>
-
-              <tui-svg
-                class="icon-faq"
-                src="tuiIconTrash"
-                (click)="deleteFaq(question.id, category.id)"
-              ></tui-svg>
-            </div>
-          </div>
-        </ng-template>
-        <ng-template tuiAccordionItemContent> </ng-template>
-      </tui-accordion-item>
-    </tui-accordion>
+          <tui-svg
+            class="icon-faq"
+            src="tuiIconTrash"
+            (click)="deleteFaq(question.id, question.categoryId)"
+          ></tui-svg>
+        </div>
+      </div>
+      <div class="new-faq-block">
+        <button
+          tuiButton
+          type="button"
+          appearance="accent"
+          class="new-faq-button"
+          [routerLink]="['/faq']"
+          size="m"
+        >
+          Создать новый вопрос
+        </button>
+      </div>
+    </div>
   </div>
 </div>

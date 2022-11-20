@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { UserInfo } from '../models/userInfo';
 
-const API = 'http://localhost:8080/users';
+const API = 'https://hr-automation-backend.onrender.com/users';
 @Injectable({
   providedIn: 'root',
 })

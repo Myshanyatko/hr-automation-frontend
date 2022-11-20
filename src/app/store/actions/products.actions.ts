@@ -48,17 +48,7 @@ export const editFaq = createAction(
   props<{ faq: Faq }>()
 );
 export const putFaq = createAction('[Faq Page] Put Faq', props<{ faq: Faq }>());
-
 export const putFaqSuccess = createAction(
   '[Faq Page] Put Faq Success',
   props<{ faq: Faq }>()
-);
-// получить отфильтрованные вопросы
-export const getFiltredFaq = createAction(
-  '[Faq Page] Get Filtred Faq',
-  props<{ name: string }>()
-);
-export const setFiltredFaq = createAction(
-  '[Faq Page] Set Filtred Faq',
-  props<{ faqList: Faq[] }>()
 );
