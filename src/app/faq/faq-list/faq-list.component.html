@@ -4,25 +4,32 @@
     (ngSubmit)="searchFaq()"
     class="search-and-new-faq-block"
   >
-    <div class="search-faq-block">
-      <tui-input
-        [tuiTextfieldCleaner]="true"
-        class="search-faq"
-        [(ngModel)]="search"
-        formControlName="name"
-      >
-        Поиск
-      </tui-input>
-    </div>
-    <div class="search-faq-button">
-      <button
-        tuiIconButton
-        type="submit"
-        icon="tuiIconSearch"
-        appearance="accent"
-        class="search-faq-button"
-      ></button>
-    </div>
+    <tui-input
+      [tuiTextfieldCleaner]="true"
+      class="search-faq"
+      formControlName="name"
+    >
+      Поиск
+    </tui-input>
+
+    <button
+      tuiIconButton
+      type="submit"
+      icon="tuiIconSearch"
+      appearance="white"
+      class="search-faq-button"
+    ></button>
+
+    <button
+      tuiButton
+      type="button"
+      appearance="accent"
+      class="new-faq-button"
+      [routerLink]="['/faq']"
+      size="l"
+    >
+      new
+    </button>
   </form>
 
   <div class="category-block">
@@ -100,18 +107,6 @@
             (click)="deleteFaq(question.id, question.categoryId)"
           ></tui-svg>
         </div>
-      </div>
-      <div class="new-faq-block">
-        <button
-          tuiButton
-          type="button"
-          appearance="accent"
-          class="new-faq-button"
-          [routerLink]="['/faq']"
-          size="m"
-        >
-          Создать новый вопрос
-        </button>
       </div>
     </div>
   </div>

@@ -4,11 +4,13 @@
 }
 .search-and-new-faq-block {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 400px auto auto;
   width: 600px;
-  grid-gap: 10px;
 }
-
+.search-faq {
+  border-top-right-radius: 0%;
+  border-bottom-right-radius: 0%;
+}
 .category-block {
   margin-top: 15px;
   background-color: #fff;
@@ -38,8 +40,4 @@
 }
 .icon-faq:hover {
   color: #000;
-}
-.new-faq-button {
-  margin-top: 10px;
-  align-items: center;
 }

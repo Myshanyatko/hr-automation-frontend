@@ -3,28 +3,23 @@
 }
 .search-and-new-user-block {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  width: 500px;
-  grid-gap: 10px;
+  grid-template-columns: 400px auto auto;
+  width: 600px;
+  align-items: flex-start;
 }
-
-.new-user-block {
-  overflow: hidden;
-}
-.new-user-button {
-  width: 100%;
-  font: var(--tui-font-text-m);
-  background-color: #ff7043;
-  color: #fff;
+.search-faq {
+  border-top-right-radius: 0%;
+  border-bottom-right-radius: 0%;
 }
 .staff-list-block {
   overflow: hidden;
-  display: block;
+  display: grid;
+  grid-template-columns: 400px auto;
   background-color: #fff;
   border-radius: var(--tui-radius-l);
   box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
   margin: 15px 0;
-  width: 500px;
+  width: 600px;
 }
 .staff-list {
   list-style-type: none;

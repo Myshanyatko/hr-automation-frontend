@@ -1,5 +1,4 @@
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { observable, Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import {
   deleteFaq,

@@ -1,26 +1,40 @@
 <div class="tui-container">
-  <div class="search-and-new-user-block">
-    <div class="search-staff-block">
+  <form
+    [formGroup]="usersForm"
+    (ngSubmit)="searchUsers()"
+    class="search-and-new-user-block"
+  >
+    <div class="search-faq-block">
       <tui-input
-        tuiTextfieldIconLeft="tuiIconSearchLarge"
-        class="search-staff"
-        [(ngModel)]="search"
+        [tuiTextfieldCleaner]="true"
+        class="search-faq"
+        formControlName="name"
       >
         Поиск
       </tui-input>
     </div>
-    <div class="new-user-block">
-      <button
-        tuiButton
-        type="button"
-        appearance="accent"
-        class="new-user-button"
-        [routerLink]="['/new-user']"
-      >
-        Создать
-      </button>
-    </div>
-  </div>
+
+    <button
+      tuiIconButton
+      type="submit"
+      icon="tuiIconSearch"
+      appearance="white"
+      size="l"
+      class="search-user-button"
+    ></button>
+
+    <button
+      tuiButton
+      type="button"
+      appearance="accent"
+      class="new-user-button"
+      size="l"
+      [routerLink]="['/new-user']"
+    >
+      new
+    </button>
+  </form>
+
   <div class="staff-list-block">
     <ul class="staff-list">
       <li *ngFor="let user of users$ | async" class="staff-list-item">

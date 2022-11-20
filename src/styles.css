@@ -35,6 +35,14 @@ h4 {
   padding: var(--tui-padding-s);
   background-color: #f2f2f2;
 }
+[data-appearance="white"] {
+  color: #ff7043;
+  height: 54px;
+  background-color: #fff;
+  border-top-left-radius: 0%;
+  border-bottom-left-radius: 0%;
+  box-shadow: 0 0.05rem 0.12rem rgb(0 0 0 / 10%);
+}
 [data-appearance="second"] :hover {
   background-color: #e8e8e8;
   transition: var(--tui-focus);
