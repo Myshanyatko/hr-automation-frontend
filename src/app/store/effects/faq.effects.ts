@@ -20,7 +20,7 @@ import { DialogService } from './../../services/dialog.service';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { exhaustMap, mergeMap, catchError, EMPTY } from 'rxjs';
+import { exhaustMap, mergeMap, catchError, EMPTY, tap } from 'rxjs';
 @Injectable()
 export class FaqEffects {
   getfaqList$ = createEffect(() =>
@@ -52,25 +52,34 @@ export class FaqEffects {
     )
   );
 
-  AddNewFaq$ = createEffect(() =>
+  addNewFaq$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addNewFaq),
-      exhaustMap((action) =>
-        this.faqService.postFaq(action.faq).pipe(
+      exhaustMap(({ processId, faq }) =>
+        this.faqService.postFaq(faq).pipe(
           map(() => {
-            this.alert.showNotificationSuccess('Ответ добавлен').subscribe();
-            this.router.navigate(['faq-list']);
-            return addNewFaqSuccess({ faq: action.faq });
+            return addNewFaqSuccess({ processId: processId, faq: faq });
           }),
+
           catchError((err) => {
-            this.alert.showNotificationError(err.message).subscribe();
+            this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
         )
       )
     )
   );
-  AddNewCategory$ = createEffect(() =>
+  addNewFaqSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(addNewFaqSuccess),
+        tap(() =>
+          this.alert.showNotificationSuccess('Ответ добавлен').subscribe()
+        )
+      ),
+    { dispatch: false }
+  );
+  addNewCategory$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addNewCategory),
       exhaustMap((action) =>

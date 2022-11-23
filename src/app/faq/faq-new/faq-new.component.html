@@ -28,15 +28,23 @@
         class="faq-form-item"
         tuiTextfieldSize="l"
         formControlName="category"
-        *ngIf="categoriesName$ | async as categoriesName"
+        *ngIf="categories$ | async as categories"
+        [valueContent]="categoryContent"
       >
         Категория
-        <input tuiTextfield />
+
         <tui-data-list-wrapper
           *tuiDataList
-          [items]="categoriesName"
+          [items]="categories"
+          [itemContent]="categoryContent"
         ></tui-data-list-wrapper>
       </tui-select>
+
+      <ng-template #categoryContent let-item>
+        <div class="category-item">
+          {{ item.name }}
+        </div>
+      </ng-template>
 
       <button
         tuiButton

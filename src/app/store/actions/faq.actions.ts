@@ -18,11 +18,11 @@ export const setCategories = createAction(
 //добавить новоый вопрос
 export const addNewFaq = createAction(
   '[Faq Page] Add New Faq',
-  props<{ faq: Faq }>()
+  props<{ faq: Faq; processId: number }>()
 );
 export const addNewFaqSuccess = createAction(
   '[Faq Page] Add New Faq Success',
-  props<{ faq: Faq }>()
+  props<{ faq: Faq; processId: number }>()
 );
 //добавить новую категорию
 export const addNewCategory = createAction(

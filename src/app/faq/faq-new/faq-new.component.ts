@@ -1,8 +1,17 @@
+import { Category } from './../../models/category';
+import { Router } from '@angular/router';
+import { filter, tap, map, switchMap, first, take, last } from 'rxjs/operators';
+import { Actions, ofType } from '@ngrx/effects';
 import {
   selectCategoriesName,
   selectCategoriesId,
+  selectCategories,
 } from './../../store/selectors/faq.selectors';
-import { addNewFaq, getCategories } from './../../store/actions/faq.actions';
+import {
+  addNewFaq,
+  getCategories,
+  addNewFaqSuccess,
+} from './../../store/actions/faq.actions';
 import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
 
@@ -14,6 +23,9 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { pipe } from 'rxjs';
+
+let nextProcessId = 1;
 
 @Component({
   selector: 'app-faq',
@@ -22,37 +34,55 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqNewComponent implements OnInit {
   faq!: Faq;
-  category = '';
   faqForm!: FormGroup;
-  categoriesName$ = this.store$.select(selectCategoriesName);
-  categoriesId$ = this.store$.select(selectCategoriesId);
+  cats = [
+    { id: 1, name: '1' },
+    { id: 2, name: '2' },
+  ];
+  categories$ = this.store$.select(selectCategories);
 
-  constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
+  constructor(
+    private actions$: Actions,
+    private fb: FormBuilder,
+    private router: Router,
+    private store$: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
     this.store$.dispatch(getCategories());
-    this.categoriesName$.subscribe((category) => (this.category = category[0]));
     this.faqForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      category: new FormControl(this.category),
     });
+
+    this.categories$.subscribe((item) =>
+      this.faqForm.addControl('category', new FormControl(item[0]))
+    );
   }
   saveFaq() {
-    var categoryId1 = 0;
-    var categoryId2 = 0;
-    this.categoriesName$.subscribe(
-      (names) => (categoryId1 = names.indexOf(this.faqForm.value.category))
+    this.faq = {
+      id: 0,
+      title: this.faqForm.value.title,
+      description: this.faqForm.value.description,
+      categoryId: this.faqForm.value.category.id,
+    };
+
+    const processId = nextProcessId + 1;
+
+    this.actions$.subscribe(() =>
+      pipe(
+        ofType(addNewFaqSuccess),
+        filter((action) => action.processId === processId),
+        tap(() => {
+          return this.complete();
+        })
+      )
     );
-    this.categoriesId$.subscribe((ides) => (categoryId2 = ides[categoryId1]));
-    if (this.faq == null) {
-      this.faq = {
-        id: 0,
-        title: this.faqForm.value.title,
-        description: this.faqForm.value.description,
-        categoryId: categoryId2,
-      };
-    }
-    this.store$.dispatch(addNewFaq({ faq: this.faq }));
+    this.store$.dispatch(addNewFaq({ faq: this.faq, processId: processId }));
+  }
+  complete() {
+    console.log('navigate');
+
+    return this.router.navigate(['faq-list']);
   }
 }
