@@ -1,12 +1,18 @@
-import { initialUserState } from './../../store/state/users.state';
+import { filter, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Actions, ofType } from '@ngrx/effects';
 import { UserInfo } from './../../models/userInfo';
-import { addNewUser } from './../../store/actions/users.actions';
+import {
+  addNewUser,
+  addNewUserSuccess,
+} from './../../store/actions/users.actions';
 import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
-import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
-import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { pipe } from 'rxjs';
+
+let nextProcessId = 1;
 
 @Component({
   selector: 'app-new-user',
@@ -14,33 +20,63 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
   styleUrls: ['./new-user.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewUserComponent {
-  createUserForm: FormGroup;
-  user: UserInfo = initialUserState.selectedUser;
+export class NewUserComponent implements OnInit {
+  createUserForm!: FormGroup;
+  user: UserInfo | null = null;
+  errors = false;
 
-  constructor(private store$: Store<AppState>, private fb: FormBuilder) {
+  constructor(
+    private actions$: Actions,
+    private fb: FormBuilder,
+    private router: Router,
+    private store$: Store<AppState>
+  ) {}
+
+  ngOnInit(): void {
     this.createUserForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       date: [''],
       project: [''],
       post: [''],
-      information: [''],
+      about: [''],
       admin: [false],
     });
   }
+  saveUser() {
+    if (
+      this.createUserForm.get('name')?.invalid ||
+      this.createUserForm.get('email')?.invalid
+    ) {
+      this.errors = true;
+    } else {
+      if (this.user == null) {
+        this.user = {
+          id: 0,
+          photo: '',
+          username: this.createUserForm.value.name,
+          date: this.createUserForm.value.date,
+          email: this.createUserForm.value.email,
+          project: this.createUserForm.value.project,
+          post: this.createUserForm.value.post,
+          admin: this.createUserForm.value.admin,
+          about: this.createUserForm.value.about,
+        };
+      }
+      const processId = nextProcessId + 1;
+      this.actions$
+        .pipe(
+          ofType(addNewUserSuccess),
+          filter((action) => action.processId === processId)
+        )
+        .subscribe(() => {
+          return this.router.navigate(['/users']);
+        });
 
-  saveUser(content: PolymorpheusContent<TuiDialogContext>) {
-    this.user = {
-      ...this.user,
-      username: this.createUserForm.value.name,
-      date: this.createUserForm.value.date,
-      email: this.createUserForm.value.email,
-      project: this.createUserForm.value.project,
-      post: this.createUserForm.value.post,
-      admin: this.createUserForm.value.admin,
-      information: this.createUserForm.value.admin,
-    };
-    this.store$.dispatch(addNewUser({ user: this.user }));
+      this.store$.dispatch(
+        addNewUser({ user: this.user, processId: processId })
+      );
+      this.errors = false;
+    }
   }
 }

@@ -2,7 +2,7 @@ import { AlertService } from './../../services/alert.service';
 import { Router } from '@angular/router';
 import { DialogService } from './../../services/dialog.service';
 import { UsersService } from './../../services/users.service';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import {
   getUser,
   getUsers,
@@ -26,7 +26,7 @@ export class USersEffects {
         this.usersService.getUsers().pipe(
           map((users) => setUsers({ userList: users })),
           catchError((err) => {
-            this.dialogService.showDialog(err.message).subscribe();
+            this.dialogService.showDialog(err.error).subscribe();
             return EMPTY;
           })
         )
@@ -40,7 +40,7 @@ export class USersEffects {
         this.usersService.getUser(action.userId).pipe(
           map((user) => setUser({ user })),
           catchError((err) => {
-            this.dialogService.showDialog(err.message).subscribe();
+            this.dialogService.showDialog(err.error).subscribe();
             return EMPTY;
           })
         )
@@ -58,38 +58,51 @@ export class USersEffects {
             this.alert
               .showNotificationSuccess('Изменения сохранены')
               .subscribe();
-            return setUser({ user: action.user });
+            return setUser({
+              user: action.user,
+            });
           }),
 
           catchError((err) => {
-            this.alert.showNotificationError(err.message).subscribe();
+            this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
         )
       )
     )
   );
+
   AddNewUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addNewUser),
       exhaustMap((action) =>
         this.usersService.postUser(action.user).pipe(
           map(() => {
-            this.alert
-              .showNotificationSuccess('Новый сотрудник добавлен')
-              .subscribe();
-            this.router.navigate(['users']);
-            return addNewUserSuccess({ user: action.user });
+            return addNewUserSuccess({
+              user: action.user,
+              processId: action.processId,
+            });
           }),
           catchError((err) => {
-            this.alert.showNotificationError(err.message).subscribe();
+            this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
         )
       )
     )
   );
-
+  AddNewUserSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(addNewUserSuccess),
+        tap(() => {
+          this.alert
+            .showNotificationSuccess('Новый сотрудник добавлен')
+            .subscribe();
+        })
+      ),
+    { dispatch: false }
+  );
   deleteUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteUser),

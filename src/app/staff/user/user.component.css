@@ -5,16 +5,25 @@
   border-radius: var(--tui-radius-l);
   width: 700px;
 }
+.back {
+  margin: 18px 0 0 20px;
+  box-shadow: none;
+  color: #ff7043;
+  cursor: pointer;
+}
+.back:hover {
+  color: #f58e6e;
+}
 .user-info-block {
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-gap: 20px;
 }
 .avatar-and-buttons-block {
-  padding: 38px;
+  padding: 20px;
 }
 .user-info {
-  padding: 38px 20px 20px 0;
+  padding: 20px 20px 20px 0;
 }
 .icon-user-avatar {
   --tui-avatar-color: #ff7043;

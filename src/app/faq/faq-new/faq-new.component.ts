@@ -1,12 +1,7 @@
-import { Category } from './../../models/category';
 import { Router } from '@angular/router';
-import { filter, tap, map, switchMap, first, take, last } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { Actions, ofType } from '@ngrx/effects';
-import {
-  selectCategoriesName,
-  selectCategoriesId,
-  selectCategories,
-} from './../../store/selectors/faq.selectors';
+import { selectCategories } from './../../store/selectors/faq.selectors';
 import {
   addNewFaq,
   getCategories,
@@ -33,6 +28,7 @@ let nextProcessId = 1;
   styleUrls: ['./faq-new.component.css'],
 })
 export class FaqNewComponent implements OnInit {
+  errors = false;
   faq!: Faq;
   faqForm!: FormGroup;
   cats = [
@@ -56,33 +52,41 @@ export class FaqNewComponent implements OnInit {
     });
 
     this.categories$.subscribe((item) =>
-      this.faqForm.addControl('category', new FormControl(item[0]))
+      this.faqForm.addControl(
+        'category',
+        new FormControl(item[0], [Validators.required])
+      )
     );
   }
   saveFaq() {
-    this.faq = {
-      id: 0,
-      title: this.faqForm.value.title,
-      description: this.faqForm.value.description,
-      categoryId: this.faqForm.value.category.id,
-    };
+    if (
+      this.faqForm.get('category')?.invalid ||
+      this.faqForm.get('title')?.invalid ||
+      this.faqForm.get('description')?.invalid
+    ) {
+      this.errors = true;
+    } else {
+      this.faq = {
+        id: 0,
+        title: this.faqForm.value.title,
+        description: this.faqForm.value.description,
+        categoryId: this.faqForm.value.category.id,
+      };
 
-    const processId = nextProcessId + 1;
-
-    this.actions$.subscribe(() =>
-      pipe(
-        ofType(addNewFaqSuccess),
-        filter((action) => action.processId === processId),
-        tap(() => {
+      const processId = nextProcessId + 1;
+      this.store$.dispatch(addNewFaq({ faq: this.faq, processId: processId }));
+      this.errors = false;
+      this.actions$
+        .pipe(
+          ofType(addNewFaqSuccess),
+          filter((action) => action.processId === processId)
+        )
+        .subscribe(() => {
           return this.complete();
-        })
-      )
-    );
-    this.store$.dispatch(addNewFaq({ faq: this.faq, processId: processId }));
+        });
+    }
   }
   complete() {
-    console.log('navigate');
-
     return this.router.navigate(['faq-list']);
   }
 }

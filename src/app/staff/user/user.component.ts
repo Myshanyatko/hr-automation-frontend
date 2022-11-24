@@ -1,5 +1,3 @@
-import { DialogService } from './../../services/dialog.service';
-import { initialUserState } from './../../store/state/users.state';
 import {
   getUser,
   deleteUser,
@@ -7,15 +5,13 @@ import {
 } from './../../store/actions/users.actions';
 import { AppState } from './../../store/state/app.state';
 import { UserInfo } from '../../models/userInfo';
-import { UsersService } from './../../services/users.service';
 import { Component, OnInit } from '@angular/core';
-import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
-import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { Observable, Subscription, takeUntil, tap } from 'rxjs';
+import { Observable, takeUntil, tap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../../store/selectors/user.selectors';
 import { TuiDestroyService } from '@taiga-ui/cdk';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -28,8 +24,8 @@ export class UserComponent implements OnInit {
   public isEdit = false;
 
   constructor(
-    private destroy$: TuiDestroyService,
     private store$: Store<AppState>,
+    private destroy$: TuiDestroyService,
     private route: ActivatedRoute
   ) {}
 

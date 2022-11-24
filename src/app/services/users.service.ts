@@ -32,7 +32,7 @@ export class UsersService {
       role: user.admin,
       project: user.project,
       post: user.post,
-      about: user.information,
+      about: user.about,
     });
   }
 
@@ -51,7 +51,7 @@ export class UsersService {
       role: user.admin,
       project: user.project,
       post: user.post,
-      about: user.information,
+      about: user.about,
     });
   }
 }

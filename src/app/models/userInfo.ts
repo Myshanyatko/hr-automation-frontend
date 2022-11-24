@@ -6,6 +6,6 @@ export interface UserInfo {
   project: string;
   post: string;
   photo: string;
-  information: string;
+  about: string;
   admin: boolean;
 }

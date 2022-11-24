@@ -27,20 +27,20 @@ export const addNewFaqSuccess = createAction(
 //добавить новую категорию
 export const addNewCategory = createAction(
   '[Faq Page] Add New Categories',
-  props<{ name: string }>()
+  props<{ name: string; processId: number }>()
 );
 export const addNewCategorySuccess = createAction(
   '[Faq Page] Add New Category Success',
-  props<{ name: string }>()
+  props<{ name: string; processId: number }>()
 );
 // удаление вопроса
 export const deleteFaq = createAction(
   '[Faq Page] Delete Faq',
-  props<{ faqId: number; categoryId: number }>()
+  props<{ faqId: number; categoryId: number; processId: number }>()
 );
 export const deleteFaqSuccess = createAction(
   '[Faq Page] Delete Faq Success',
-  props<{ faqId: number; categoryId: number }>()
+  props<{ faqId: number; categoryId: number; processId: number }>()
 );
 // изменение вопроса
 export const editFaq = createAction(

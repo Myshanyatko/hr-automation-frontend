@@ -30,7 +30,7 @@ export class FaqEffects {
         this.faqService.getFaqList().pipe(
           map((res) => setFaq({ faqList: res.content })),
           catchError((err) => {
-            this.alert.showNotificationError(err.message).subscribe();
+            this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
         )
@@ -44,7 +44,7 @@ export class FaqEffects {
         this.faqService.getCategories().pipe(
           map((category) => setCategories({ categories: category })),
           catchError((err) => {
-            this.alert.showNotificationError(err.message).subscribe();
+            this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
         )
@@ -85,32 +85,10 @@ export class FaqEffects {
       exhaustMap((action) =>
         this.faqService.postCategory(action.name).pipe(
           map(() => {
-            this.alert
-              .showNotificationSuccess('Новая категория добавлена')
-              .subscribe();
-
             this.router.navigate(['faq']);
-            return addNewCategorySuccess({ name: action.name });
-          }),
-          catchError((err) => {
-            this.alert.showNotificationError(err.message).subscribe();
-            return EMPTY;
-          })
-        )
-      )
-    )
-  );
-  deleteFaq$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(deleteFaq),
-      exhaustMap((action) =>
-        this.faqService.deleteFaq(action.faqId).pipe(
-          map(() => {
-            this.alert.showNotificationSuccess('Ответ удален').subscribe();
-
-            return deleteFaqSuccess({
-              faqId: action.faqId,
-              categoryId: action.categoryId,
+            return addNewCategorySuccess({
+              name: action.name,
+              processId: action.processId,
             });
           }),
           catchError((err) => {
@@ -120,6 +98,48 @@ export class FaqEffects {
         )
       )
     )
+  );
+  addNewCategorySuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(addNewCategorySuccess),
+        tap(() =>
+          this.alert
+            .showNotificationSuccess('Новая категория добавлена')
+            .subscribe()
+        )
+      ),
+    { dispatch: false }
+  );
+  deleteFaq$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteFaq),
+      exhaustMap((action) =>
+        this.faqService.deleteFaq(action.faqId).pipe(
+          map(() => {
+            return deleteFaqSuccess({
+              faqId: action.faqId,
+              categoryId: action.categoryId,
+              processId: action.processId,
+            });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  deleteFaqSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(deleteFaqSuccess),
+        tap(() =>
+          this.alert.showNotificationSuccess('Ответ удален').subscribe()
+        )
+      ),
+    { dispatch: false }
   );
   putFaq$ = createEffect(() =>
     this.actions$.pipe(

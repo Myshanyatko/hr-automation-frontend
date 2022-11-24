@@ -15,7 +15,7 @@ export const initialUserState: UserState = {
     project: '',
     post: '',
     photo: '',
-    information: '',
+    about: '',
     admin: false,
   },
 };

@@ -16,12 +16,12 @@
         class="error-message"
         *ngIf="
           faqForm.get('title')?.invalid &&
-          (faqForm.get('title')?.dirty || faqForm.get('title')?.touched)
+          (faqForm.get('title')?.dirty ||
+            faqForm.get('title')?.touched ||
+            errors)
         "
       >
-        <span *ngIf="faqForm.get('title')?.errors?.['required']"
-          >Обязательное поле</span
-        >
+        <span>Обязательное поле</span>
       </div>
 
       <tui-select
@@ -45,7 +45,17 @@
           {{ item.name }}
         </div>
       </ng-template>
-
+      <div
+        class="error-message"
+        *ngIf="
+          faqForm.get('category')?.invalid &&
+          (faqForm.get('category')?.dirty ||
+            faqForm.get('category')?.touched ||
+            errors)
+        "
+      >
+        <span>Обязательное поле</span>
+      </div>
       <button
         tuiButton
         size="xs"
@@ -64,12 +74,11 @@
         *ngIf="
           faqForm.get('description')?.invalid &&
           (faqForm.get('description')?.dirty ||
-            faqForm.get('description')?.touched)
+            faqForm.get('description')?.touched ||
+            errors)
         "
       >
-        <span *ngIf="faqForm.get('description')?.errors?.['required']"
-          >Обязательное поле</span
-        >
+        <span>Обязательное поле</span>
       </div>
       <div class="faq-form-buttons">
         <button tuiButton size="m" appearance="accent" class="save-faq-button">

@@ -1,4 +1,9 @@
 <div *ngIf="user$ | async as user" class="tui-container">
+  <tui-svg
+    src="tuiIconBackCircleLarge"
+    class="back"
+    routerLink="/users"
+  ></tui-svg>
   <div class="user-info-block">
     <div class="avatar-and-buttons-block">
       <tui-avatar
@@ -35,31 +40,6 @@
           </button>
         </li>
       </ul>
-      <ng-template #template let-observer class="dialog-delete-users">
-        <h4>Вы точно хотите удалить сотрудника?</h4>
-        <div class="dialog-buttons-block">
-          <button
-            tuiButton
-            class="dialog-button"
-            appearance="second"
-            size="m"
-            (click)="observer.complete()"
-          >
-            Отмена
-          </button>
-          <button
-            class="dialog-button"
-            appearance="accent"
-            tuiButton
-            type="button"
-            size="m"
-            (click)="deleteUser(user)"
-            class="tui-space_right-3"
-          >
-            Удалить
-          </button>
-        </div>
-      </ng-template>
     </div>
 
     <div *ngIf="!isEdit" class="user-info">
@@ -80,9 +60,9 @@
         <p class="info-label">должность</p>
         <p class="info-item">{{ user.post }}</p>
       </div>
-      <div class="user-info-item-block" *ngIf="user.information">
+      <div class="user-info-item-block" *ngIf="user.about">
         <p class="info-label">информация</p>
-        <p class="info-item">{{ user.information }}</p>
+        <p class="info-item">{{ user.about }}</p>
       </div>
       <div class="user-info-item-block">
         <p class="info-label">роль</p>

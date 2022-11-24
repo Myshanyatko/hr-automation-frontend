@@ -35,7 +35,7 @@ export class EditUserComponent implements OnInit {
       date: [this.user?.date],
       project: [this.user?.project],
       post: [this.user?.post],
-      information: [this.user?.information],
+      about: [this.user?.about],
       admin: [this.user?.admin],
     });
   }
@@ -51,7 +51,7 @@ export class EditUserComponent implements OnInit {
       project: this.userForm.value.project,
       post: this.userForm.value.post,
       admin: this.userForm.value.admin,
-      information: this.userForm.value.information,
+      about: this.userForm.value.about,
     };
 
     this.userEdited.emit(user);
