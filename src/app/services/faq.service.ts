@@ -30,7 +30,7 @@ export class FaqService {
   }
   getCategories() {
     return this.http.get<Category[]>(
-      'https://hr-automation-backend.onrender.com/faq/categories'
+     API+ '/categories'
     );
   }
   deleteFaq(id: number) {

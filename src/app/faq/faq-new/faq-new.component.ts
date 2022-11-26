@@ -30,10 +30,6 @@ export class FaqNewComponent implements OnInit {
   errors = false;
   faq!: Faq;
   faqForm!: FormGroup;
-  cats = [
-    { id: 1, name: '1' },
-    { id: 2, name: '2' },
-  ];
   categories$ = this.store$.select(selectCategories);
 
   constructor(

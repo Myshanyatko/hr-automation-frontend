@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { filter, switchMap, map, finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -9,9 +10,13 @@ import {
 } from './../../store/actions/users.actions';
 import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
-import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  FormControl,
+} from '@angular/forms';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-
 import { Subject, timer, Observable, of } from 'rxjs';
 let nextProcessId = 1;
 
@@ -36,7 +41,8 @@ export class NewUserComponent implements OnInit {
     private actions$: Actions,
     private fb: FormBuilder,
     private router: Router,
-    private store$: Store<AppState>
+    private store$: Store<AppState>,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -78,7 +84,6 @@ export class NewUserComponent implements OnInit {
     this.rejectedFiles$.next(null);
   }
 
-
   saveUser() {
     if (
       this.createUserForm.get('name')?.invalid ||
@@ -88,7 +93,7 @@ export class NewUserComponent implements OnInit {
     } else {
       const user: UserInfo = {
         id: 0,
-        photo: null,
+        photo: this.control.value,
         username: this.createUserForm.value.name,
         birthDate:
           this.createUserForm.value.birthDate != null
@@ -116,8 +121,16 @@ export class NewUserComponent implements OnInit {
         });
 
       this.store$.dispatch(addNewUser({ user: user, processId: processId }));
+
       
-      this.errors = false;
+      console.log(this.control.value);
+      var fd = new FormData();
+      fd.append('file', this.control.value);
+      this.http
+        .post('https://hr-automation-backend.onrender.com/test', fd)
+        .subscribe((res) => console.log(res));
     }
+
+    this.errors = false;
   }
 }

@@ -1,8 +1,13 @@
+import { ProductCategory } from './../../models/productsCategory';
 import { Product } from './../../models/product';
 export interface ProductsState {
-  products: Product[];
+  productsCategories: ProductCategory[];
+  orderedProducts: Product[];
+  selectedProduct: Product | null
 }
 
 export const initialProductsState: ProductsState = {
-  products: [],
+  productsCategories: [],
+  orderedProducts: [],
+  selectedProduct: null
 };

@@ -1,6 +1,8 @@
 export interface Product {
+  id: number;
   code: string;
   name: string;
-  pictureUrl: string;
+  photo: string | File | null;
   quantity: number;
+  categoryId: number
 }

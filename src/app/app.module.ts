@@ -1,3 +1,4 @@
+import { ProductsEffects } from './store/effects/products.effects';
 import { FaqEffects } from './store/effects/faq.effects';
 import { environment } from './../environments/environment';
 import { appReducers } from './store/reducers/app.reducers';
@@ -31,6 +32,7 @@ import {
   TuiTextAreaModule,
   TuiInputFilesModule,
   TuiInputDateModule,
+  TuiInputNumberModule
 } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -57,7 +59,8 @@ import { FaqNewComponent } from './faq/faq-new/faq-new.component';
 import { FaqListComponent } from './faq/faq-list/faq-list.component';
 import { NewCategoryComponent } from './faq/new-category/new-category.component';
 import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
-import { ProductsComponent } from './products/products.component';
+import { ProductsComponent } from './products/products-list/products-list.component';
+import { ProductNewComponent } from './products/product-new/product-new.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +77,7 @@ import { ProductsComponent } from './products/products.component';
     NewCategoryComponent,
     FaqEditComponent,
     ProductsComponent,
+    ProductNewComponent,
   ],
   imports: [
     FormsModule,
@@ -107,8 +111,9 @@ import { ProductsComponent } from './products/products.component';
     TuiInputFilesModule,
     TuiTextfieldControllerModule,
     TuiInputDateModule,
+    TuiInputNumberModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([USersEffects, FaqEffects]),
+    EffectsModule.forRoot([USersEffects, FaqEffects, ProductsEffects]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,
       autoPause: true,

@@ -91,7 +91,8 @@
           <tui-file
             *ngIf="loadedFiles$ | async as file"
             [file]="file"
-            (removed)="removeFile()"
+            (removed)="removeFile()" 
+            
           ></tui-file>
 
           <tui-file
