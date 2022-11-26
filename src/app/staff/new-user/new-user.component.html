@@ -1,4 +1,5 @@
 <div class="new-user-block">
+  <tui-svg src="tuiIconBackCircleLarge" class="back" routerLink="/.."></tui-svg>
   <h2>Новый сотрудник</h2>
 
   <form [formGroup]="createUserForm" (ngSubmit)="saveUser()">
@@ -56,6 +57,15 @@
           проект
           <input tuiTextfield type="text" class="user-form-item" />
         </tui-input>
+        <button
+        tuiButton
+        type="submit"
+        size="m"
+        appearance="accent"
+        class="save-user-button"
+      >
+        Сохранить
+      </button>
       </div>
       <div class="user-form-col2">
         <tui-input formControlName="post" class="user-form-item">
@@ -67,6 +77,36 @@
           <input tuiTextfield type="text" />
         </tui-input>
 
+        <tui-input-files
+          link="Загрузите фото профиля"
+          label=" "
+          class="user-form-item"
+          *ngIf="!control.value"
+          accept="image/*"
+          [formControl]="control"
+          (reject)="onReject($event)"
+        ></tui-input-files>
+
+        <tui-files class="user-form-item">
+          <tui-file
+            *ngIf="loadedFiles$ | async as file"
+            [file]="file"
+            (removed)="removeFile()"
+          ></tui-file>
+
+          <tui-file
+            *ngIf="rejectedFiles$ | async as file"
+            state="error"
+            [file]="file"
+            (removed)="clearRejected()"
+          ></tui-file>
+
+          <tui-file
+            *ngIf="loadingFiles$ | async as file"
+            state="loading"
+            [file]="file"
+          ></tui-file>
+        </tui-files>
         <div class="user-form-item">
           <label tuiLabel="Admin">
             <tui-toggle
@@ -76,15 +116,7 @@
             ></tui-toggle>
           </label>
         </div>
-        <button
-          tuiButton
-          type="submit"
-          size="m"
-          appearance="accent"
-          class="save-user-button"
-        >
-          Сохранить
-        </button>
+       
       </div>
     </div>
   </form>

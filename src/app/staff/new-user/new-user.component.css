@@ -6,6 +6,15 @@
   padding: 20px;
   width: 600px;
 }
+.back {
+  margin-bottom: 12px ;
+  box-shadow: none;
+  color: #ff7043;
+  cursor: pointer;
+}
+.back:hover {
+  color: #f58e6e;
+}
 .user-form-block {
   margin-top: 20px;
   display: grid;
