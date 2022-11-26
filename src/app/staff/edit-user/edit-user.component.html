@@ -42,9 +42,9 @@
           >
         </div>
 
-        <tui-input-date toNativeDate
+        <tui-input-date
+          toNativeDate 
           formControlName="birthDate"
-          
           class="user-form-item"
           tuiUnfinishedValidator="Finish filling the field"
         >
@@ -54,6 +54,9 @@
           проект
           <input tuiTextfield type="text" />
         </tui-input>
+        <button tuiButton size="m" appearance="accent" class="save-user-button">
+          Сохранить
+        </button>
       </div>
       <div class="user-form-col2">
         <tui-input formControlName="post" class="user-form-item">
@@ -66,7 +69,7 @@
         </tui-input>
 
         <tui-input-files
-          link="Выберите или перетащите фото профиля сюда"
+          link="Выберите фото профиля"
           label=" "
           class="user-form-item"
           *ngIf="!control.value"
@@ -75,7 +78,7 @@
           (reject)="onReject($event)"
         ></tui-input-files>
 
-        <tui-files class="tui-space_top-1">
+        <tui-files class="user-form-item">
           <tui-file
             *ngIf="loadedFiles$ | async as file"
             [file]="file"
@@ -104,9 +107,6 @@
             ></tui-toggle>
           </label>
         </div>
-        <button tuiButton size="m" appearance="accent" class="save-user-button">
-          Сохранить
-        </button>
       </div>
     </div>
   </form>

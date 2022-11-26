@@ -41,29 +41,31 @@
 
     <div class="user-info">
       <h2 class="info-name">{{ user.username }}</h2>
-      <div class="user-info-item-block" *ngIf="tuiday$ | async as birthDate">
-        <p class="info-label">дата рождения</p>
-        <p class="info-item">{{ birthDate }}</p>
-      </div>
-      <div class="user-info-item-block">
-        <p class="info-label">почта</p>
-        <p class="info-item">{{ user.email }}</p>
-      </div>
-      <div class="user-info-item-block" *ngIf="user.project">
-        <p class="info-label">проект</p>
-        <p class="info-item">{{ user.project }}</p>
-      </div>
-      <div class="user-info-item-block" *ngIf="user.post">
-        <p class="info-label">должность</p>
-        <p class="info-item">{{ user.post }}</p>
+      <div class="div-info-for-grig">
+        <div class="user-info-item-block" *ngIf="tuiday$ | async as birthDate">
+          <p class="info-label">дата рождения</p>
+          <p class="info-item">{{ birthDate }}</p>
+        </div>
+        <div class="user-info-item-block">
+          <p class="info-label">почта</p>
+          <p class="info-item">{{ user.email }}</p>
+        </div>
+        <div class="user-info-item-block" *ngIf="user.project">
+          <p class="info-label">проект</p>
+          <p class="info-item">{{ user.project }}</p>
+        </div>
+        <div class="user-info-item-block" *ngIf="user.post">
+          <p class="info-label">должность</p>
+          <p class="info-item">{{ user.post }}</p>
+        </div>
+        <div class="user-info-item-block">
+          <p class="info-label">роль</p>
+          <p class="info-item">{{ user.admin ? "Админ" : "Сотрудник" }}</p>
+        </div>
       </div>
       <div class="user-info-item-block" *ngIf="user.about">
         <p class="info-label">информация</p>
         <p class="info-item">{{ user.about }}</p>
-      </div>
-      <div class="user-info-item-block">
-        <p class="info-label">роль</p>
-        <p class="info-item">{{ user.admin ? "Админ" : "Сотрудник" }}</p>
       </div>
     </div>
   </div>

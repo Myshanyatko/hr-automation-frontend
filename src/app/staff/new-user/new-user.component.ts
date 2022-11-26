@@ -1,4 +1,4 @@
-import { filter, tap } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { UserInfo } from './../../models/userInfo';
@@ -10,7 +10,6 @@ import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { pipe } from 'rxjs';
 
 let nextProcessId = 1;
 
@@ -22,7 +21,6 @@ let nextProcessId = 1;
 })
 export class NewUserComponent implements OnInit {
   createUserForm!: FormGroup;
-  user: UserInfo | null = null;
   errors = false;
 
   constructor(
@@ -36,7 +34,7 @@ export class NewUserComponent implements OnInit {
     this.createUserForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      date: [''],
+      birthDate: [],
       project: [''],
       post: [''],
       about: [''],
@@ -50,19 +48,25 @@ export class NewUserComponent implements OnInit {
     ) {
       this.errors = true;
     } else {
-      if (this.user == null) {
-        this.user = {
+      
+      const user: UserInfo  = {
           id: 0,
           photo: null,
           username: this.createUserForm.value.name,
-          birthDate: this.createUserForm.value.birthDate,
+          birthDate:  this.createUserForm.value.birthDate != null
+          ? new Date(
+              this.createUserForm.value.birthDate.year,
+              this.createUserForm.value.birthDate.month,
+              this.createUserForm.value.birthDate.day
+            )
+          : null,
           email: this.createUserForm.value.email,
           project: this.createUserForm.value.project,
           post: this.createUserForm.value.post,
           admin: this.createUserForm.value.admin,
           about: this.createUserForm.value.about,
         };
-      }
+      
       const processId = nextProcessId + 1;
       this.actions$
         .pipe(
@@ -74,7 +78,7 @@ export class NewUserComponent implements OnInit {
         });
 
       this.store$.dispatch(
-        addNewUser({ user: this.user, processId: processId })
+        addNewUser({ user: user, processId: processId })
       );
       this.errors = false;
     }

@@ -45,10 +45,13 @@
             >Невалидное значение почты</span
           >
         </div>
-        <tui-input formControlName="date" class="user-form-item">
-          дата рождения
-          <input tuiTextfield type="text" />
-        </tui-input>
+        <tui-input-date 
+        formControlName="birthDate"
+        class="user-form-item"
+        tuiUnfinishedValidator="Finish filling the field"
+      >
+        дата рождения
+      </tui-input-date>
         <tui-input formControlName="project" class="user-form-item">
           проект
           <input tuiTextfield type="text" class="user-form-item" />

@@ -25,6 +25,10 @@
 .user-info {
   padding: 20px 20px 20px 0;
 }
+.div-info-for-grig{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 .icon-user-avatar {
   --tui-avatar-color: #ff7043;
   --tui-avatar-background: #f2f2f2;

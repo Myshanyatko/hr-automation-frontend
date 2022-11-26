@@ -1,6 +1,6 @@
 import { Actions, ofType } from '@ngrx/effects';
 import { TuiDestroyService, TuiDay } from '@taiga-ui/cdk';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { selectUser } from './../../store/selectors/user.selectors';
 import { switchMap, map, finalize, tap, filter } from 'rxjs/operators';
 import { Subject, timer, Observable, of, takeUntil } from 'rxjs';
@@ -13,7 +13,7 @@ import {
   Validators,
   FormBuilder,
 } from '@angular/forms';
-import { Component, OnInit,} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppState } from 'src/app/store/state/app.state';
 import { TuiFileLike } from '@taiga-ui/kit';
 
@@ -75,8 +75,7 @@ export class EditUserComponent implements OnInit {
                   new Date(att.birthDate).getDate()
                 )
               );
-          } else
-            this.userForm.get('birthDate')?.setValue(new TuiDay(1970, 1, 1));
+          }
         } else this.userForm.get(i)?.setValue(att[i as keyof UserInfo]);
       }
     });
@@ -114,7 +113,14 @@ export class EditUserComponent implements OnInit {
     const user: UserInfo = {
       id: this.id,
       username: this.userForm.value.username,
-      birthDate: new Date(this.userForm.value.birthDate),
+      birthDate:
+        this.userForm.value.birthDate != null
+          ? new Date(
+              this.userForm.value.birthDate.year,
+              this.userForm.value.birthDate.month,
+              this.userForm.value.birthDate.day
+            )
+          : null,
       email: this.userForm.value.email,
       project: this.userForm.value.project,
       post: this.userForm.value.post,
