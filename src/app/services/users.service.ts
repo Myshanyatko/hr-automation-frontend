@@ -27,7 +27,7 @@ export class UsersService {
     return this.http.put(API, {
       id: user.id,
       email: user.email,
-      birthDate: user.date,
+      birthDate: user.birthDate,
       username: user.username,
       role: user.admin,
       project: user.project,
@@ -46,7 +46,7 @@ export class UsersService {
     return this.http.post(API, {
       id: user.id,
       email: user.email,
-      birthDate: user.date,
+      birthDate: user.birthDate,
       username: user.username,
       role: user.admin,
       project: user.project,

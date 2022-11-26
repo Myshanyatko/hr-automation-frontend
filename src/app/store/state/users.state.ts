@@ -10,11 +10,11 @@ export const initialUserState: UserState = {
   selectedUser: {
     id: 0,
     username: '',
-    date: '',
+    birthDate: null,
     email: '',
     project: '',
     post: '',
-    photo: '',
+    photo: null,
     about: '',
     admin: false,
   },

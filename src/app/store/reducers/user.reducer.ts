@@ -1,3 +1,4 @@
+
 import { createReducer, on } from '@ngrx/store';
 import {
   setUsers,
@@ -14,7 +15,12 @@ export const userReducer = createReducer(
     return { ...state, users: userList };
   }),
   on(setUser, (state, { user }) => {
-    return { ...state, selectedUser: user };
+    return {
+      ...state,
+      selectedUser: 
+    user
+      ,
+    };
   }),
   on(editUser, (state, { user }) => {
     return { ...state, selectedUser: user };

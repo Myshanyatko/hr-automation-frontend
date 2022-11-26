@@ -13,6 +13,7 @@ import {
   addNewUserSuccess,
   deleteUser,
   deleteUserSuccess,
+  editUserSuccess,
 } from './../actions/users.actions';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -55,11 +56,9 @@ export class USersEffects {
       mergeMap((action) =>
         this.usersService.putUser(action.user).pipe(
           map(() => {
-            this.alert
-              .showNotificationSuccess('Изменения сохранены')
-              .subscribe();
-            return setUser({
+            return editUserSuccess({
               user: action.user,
+              processId: action.processId
             });
           }),
 
@@ -70,6 +69,20 @@ export class USersEffects {
         )
       )
     )
+  );
+  editUserSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(editUserSuccess),
+
+        map((action) =>{this.alert.showNotificationSuccess('Изменения сохранены').subscribe()
+          return setUser({
+            user: action.user,
+            
+          })}
+          
+        )
+      )
   );
 
   AddNewUser$ = createEffect(() =>

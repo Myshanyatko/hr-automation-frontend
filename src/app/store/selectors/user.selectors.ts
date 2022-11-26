@@ -11,3 +11,7 @@ export const selectUser = createSelector(
   selectUsers,
   (state: UserState) => state.selectedUser
 );
+export const selectUserBirthDate = createSelector(
+  selectUsers,
+  (state: UserState) => state.selectedUser.birthDate
+);

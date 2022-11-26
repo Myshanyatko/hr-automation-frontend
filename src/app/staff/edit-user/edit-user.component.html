@@ -1,70 +1,113 @@
-<form [formGroup]="userForm" (ngSubmit)="saveUser()">
-  <div class="user-form-block">
-    <div class="user-form-col1">
-      <tui-input formControlName="name" class="user-form-item">
-        имя
-        <input tuiTextfield type="text" />
-      </tui-input>
-      <div
-        class="error-message"
-        *ngIf="
-          userForm.get('name')?.invalid &&
-          (userForm.get('name')?.dirty || userForm.get('name')?.touched)
-        "
-      >
-        <span *ngIf="userForm.get('name')?.errors?.['required']"
-          >Обязательное поле</span
+<div *ngIf="user$ | async as user" class="tui-container">
+  <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+    <tui-svg
+      src="tuiIconBackCircleLarge"
+      class="back"
+      [routerLink]="['/user/' + user.id]"
+    ></tui-svg>
+    <div class="user-form-block">
+      <div class="user-form-col1">
+        <tui-input formControlName="username" class="user-form-item">
+          имя
+          <input tuiTextfield type="text" />
+        </tui-input>
+        <div
+          class="error-message"
+          *ngIf="
+            userForm.get('username')?.invalid &&
+            (userForm.get('username')?.dirty ||
+              userForm.get('username')?.touched)
+          "
         >
-      </div>
-      <tui-input formControlName="email" class="user-form-item">
-        почта
-        <input tuiTextfield type="email" />
-      </tui-input>
-      <div
-        class="error-message"
-        *ngIf="
-          userForm.get('email')?.invalid &&
-          (userForm.get('email')?.dirty || userForm.get('email')?.touched)
-        "
-      >
-        <span *ngIf="userForm.get('email')?.errors?.['required']"
-          >Обязательное поле</span
+          <span *ngIf="userForm.get('name')?.errors?.['required']"
+            >Обязательное поле</span
+          >
+        </div>
+        <tui-input formControlName="email" class="user-form-item">
+          почта
+          <input tuiTextfield type="email" />
+        </tui-input>
+        <div
+          class="error-message"
+          *ngIf="
+            userForm.get('email')?.invalid &&
+            (userForm.get('email')?.dirty || userForm.get('email')?.touched)
+          "
         >
-        <span *ngIf="userForm.get('email')?.errors?.['email']"
-          >Невалидное значение почты</span
-        >
-      </div>
-      <tui-input formControlName="date" class="user-form-item">
-        дата рождения
-        <input tuiTextfield type="text" />
-      </tui-input>
-      <tui-input formControlName="project" class="user-form-item">
-        проект
-        <input tuiTextfield type="text" />
-      </tui-input>
-    </div>
-    <div class="user-form-col2">
-      <tui-input formControlName="post" class="user-form-item">
-        должность
-        <input tuiTextfield type="text" />
-      </tui-input>
-      <tui-input formControlName="about" class="user-form-item">
-        информация
-        <input tuiTextfield type="text" />
-      </tui-input>
+          <span *ngIf="userForm.get('email')?.errors?.['required']"
+            >Обязательное поле</span
+          >
+          <span *ngIf="userForm.get('email')?.errors?.['email']"
+            >Невалидное значение почты</span
+          >
+        </div>
 
-      <div class="user-form-item">
-        <label tuiLabel="Admin">
-          <tui-toggle
-            formControlName="admin"
-            size="l"
-            data-appearance="accent"
-          ></tui-toggle>
-        </label>
+        <tui-input-date toNativeDate
+          formControlName="birthDate"
+          
+          class="user-form-item"
+          tuiUnfinishedValidator="Finish filling the field"
+        >
+          дата рождения
+        </tui-input-date>
+        <tui-input formControlName="project" class="user-form-item">
+          проект
+          <input tuiTextfield type="text" />
+        </tui-input>
       </div>
-      <button tuiButton size="m" appearance="accent" class="save-user-button">
-        Сохранить
-      </button>
+      <div class="user-form-col2">
+        <tui-input formControlName="post" class="user-form-item">
+          должность
+          <input tuiTextfield type="text" />
+        </tui-input>
+        <tui-input formControlName="about" class="user-form-item">
+          информация
+          <input tuiTextfield type="text" />
+        </tui-input>
+
+        <tui-input-files
+          link="Выберите или перетащите фото профиля сюда"
+          label=" "
+          class="user-form-item"
+          *ngIf="!control.value"
+          accept="image/*"
+          [formControl]="control"
+          (reject)="onReject($event)"
+        ></tui-input-files>
+
+        <tui-files class="tui-space_top-1">
+          <tui-file
+            *ngIf="loadedFiles$ | async as file"
+            [file]="file"
+            (removed)="removeFile()"
+          ></tui-file>
+
+          <tui-file
+            *ngIf="rejectedFiles$ | async as file"
+            state="error"
+            [file]="file"
+            (removed)="clearRejected()"
+          ></tui-file>
+
+          <tui-file
+            *ngIf="loadingFiles$ | async as file"
+            state="loading"
+            [file]="file"
+          ></tui-file>
+        </tui-files>
+        <div class="user-form-item">
+          <label tuiLabel="Admin">
+            <tui-toggle
+              formControlName="admin"
+              size="l"
+              data-appearance="accent"
+            ></tui-toggle>
+          </label>
+        </div>
+        <button tuiButton size="m" appearance="accent" class="save-user-button">
+          Сохранить
+        </button>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>

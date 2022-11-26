@@ -19,8 +19,6 @@ export class FaqService {
     });
   }
   postCategory(name: string) {
-    console.log('postCategory = ' + name);
-
     return this.http.post(API + '/category', {
       name: name,
     });

@@ -1,3 +1,4 @@
+import { EditUserComponent } from './staff/edit-user/edit-user.component';
 import { ProductsComponent } from './products/products.component';
 import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
 import { NewCategoryComponent } from './faq/new-category/new-category.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'faq-list', component: FaqListComponent, canActivate: [AuthGuard] },
   { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] },
   { path: 'new-user', component: NewUserComponent, canActivate: [AuthGuard] },
+  { path: 'edit-user/:id', component: EditUserComponent, canActivate: [AuthGuard] },
   {
     path: 'new-category',
     component: NewCategoryComponent,

@@ -1,3 +1,5 @@
+import { map } from 'rxjs/operators';
+import { selectUserBirthDate } from './../../store/selectors/user.selectors';
 import {
   getUser,
   deleteUser,
@@ -6,11 +8,11 @@ import {
 import { AppState } from './../../store/state/app.state';
 import { UserInfo } from '../../models/userInfo';
 import { Component, OnInit } from '@angular/core';
-import { Observable, takeUntil, tap } from 'rxjs';
+import { Observable, takeUntil, tap, pipe, Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../../store/selectors/user.selectors';
-import { TuiDestroyService } from '@taiga-ui/cdk';
+import { TuiDestroyService, TuiDay } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-user',
@@ -20,8 +22,8 @@ import { TuiDestroyService } from '@taiga-ui/cdk';
 })
 export class UserComponent implements OnInit {
   public user$: Observable<UserInfo> = this.store$.select(selectUser);
-
-  public isEdit = false;
+  public birthDate$ = this.store$.select(selectUserBirthDate);
+  tuiday$?: Observable<TuiDay | null>;
 
   constructor(
     private store$: Store<AppState>,
@@ -30,6 +32,14 @@ export class UserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.tuiday$ = this.birthDate$.pipe(
+      map((date) => {
+        if(date == null)
+        return null 
+        else
+       return this.fromLocalNativeDate(date)
+      })
+    );
     this.route.params
       .pipe(
         tap(({ id }) => {
@@ -39,16 +49,11 @@ export class UserComponent implements OnInit {
       )
       .subscribe();
   }
-
-  editUser() {
-    this.isEdit = true;
-  }
-
+ fromLocalNativeDate(date: Date): TuiDay {
+  date = new Date(date)
+    return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate());
+}
   deleteUser(user: UserInfo) {
     this.store$.dispatch(deleteUser({ id: user.id }));
-  }
-  saveUser(user: UserInfo) {
-    this.store$.dispatch(editUser({ user: user }));
-    this.isEdit = false;
   }
 }

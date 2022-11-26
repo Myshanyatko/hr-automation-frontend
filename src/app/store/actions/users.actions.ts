@@ -22,7 +22,11 @@ export const setUser = createAction(
 //изменить выбранного пользователя
 export const editUser = createAction(
   '[Users Page] Edit User',
-  props<{ user: UserInfo }>()
+  props<{ user: UserInfo ,processId: number }>()
+);
+export const editUserSuccess = createAction(
+  '[Users Page] Edit User Success',
+  props<{ user: UserInfo ,processId: number }>()
 );
 //изменить выбранного пользователя
 export const addNewUser = createAction(

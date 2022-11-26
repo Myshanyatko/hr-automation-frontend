@@ -1,5 +1,18 @@
+.tui-container {
+  background-color: #fff;
+  margin: 35px 0;
+  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+  border-radius: var(--tui-radius-l);
+  width: 700px;
+}
+.back {
+  margin: 18px 0 0 20px;
+  box-shadow: none;
+  color: #ff7043;
+  cursor: pointer;
+}
 .user-form-block {
-  margin: 40px 20px 20px 0;
+  margin: 10px 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 15px;

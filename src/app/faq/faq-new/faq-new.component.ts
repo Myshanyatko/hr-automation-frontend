@@ -18,7 +18,6 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { pipe } from 'rxjs';
 
 let nextProcessId = 1;
 

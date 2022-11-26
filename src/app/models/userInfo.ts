@@ -1,11 +1,11 @@
 export interface UserInfo {
   id: number;
   username: string;
-  date: string;
+  birthDate: Date | null;
   email: string;
   project: string;
   post: string;
-  photo: string;
+  photo: File | null;
   about: string;
   admin: boolean;
 }

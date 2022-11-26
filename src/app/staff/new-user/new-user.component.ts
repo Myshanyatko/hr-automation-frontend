@@ -53,9 +53,9 @@ export class NewUserComponent implements OnInit {
       if (this.user == null) {
         this.user = {
           id: 0,
-          photo: '',
+          photo: null,
           username: this.createUserForm.value.name,
-          date: this.createUserForm.value.date,
+          birthDate: this.createUserForm.value.birthDate,
           email: this.createUserForm.value.email,
           project: this.createUserForm.value.project,
           post: this.createUserForm.value.post,

@@ -1,9 +1,6 @@
 <div *ngIf="user$ | async as user" class="tui-container">
-  <tui-svg
-    src="tuiIconBackCircleLarge"
-    class="back"
-    routerLink="/users"
-  ></tui-svg>
+  <tui-svg src="tuiIconBackCircleLarge" class="back" routerLink="/.."></tui-svg>
+
   <div class="user-info-block">
     <div class="avatar-and-buttons-block">
       <tui-avatar
@@ -15,14 +12,14 @@
         avatarUrl="tuiIconUser"
       ></tui-avatar>
 
-      <ul class="user-buttons" *ngIf="!isEdit">
+      <ul class="user-buttons">
         <li>
           <button
             class="user-edit-button"
             tuiButton
             size="m"
             appearance="second"
-            (click)="editUser()"
+            routerLink="/edit-user/{{ user.id }}"
           >
             Изменить
           </button>
@@ -42,11 +39,11 @@
       </ul>
     </div>
 
-    <div *ngIf="!isEdit" class="user-info">
+    <div class="user-info">
       <h2 class="info-name">{{ user.username }}</h2>
-      <div class="user-info-item-block" *ngIf="user.date">
+      <div class="user-info-item-block" *ngIf="tuiday$ | async as birthDate">
         <p class="info-label">дата рождения</p>
-        <p class="info-item">{{ user.date }}</p>
+        <p class="info-item">{{ birthDate }}</p>
       </div>
       <div class="user-info-item-block">
         <p class="info-label">почта</p>
@@ -69,10 +66,5 @@
         <p class="info-item">{{ user.admin ? "Админ" : "Сотрудник" }}</p>
       </div>
     </div>
-    <app-edit-user
-      *ngIf="isEdit"
-      [user]="user"
-      (userEdited)="saveUser($event)"
-    ></app-edit-user>
   </div>
 </div>
