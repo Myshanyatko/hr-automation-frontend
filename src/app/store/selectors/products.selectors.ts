@@ -8,6 +8,10 @@ export const selectProductsCategories = createSelector(
   selectProducts,
   (state: ProductsState) => state.productsCategories
 );
+export const selectOrderedProducts = createSelector(
+  selectProducts,
+  (state: ProductsState) => state.orderedProducts
+);
 
 export const selectSelectedProduct = createSelector(
   selectProducts,

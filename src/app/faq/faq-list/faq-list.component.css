@@ -32,11 +32,9 @@
   text-align: center;
 }
 .icon-faq {
+  color: #ff7043;
   padding: 0 5px;
   cursor: pointer;
-}
-.icon-faq {
-  color: #ff7043;
 }
 .icon-faq:hover {
   color: #000;

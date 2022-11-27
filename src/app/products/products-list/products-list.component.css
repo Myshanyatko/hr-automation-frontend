@@ -1,0 +1,49 @@
+.tui-container {
+  margin: 35px 0;
+  width: 560px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: var(--tui-radius-l);
+  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+}
+.back-and-title {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 15px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.back {
+  box-shadow: none;
+  color: #ff7043;
+  cursor: pointer;
+}
+.back:hover {
+  color: #f58e6e;
+}
+.products-block {
+  margin: 0 35px;
+}
+.product-block {
+  margin-bottom: 15px;
+  display: grid;
+  grid-template-columns: 300px auto;
+}
+.product-code {
+  color: #a6a2a2;
+}
+.new-product-button {
+  margin-top: 20px;
+}
+.icons-faq {
+  padding: 0 5px;
+  text-align: center;
+}
+.icon-faq {
+  color: #ff7043;
+  padding: 0 5px;
+  cursor: pointer;
+}
+.icon-faq:hover {
+  color: #000;
+}

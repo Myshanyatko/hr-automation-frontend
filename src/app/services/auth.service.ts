@@ -24,7 +24,7 @@ export class AuthService {
     window.sessionStorage.setItem('email', email);
     //разкомментить, когда подключишь сервер
     return this.http
-      .get(AUTH_API + 'authorization?email=' + email, {
+      .get(AUTH_API + 'authorization/admin?email=' + email, {
         headers: { 'Access-Control-Allow-Origin': '*' },
       })
       .subscribe({

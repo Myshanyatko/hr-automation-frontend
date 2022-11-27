@@ -12,6 +12,15 @@ export const setProductsCategories = createAction(
   '[Products Page] Set Products Categories',
   props<{ productsCategories: ProductCategory[] }>()
 );
+// список заказанных продуктов
+export const getOrderedProducts = createAction(
+  '[Products Page] Get Ordered Products'
+);
+
+export const setOrderedProducts = createAction(
+  '[Products Page] Set Ordered Products',
+  props<{ orderedProducts: Product[] }>()
+);
 
 //добавить новоый продукт
 export const addNewProduct = createAction(
@@ -21,4 +30,24 @@ export const addNewProduct = createAction(
 export const addNewProductSuccess = createAction(
   '[Products Page] Add New Product Success',
   props<{ product: Product; processId: number }>()
+);
+
+//добавить новоый продукт
+export const editProduct = createAction(
+  '[Products Page] Edit Product',
+  props<{ product: Product; processId: number }>()
+);
+export const editProductSuccess = createAction(
+  '[Products Page] Edit Product Success',
+  props<{ processId: number }>()
+);
+
+//запрошенный продукт
+export const getProduct = createAction(
+  '[Products Page] Get Product',
+  props<{ id: number }>()
+);
+export const setProduct = createAction(
+  '[Products Page] Set Product',
+  props<{ product: Product }>()
 );

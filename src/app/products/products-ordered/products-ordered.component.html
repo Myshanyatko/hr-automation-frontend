@@ -1,0 +1,9 @@
+<div class="tui-container">
+  <a routerLink="/products">все продукты</a>
+
+  <div class="products" *ngIf="products$ | async as products">
+<div class="product" *ngFor="let product of products">
+<p>{{product.name}}</p>
+</div>
+  </div>
+</div>

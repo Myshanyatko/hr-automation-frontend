@@ -10,7 +10,7 @@ export class MenuComponent {
   public menuItems = [
     { name: 'Сотрудники', url: 'users'},
     { name: 'FAQ', url: 'faq-list' },
-    { name: 'Продукты', url: 'products' },
+    { name: 'Продукты', url: 'products-ordered' },
     { name: 'Рестораны', url: 'restorans' },
   ];
 

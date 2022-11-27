@@ -1,1 +1,59 @@
-<a routerLink="/product-new">add product</a>
+<div class="tui-container">
+  <div class="back-and-title">
+    <tui-svg
+      src="tuiIconBackCircleLarge"
+      class="back"
+      routerLink="/products-ordered"
+    ></tui-svg>
+    <h2 class="title-new-product">Продукты</h2>
+  </div>
+  <div class="products-block">
+    <div class="products-list">
+      <tui-accordion [closeOthers]="false">
+        >
+        <tui-accordion-item
+          *ngFor="let category of categories$ | async"
+          class="category-item"
+        >
+          {{ category.name }}
+
+          <ng-template tuiAccordionItemContent>
+            <div
+              class="product-block"
+              *ngFor="let product of category.products"
+            >
+              <div class="product">
+                <tui-avatar></tui-avatar>
+                <h4 class="product-title">{{ product.name }}</h4>
+                <p class="product-code">{{ product.code }}</p>
+              </div>
+              <div class="icons-faq">
+                <tui-svg
+                  class="icon-faq"
+                  src="tuiIconEdit"
+                  [routerLink]="['/edit-product/' + product.id]"
+                ></tui-svg>
+
+                <tui-svg
+                  class="icon-faq"
+                  src="tuiIconTrash"
+                  (click)="deleteProduct(product.id, category.id)"
+                ></tui-svg>
+              </div>
+            </div>
+          </ng-template>
+        </tui-accordion-item>
+      </tui-accordion>
+    </div>
+    <button
+      tuiButton
+      type="button"
+      appearance="accent"
+      class="new-product-button"
+      [routerLink]="['/product-new']"
+      size="m"
+    >
+      Добавить новый продукт
+    </button>
+  </div>
+</div>

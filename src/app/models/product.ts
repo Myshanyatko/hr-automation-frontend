@@ -4,5 +4,6 @@ export interface Product {
   name: string;
   photo: string | File | null;
   quantity: number;
-  categoryId: number
+  categoryId: number;
+  ordered: boolean
 }

@@ -1,3 +1,5 @@
+import { ProductsOrderedComponent } from './products/products-ordered/products-ordered.component';
+import { ProductEditComponent } from './products/product-edit/product-edit.component';
 import { ProductNewComponent } from './products/product-new/product-new.component';
 import { EditUserComponent } from './staff/edit-user/edit-user.component';
 import { ProductsComponent } from './products/products-list/products-list.component';
@@ -25,9 +27,11 @@ const routes: Routes = [
   { path: 'faq', component: FaqNewComponent, canActivate: [AuthGuard] },
   { path: 'faq-list', component: FaqListComponent, canActivate: [AuthGuard] },
   { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] },
+  { path: 'products-ordered', component: ProductsOrderedComponent, canActivate: [AuthGuard] },
   { path: 'product-new', component: ProductNewComponent, canActivate: [AuthGuard] },
   { path: 'new-user', component: NewUserComponent, canActivate: [AuthGuard] },
   { path: 'edit-user/:id', component: EditUserComponent, canActivate: [AuthGuard] },
+  { path: 'edit-product/:id', component: ProductEditComponent, canActivate: [AuthGuard] },
   {
     path: 'new-category',
     component: NewCategoryComponent,

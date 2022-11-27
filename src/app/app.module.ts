@@ -61,6 +61,8 @@ import { NewCategoryComponent } from './faq/new-category/new-category.component'
 import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
 import { ProductsComponent } from './products/products-list/products-list.component';
 import { ProductNewComponent } from './products/product-new/product-new.component';
+import { ProductEditComponent } from './products/product-edit/product-edit.component';
+import { ProductsOrderedComponent } from './products/products-ordered/products-ordered.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +80,8 @@ import { ProductNewComponent } from './products/product-new/product-new.componen
     FaqEditComponent,
     ProductsComponent,
     ProductNewComponent,
+    ProductEditComponent,
+    ProductsOrderedComponent,
   ],
   imports: [
     FormsModule,
