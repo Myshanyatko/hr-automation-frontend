@@ -1,6 +1,7 @@
 <div class="tui-container">
   <h2 class="title-product">Заказанные продукты </h2>
-  <div class="products" *ngIf="products$ | async as products">
+  <div class="products"  *tuiLet="products$ | async as products">
+    <tui-loader *ngIf="products == null" class="loader"> </tui-loader>
     <div class="product" *ngFor="let product of products">
       <div class="info">
         <h3>{{ product.name }}</h3>

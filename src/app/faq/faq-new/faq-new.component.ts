@@ -17,7 +17,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 let nextProcessId = 1;
 
@@ -26,11 +26,12 @@ let nextProcessId = 1;
   templateUrl: './faq-new.component.html',
   styleUrls: ['./faq-new.component.css'],
 })
-export class FaqNewComponent implements OnInit {
+export class FaqNewComponent implements OnInit, OnDestroy {
   errors = false;
   faq!: Faq;
   faqForm!: FormGroup;
   categories$ = this.store$.select(selectCategories);
+  loading = false;
 
   constructor(
     private actions$: Actions,
@@ -46,21 +47,24 @@ export class FaqNewComponent implements OnInit {
       description: ['', [Validators.required]],
     });
 
-    this.categories$.subscribe((item) =>
-      this.faqForm.addControl(
+    this.categories$.subscribe((item) => {
+      if (item == null) return null;
+
+      return this.faqForm.addControl(
         'category',
         new FormControl(item[0], [Validators.required])
-      )
-    );
+      );
+    });
   }
   saveFaq() {
     if (
       this.faqForm.get('category')?.invalid ||
       this.faqForm.get('title')?.invalid ||
-      this.faqForm.get('description')?.invalid
+      this.faqForm.get('description')?.invalid 
     ) {
       this.errors = true;
     } else {
+      if (this.loading == false) this.loading = true;
       this.faq = {
         id: 0,
         title: this.faqForm.value.title,
@@ -83,5 +87,8 @@ export class FaqNewComponent implements OnInit {
   }
   complete() {
     return this.router.navigate(['faq-list']);
+  }
+  ngOnDestroy(): void {
+    this.loading = false;
   }
 }

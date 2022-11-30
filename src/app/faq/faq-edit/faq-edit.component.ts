@@ -5,7 +5,7 @@ import { Observable, take, tap } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppState } from './../../store/state/app.state';
 import { Store } from '@ngrx/store';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { putFaq } from 'src/app/store/actions/faq.actions';
 
 @Component({
@@ -14,7 +14,9 @@ import { putFaq } from 'src/app/store/actions/faq.actions';
   styleUrls: ['./faq-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FaqEditComponent implements OnInit {
+export class FaqEditComponent implements OnInit, OnDestroy {
+  errors = false;
+  loading = false;
   faq$ = this.store$.select(selectEditedFaq);
   faqForm!: FormGroup;
   title: string = '';
@@ -31,22 +33,36 @@ export class FaqEditComponent implements OnInit {
     });
   }
   saveFaq() {
-    var idFaq = 0;
-    var categoryIdFaq = 0;
-    this.faq$
-      .pipe(
-        tap(({ id, categoryId }) => {
-          (idFaq = Number(id)), (categoryIdFaq = Number(categoryId));
-        })
-      )
-      .subscribe();
-    const faq = {
-      id: idFaq,
-      categoryId: categoryIdFaq,
-      title: this.faqForm.value.title,
-      description: this.faqForm.value.description,
-    };
+    if (
+      this.faqForm.get('category')?.invalid ||
+      this.faqForm.get('title')?.invalid ||
+      this.faqForm.get('description')?.invalid
+    ) {
+      this.errors = true;
+    } else {
+      if (this.loading == false) this.loading = true;
+      var idFaq = 0;
+      var categoryIdFaq = 0;
+      this.faq$
+        .pipe(
+          tap(({ id, categoryId }) => {
+            (idFaq = Number(id)), (categoryIdFaq = Number(categoryId));
+          })
+        )
+        .subscribe();
+      const faq = {
+        id: idFaq,
+        categoryId: categoryIdFaq,
+        title: this.faqForm.value.title,
+        description: this.faqForm.value.description,
+      };
 
-    this.store$.dispatch(putFaq({ faq }));
+      this.store$.dispatch(putFaq({ faq }));
+      this.errors = false;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.loading = false;
   }
 }

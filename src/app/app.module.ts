@@ -17,7 +17,7 @@ import {
   TuiDropdownModule,
   TuiNotificationModule,
   TuiTextfieldControllerModule,
-  
+  TuiLoaderModule,
 } from '@taiga-ui/core';
 import {
   TuiInputModule,
@@ -34,7 +34,7 @@ import {
   TuiInputFilesModule,
   TuiInputDateModule,
   TuiInputNumberModule,
-  TuiPaginationModule
+  TuiPaginationModule,
 } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -119,6 +119,7 @@ import { ProductsOrderedComponent } from './products/products-ordered/products-o
     TuiInputDateModule,
     TuiPaginationModule,
     TuiInputNumberModule,
+    TuiLoaderModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([USersEffects, FaqEffects, ProductsEffects]),
     StoreDevtoolsModule.instrument({

@@ -13,7 +13,7 @@ import {
   Validators,
   FormBuilder,
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppState } from 'src/app/store/state/app.state';
 import { TuiFileLike } from '@taiga-ui/kit';
 
@@ -25,10 +25,11 @@ let nextProcessId = 1;
   styleUrls: ['./edit-user.component.css'],
   providers: [TuiDestroyService],
 })
-export class EditUserComponent implements OnInit {
+export class EditUserComponent implements OnInit, OnDestroy {
   public user$: Observable<UserInfo> = this.store$.select(selectUser);
   userForm!: FormGroup;
   errors = false;
+  loading = false;
 
   readonly control = new FormControl();
   readonly rejectedFiles$ = new Subject<TuiFileLike | null>();
@@ -118,6 +119,7 @@ export class EditUserComponent implements OnInit {
     ) {
       this.errors = true;
     } else {
+      if (this.loading == false) this.loading = true;
       const user: UserInfo = {
         id: this.id,
         username: this.userForm.value.username,
@@ -151,5 +153,8 @@ export class EditUserComponent implements OnInit {
       this.store$.dispatch(editUser({ user: user, processId: processId }));
       this.errors = false;
     }
+  }
+  ngOnDestroy(): void {
+    this.loading = false;
   }
 }

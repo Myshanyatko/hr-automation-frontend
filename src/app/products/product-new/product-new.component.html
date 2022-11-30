@@ -52,7 +52,8 @@
           errors)
       "
     >
-      <span>Обязательное поле</span>
+      <span *ngIf="productForm.get('quantity')?.errors?.['required']">Обязательное поле</span>
+      <span *ngIf="productForm.get('quantity')?.errors?.['minLength']">Количество должно быть больше одного</span>
     </div>
 
     <tui-select
@@ -122,6 +123,7 @@
       tuiButton
       type="submit"
       size="m"
+      [showLoader]="loading"
       appearance="accent"
       class="save-product-button"
     >

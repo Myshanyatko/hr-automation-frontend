@@ -23,12 +23,14 @@ export const faqReducer = createReducer(
   //   return { ...state, categories: [...state.categories, ] };
   // }),
   on(deleteFaqSuccess, (state, { faqId, categoryId }) => {
-    const category = state.categories.find((cat) => cat.id === categoryId) || {
+     if (state.categories != null){
+    var category = state.categories.find((cat) => cat.id === categoryId) || {
       id: -1,
       name: '',
       questions: [],
     };
     var questions = category?.questions.filter((faq) => faq.id != faqId);
+   
     return {
       ...state,
       categories: [
@@ -49,7 +51,8 @@ export const faqReducer = createReducer(
 
         return 0;
       }),
-    };
+    };}
+    else return state
   }),
   on(editFaq, (state, { faq }) => {
     return {

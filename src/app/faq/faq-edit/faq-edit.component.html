@@ -16,12 +16,12 @@
         class="error-message"
         *ngIf="
           faqForm.get('title')?.invalid &&
-          (faqForm.get('title')?.dirty || faqForm.get('title')?.touched)
+          (faqForm.get('title')?.dirty ||
+            faqForm.get('title')?.touched ||
+            errors)
         "
       >
-        <span *ngIf="faqForm.get('title')?.errors?.['required']"
-          >Обязательное поле</span
-        >
+        <span>Обязательное поле</span>
       </div>
 
       <tui-text-area formControlName="description" class="faq-form-item">
@@ -32,12 +32,11 @@
         *ngIf="
           faqForm.get('description')?.invalid &&
           (faqForm.get('description')?.dirty ||
-            faqForm.get('description')?.touched)
+            faqForm.get('description')?.touched ||
+            errors)
         "
       >
-        <span *ngIf="faqForm.get('description')?.errors?.['required']"
-          >Обязательное поле</span
-        >
+        <span>Обязательное поле</span>
       </div>
       <div class="faq-form-buttons">
         <button
@@ -53,6 +52,7 @@
           tuiButton
           type="submit"
           size="m"
+          [showLoader]="loading"
           appearance="accent"
           class="save-faq-button"
         >

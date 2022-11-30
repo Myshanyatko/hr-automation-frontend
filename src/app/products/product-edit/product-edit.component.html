@@ -1,132 +1,132 @@
 <div class="tui-container">
-    <div class="back-and-title">
-      <tui-svg
-        src="tuiIconBackCircleLarge"
-        class="back"
-        routerLink="/products"
-      ></tui-svg>
-      <h2 class="title-new-product">Редактирование продукта</h2>
-    </div>
-  
-    <form [formGroup]="productForm" (ngSubmit)="saveProduct()" class="form">
-      <tui-input formControlName="name" class="product-form-item">
-        название продукта
-        <input tuiTextfield type="text" />
-      </tui-input>
-      <div
-        class="error-message"
-        *ngIf="
-          productForm.get('name')?.invalid &&
-          (productForm.get('name')?.dirty ||
-            productForm.get('name')?.touched ||
-            errors)
-        "
-      >
-        <span>Обязательное поле</span>
-      </div>
-      <tui-input formControlName="code" class="product-form-item">
-        артикул продукта
-        <input tuiTextfield type="text" />
-      </tui-input>
-      <div
-        class="error-message"
-        *ngIf="
-          productForm.get('code')?.invalid &&
-          (productForm.get('code')?.dirty ||
-            productForm.get('code')?.touched ||
-            errors)
-        "
-      >
-        <span>Обязательное поле</span>
-      </div>
-      <tui-input-number formControlName="quantity" class="product-form-item">
-        Количество
-      </tui-input-number>
-  
-      <div
-        class="error-message"
-        *ngIf="
-          productForm.get('quantity')?.invalid &&
-          (productForm.get('quantity')?.dirty ||
-            productForm.get('quantity')?.touched ||
-            errors)
-        "
-      >
-        <span>Обязательное поле</span>
-      </div>
-  
-      <tui-select
-        class="product-form-item"
-        tuiTextfieldSize="l"
-        formControlName="category"
-        *ngIf="categories$ | async as categories"
-        [valueContent]="categoryContent"
-      >
-        Категория
-  
-        <tui-data-list-wrapper
-          *tuiDataList
-          [items]="categories"
-          [itemContent]="categoryContent"
-        ></tui-data-list-wrapper>
-      </tui-select>
-  
-      <ng-template #categoryContent let-item>
-        <div class="category-item">
-          {{ item.name }}
-        </div>
-      </ng-template>
-      <div
-        class="error-message"
-        *ngIf="
-          productForm.get('category')?.invalid &&
-          (productForm.get('category')?.dirty ||
-            productForm.get('category')?.touched ||
-            errors)
-        "
-      >
-        <span>Обязательное поле</span>
-      </div>
-  
-      <tui-input-files
-        link="Загрузите фото продукта"
-        label=" "
-        class="product-form-item"
-        *ngIf="!control.value"
-        accept="image/*"
-        [formControl]="control"
-        (reject)="onReject($event)"
-      ></tui-input-files>
-  
-      <tui-files class="product-form-item">
-        <tui-file
-          *ngIf="loadedFiles$ | async as file"
-          [file]="file"
-          (removed)="removeFile()"
-        ></tui-file>
-  
-        <tui-file
-          *ngIf="rejectedFiles$ | async as file"
-          state="error"
-          [file]="file"
-          (removed)="clearRejected()"
-        ></tui-file>
-  
-        <tui-file
-          *ngIf="loadingFiles$ | async as file"
-          state="loading"
-          [file]="file"
-        ></tui-file>
-      </tui-files>
-      <button
-        tuiButton
-        type="submit"
-        size="m"
-        appearance="accent"
-        class="save-product-button"
-      >
-        Сохранить
-      </button>
-    </form>
+  <div class="back-and-title">
+    <tui-svg
+      src="tuiIconBackCircleLarge"
+      class="back"
+      routerLink="/products"
+    ></tui-svg>
+    <h2 class="title-new-product">Редактирование продукта</h2>
   </div>
-  
+
+  <form [formGroup]="productForm" (ngSubmit)="saveProduct()" class="form">
+    <tui-input formControlName="name" class="product-form-item">
+      название продукта
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <div
+      class="error-message"
+      *ngIf="
+        productForm.get('name')?.invalid &&
+        (productForm.get('name')?.dirty ||
+          productForm.get('name')?.touched ||
+          errors)
+      "
+    >
+      <span>Обязательное поле</span>
+    </div>
+    <tui-input formControlName="code" class="product-form-item">
+      артикул продукта
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <div
+      class="error-message"
+      *ngIf="
+        productForm.get('code')?.invalid &&
+        (productForm.get('code')?.dirty ||
+          productForm.get('code')?.touched ||
+          errors)
+      "
+    >
+      <span>Обязательное поле</span>
+    </div>
+    <tui-input-number formControlName="quantity" class="product-form-item">
+      Количество
+    </tui-input-number>
+
+    <div
+      class="error-message"
+      *ngIf="
+        productForm.get('quantity')?.invalid &&
+        (productForm.get('quantity')?.dirty ||
+          productForm.get('quantity')?.touched ||
+          errors)
+      "
+    >
+      <span>Обязательное поле</span>
+    </div>
+
+    <tui-select
+      class="product-form-item"
+      tuiTextfieldSize="l"
+      formControlName="category"
+      *ngIf="categories$ | async as categories"
+      [valueContent]="categoryContent"
+    >
+      Категория
+
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="categories"
+        [itemContent]="categoryContent"
+      ></tui-data-list-wrapper>
+    </tui-select>
+
+    <ng-template #categoryContent let-item>
+      <div class="category-item">
+        {{ item.name }}
+      </div>
+    </ng-template>
+    <div
+      class="error-message"
+      *ngIf="
+        productForm.get('category')?.invalid &&
+        (productForm.get('category')?.dirty ||
+          productForm.get('category')?.touched ||
+          errors)
+      "
+    >
+      <span>Обязательное поле</span>
+    </div>
+
+    <tui-input-files
+      link="Загрузите фото продукта"
+      label=" "
+      class="product-form-item"
+      *ngIf="!control.value"
+      accept="image/*"
+      [formControl]="control"
+      (reject)="onReject($event)"
+    ></tui-input-files>
+
+    <tui-files class="product-form-item">
+      <tui-file
+        *ngIf="loadedFiles$ | async as file"
+        [file]="file"
+        (removed)="removeFile()"
+      ></tui-file>
+
+      <tui-file
+        *ngIf="rejectedFiles$ | async as file"
+        state="error"
+        [file]="file"
+        (removed)="clearRejected()"
+      ></tui-file>
+
+      <tui-file
+        *ngIf="loadingFiles$ | async as file"
+        state="loading"
+        [file]="file"
+      ></tui-file>
+    </tui-files>
+    <button
+      tuiButton
+      type="submit"
+      size="m"
+      [showLoader]="loading"
+      appearance="accent"
+      class="save-product-button"
+    >
+      Сохранить
+    </button>
+  </form>
+</div>

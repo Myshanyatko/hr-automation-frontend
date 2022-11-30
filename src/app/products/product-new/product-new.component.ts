@@ -13,14 +13,14 @@ import { Actions, ofType } from '@ngrx/effects';
 import { Product } from './../../models/product';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { map, finalize, switchMap, filter } from 'rxjs/operators';
-import { timer, Observable, Subject, of } from 'rxjs';
+import { timer, Observable, Subject, of, takeUntil } from 'rxjs';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   FormControl,
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 let nextProcessId = 1;
 
@@ -29,10 +29,10 @@ let nextProcessId = 1;
   templateUrl: './product-new.component.html',
   styleUrls: ['./product-new.component.css'],
 })
-export class ProductNewComponent implements OnInit {
+export class ProductNewComponent implements OnInit, OnDestroy {
   productForm!: FormGroup;
   errors = false;
-
+  loading = false;
   categories$ = this.store$.select(selectProductsCategories);
 
   readonly control = new FormControl();
@@ -54,16 +54,17 @@ export class ProductNewComponent implements OnInit {
     this.productForm = this.fb.group({
       name: ['', [Validators.required]],
       code: ['', [Validators.required]],
-      quantity: [[Validators.required]],
+      quantity: [1, [Validators.required, Validators.minLength(1)]],
     });
 
     this.categories$.subscribe((categories) => {
-      console.log(categories);
-
-      this.productForm.addControl(
-        'category',
-        new FormControl(categories[0], [Validators.required])
-      );
+      if (categories == null) return null;
+      else {
+        return this.productForm.addControl(
+          'category',
+          new FormControl(categories[0], [Validators.required])
+        );
+      }
     });
   }
 
@@ -103,6 +104,7 @@ export class ProductNewComponent implements OnInit {
     ) {
       this.errors = true;
     } else {
+      if (this.loading == false) this.loading = true;
       const product: Product = {
         id: 0,
         name: this.productForm.value.name,
@@ -110,7 +112,7 @@ export class ProductNewComponent implements OnInit {
         quantity: this.productForm.value.quantity,
         categoryId: this.productForm.value.category.id,
         photo: this.productForm.value.photo,
-        ordered: false
+        ordered: false,
       };
 
       const processId = nextProcessId + 1;
@@ -118,7 +120,7 @@ export class ProductNewComponent implements OnInit {
         addNewProduct({ product: product, processId: processId })
       );
       this.errors = false;
-      
+
       this.actions$
         .pipe(
           ofType(addNewProductSuccess),
@@ -128,5 +130,8 @@ export class ProductNewComponent implements OnInit {
           this.router.navigate(['/products']);
         });
     }
+  }
+  ngOnDestroy(): void {
+    this.loading = false;
   }
 }

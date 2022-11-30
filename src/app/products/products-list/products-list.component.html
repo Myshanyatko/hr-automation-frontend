@@ -7,12 +7,13 @@
     ></tui-svg>
     <h2 class="title-new-product">Продукты</h2>
   </div>
-  <div class="products-block">
+  <div class="products-block" *tuiLet="categories$ | async as categories">
+    <tui-loader *ngIf="categories == null" class="loader"> </tui-loader>
     <div class="products-list">
       <tui-accordion [closeOthers]="false">
         >
         <tui-accordion-item
-          *ngFor="let category of categories$ | async"
+          *ngFor="let category of categories"
           class="category-item"
         >
           {{ category.name }}

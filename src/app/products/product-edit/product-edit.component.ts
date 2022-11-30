@@ -27,7 +27,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 let nextProcessId = 1;
 @Component({
@@ -36,8 +36,9 @@ let nextProcessId = 1;
   styleUrls: ['./product-edit.component.css'],
   providers: [TuiDestroyService],
 })
-export class ProductEditComponent implements OnInit {
+export class ProductEditComponent implements OnInit ,  OnDestroy{
   id = -1;
+  loading = false;
   productForm!: FormGroup;
   errors = false;
   categories$ = this.store$.select(selectProductsCategories);
@@ -78,8 +79,8 @@ export class ProductEditComponent implements OnInit {
     });
 
     this.categories$.subscribe((categories) => {
-    this.productForm.get('category')?.setValue(categories[0])
-      
+      if (categories == null) return null;
+      else return this.productForm.get('category')?.setValue(categories[0]);
     });
     this.product$.subscribe((product) => {
       this.product = product;
@@ -126,29 +127,31 @@ export class ProductEditComponent implements OnInit {
     ) {
       this.errors = true;
     } else {
+      if (this.loading == false) this.loading = true;
       const processId = nextProcessId + 1;
-      this.product$.pipe(map((prod) => {
-        if (prod != null) {
-          
-          this.store$.dispatch(
-            editProduct({
-              product: {
-                id: prod.id,
-                ordered: prod.ordered,
-                name: this.productForm.value.name,
-                code: this.productForm.value.code,
-                quantity: this.productForm.value.quantity,
-                categoryId: this.productForm.value.category.id,
-                photo: this.productForm.value.photo,
-              },
-              processId: processId,
-            })
-          );
-        }
-      }),
-      takeUntil(this.destroy$)
-    )
-    .subscribe();
+      this.product$
+        .pipe(
+          map((prod) => {
+            if (prod != null) {
+              this.store$.dispatch(
+                editProduct({
+                  product: {
+                    id: prod.id,
+                    ordered: prod.ordered,
+                    name: this.productForm.value.name,
+                    code: this.productForm.value.code,
+                    quantity: this.productForm.value.quantity,
+                    categoryId: this.productForm.value.category.id,
+                    photo: this.productForm.value.photo,
+                  },
+                  processId: processId,
+                })
+              );
+            }
+          }),
+          takeUntil(this.destroy$)
+        )
+        .subscribe();
       this.errors = false;
 
       this.actions$
@@ -160,5 +163,8 @@ export class ProductEditComponent implements OnInit {
           this.router.navigate(['/products']);
         });
     }
+  }
+  ngOnDestroy(): void {
+    this.loading = false;
   }
 }

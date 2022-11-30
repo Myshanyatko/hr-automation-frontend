@@ -55,7 +55,13 @@
           проект
           <input tuiTextfield type="text" />
         </tui-input>
-        <button tuiButton size="m" appearance="accent" class="save-user-button">
+        <button
+          tuiButton
+          size="m"
+          appearance="accent"
+          class="save-user-button"
+          [showLoader]="loading"
+        >
           Сохранить
         </button>
       </div>

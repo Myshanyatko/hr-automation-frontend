@@ -14,7 +14,7 @@ import { selectUserList } from '../store/selectors/user.selectors';
 })
 export class StaffComponent implements OnInit {
   index = 0;
-  users$: Observable<User[]> | null = this.store$.select(selectUserList);
+  users$: Observable<User[]| null > | null = this.store$.select(selectUserList);
   usersForm!: FormGroup;
   readonly urlNewUser = 'tuiIconUser';
   constructor(private fb: FormBuilder, private store$: Store<AppState>) {}

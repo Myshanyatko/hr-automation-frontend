@@ -19,34 +19,37 @@ export const productsReducer = createReducer(
     return { ...state, selectedProduct: product };
   }),
   on(deleteProductSuccess, (state, { id, categoryId }) => {
-    const category = state.productsCategories.find(
-      (cat) => cat.id === categoryId
-    );
-    var products = category?.products.filter((product) => product.id != id);
-    const newProductsCategories = [
-      ...state.productsCategories.filter((cat) => cat.id != categoryId),
-    ];
-    if (category && products) {
-      newProductsCategories.push({
-        id: category ? category.id : 1,
-        name: category.name,
-        products: products,
+    if (state.productsCategories == null) return state;
+    else {
+      const category = state.productsCategories.find(
+        (cat) => cat.id === categoryId
+      );
+      var products = category?.products.filter((product) => product.id != id);
+      const newProductsCategories = [
+        ...state.productsCategories.filter((cat) => cat.id != categoryId),
+      ];
+      if (category && products) {
+        newProductsCategories.push({
+          id: category ? category.id : 1,
+          name: category.name,
+          products: products,
+        });
+      }
+      newProductsCategories.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1;
+        }
+
+        if (a.name < b.name) {
+          return -1;
+        }
+
+        return 0;
       });
+      return {
+        ...state,
+        productsCategories: newProductsCategories,
+      };
     }
-    newProductsCategories.sort((a, b) => {
-      if (a.name > b.name) {
-        return 1;
-      }
-
-      if (a.name < b.name) {
-        return -1;
-      }
-
-      return 0;
-    });
-    return {
-      ...state,
-      productsCategories: newProductsCategories,
-    };
   })
 );

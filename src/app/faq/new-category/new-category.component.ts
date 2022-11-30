@@ -7,7 +7,7 @@ import {
 import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { pipe } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -18,8 +18,10 @@ let nextProcessId = 1;
   templateUrl: './new-category.component.html',
   styleUrls: ['./new-category.component.css'],
 })
-export class NewCategoryComponent implements OnInit {
+export class NewCategoryComponent implements OnInit, OnDestroy {
   categoryForm!: FormGroup;
+  loading = false;
+  
   constructor(
     private actions$: Actions,
     private fb: FormBuilder,
@@ -33,6 +35,7 @@ export class NewCategoryComponent implements OnInit {
     });
   }
   saveCategory() {
+    if (this.loading == false) this.loading = true;
     const processId = nextProcessId + 1;
 
     this.actions$.subscribe(() =>
@@ -50,5 +53,8 @@ export class NewCategoryComponent implements OnInit {
         processId: processId,
       })
     );
+  }
+  ngOnDestroy(): void {
+    this.loading = false;
   }
 }

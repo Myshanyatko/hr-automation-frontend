@@ -35,8 +35,9 @@
     </button>
   </form>
 
-  <div class="staff-list-block">
+  <div class="staff-list-block" *tuiLet="users$ | async as users">
     <ul class="staff-list">
+      <tui-loader *ngIf="users == null" class="loader"> </tui-loader>
       <li *ngFor="let user of users$ | async" class="staff-list-item">
         <button
           tuiButton
@@ -59,12 +60,11 @@
         </button>
       </li>
     </ul>
-      <tui-pagination
-        [length]="3"
-        [index]="index"
-        class="pagination"
-        (indexChange)="goToPage($event)"
-      ></tui-pagination>
-    </div>
-  
+    <tui-pagination
+      [length]="3"
+      [index]="index"
+      class="pagination"
+      (indexChange)="goToPage($event)"
+    ></tui-pagination>
+  </div>
 </div>

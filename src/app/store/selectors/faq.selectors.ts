@@ -13,10 +13,10 @@ export const selectCategories = createSelector(
 );
 export const selectCategoriesName = createSelector(
   selectFaq,
-  (state: FaqState) => state.categories.map((category) => category.name)
+  (state: FaqState) => state.categories?.map((category) => category.name)
 );
 export const selectCategoriesId = createSelector(selectFaq, (state: FaqState) =>
-  state.categories.map((category) => category.id)
+  state.categories?.map((category) => category.id)
 );
 export const selectEditedFaq = createSelector(
   selectFaq,

@@ -16,7 +16,7 @@ import {
   FormBuilder,
   FormControl,
 } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, timer, Observable, of } from 'rxjs';
 let nextProcessId = 1;
 
@@ -26,9 +26,10 @@ let nextProcessId = 1;
   styleUrls: ['./new-user.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewUserComponent implements OnInit {
+export class NewUserComponent implements OnInit, OnDestroy {
   createUserForm!: FormGroup;
   errors = false;
+  loading = false;
 
   readonly control = new FormControl();
   readonly rejectedFiles$ = new Subject<TuiFileLike | null>();
@@ -91,6 +92,7 @@ export class NewUserComponent implements OnInit {
     ) {
       this.errors = true;
     } else {
+      if (this.loading == false) this.loading = true;
       const user: UserInfo = {
         id: 0,
         photo: this.control.value,
@@ -136,5 +138,8 @@ export class NewUserComponent implements OnInit {
     }
 
     
+  }
+  ngOnDestroy(): void {
+    this.loading = false;
   }
 }

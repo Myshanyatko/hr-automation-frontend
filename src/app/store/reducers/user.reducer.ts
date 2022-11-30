@@ -1,4 +1,3 @@
-
 import { createReducer, on } from '@ngrx/store';
 import {
   setUsers,
@@ -17,25 +16,27 @@ export const userReducer = createReducer(
   on(setUser, (state, { user }) => {
     return {
       ...state,
-      selectedUser: 
-    user
-      ,
+      selectedUser: user,
     };
   }),
   on(editUser, (state, { user }) => {
     return { ...state, selectedUser: user };
   }),
   on(addNewUserSuccess, (state, { user }) => {
-    return { ...state, users: [...state.users, user] };
+    if (state.users != null) {
+      return { ...state, users: [...state.users, user] };
+    } else return { ...state };
   }),
   on(deleteUserSuccess, (state, { id }) => {
-    return {
-      ...state,
-      users: [
-        ...state.users.filter((user) => {
-          user.id !== id;
-        }),
-      ],
-    };
+    if (state.users != null) {
+      return {
+        ...state,
+        users: [
+          ...state.users.filter((user) => {
+            user.id !== id;
+          }),
+        ],
+      };
+    } else return { ...state };
   })
 );

@@ -78,3 +78,6 @@ tui-pagination [tuiWrapper][data-appearance="primary"],
 tui-pagination [tuiWrapper][data-appearance="flat"] {
   color: #ff7043;
 }
+.loader {
+  padding: 100px 0;
+}
