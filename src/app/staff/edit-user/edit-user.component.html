@@ -16,12 +16,11 @@
           *ngIf="
             userForm.get('username')?.invalid &&
             (userForm.get('username')?.dirty ||
-              userForm.get('username')?.touched)
+              userForm.get('username')?.touched ||
+              errors)
           "
         >
-          <span *ngIf="userForm.get('name')?.errors?.['required']"
-            >Обязательное поле</span
-          >
+          <span>Обязательное поле</span>
         </div>
         <tui-input formControlName="email" class="user-form-item">
           почта
@@ -31,7 +30,9 @@
           class="error-message"
           *ngIf="
             userForm.get('email')?.invalid &&
-            (userForm.get('email')?.dirty || userForm.get('email')?.touched)
+            (userForm.get('email')?.dirty ||
+              userForm.get('email')?.touched ||
+              errors)
           "
         >
           <span *ngIf="userForm.get('email')?.errors?.['required']"
@@ -43,7 +44,7 @@
         </div>
 
         <tui-input-date
-          toNativeDate 
+          toNativeDate
           formControlName="birthDate"
           class="user-form-item"
           tuiUnfinishedValidator="Finish filling the field"

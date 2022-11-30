@@ -28,6 +28,8 @@ let nextProcessId = 1;
 export class EditUserComponent implements OnInit {
   public user$: Observable<UserInfo> = this.store$.select(selectUser);
   userForm!: FormGroup;
+  errors = false;
+
   readonly control = new FormControl();
   readonly rejectedFiles$ = new Subject<TuiFileLike | null>();
   readonly loadingFiles$ = new Subject<TuiFileLike | null>();
@@ -110,37 +112,44 @@ export class EditUserComponent implements OnInit {
   }
 
   saveUser() {
-    const user: UserInfo = {
-      id: this.id,
-      username: this.userForm.value.username,
-      birthDate:
-        this.userForm.value.birthDate != null
-          ? new Date(
-              this.userForm.value.birthDate.year,
-              this.userForm.value.birthDate.month,
-              this.userForm.value.birthDate.day
-            )
-          : null,
-      email: this.userForm.value.email,
-      project: this.userForm.value.project,
-      post: this.userForm.value.post,
-      admin: this.userForm.value.admin,
-      about: this.userForm.value.about,
-      photo: this.control.value,
-    };
+    if (
+      this.userForm.get('username')?.invalid ||
+      this.userForm.get('email')?.invalid
+    ) {
+      this.errors = true;
+    } else {
+      const user: UserInfo = {
+        id: this.id,
+        username: this.userForm.value.username,
+        birthDate:
+          this.userForm.value.birthDate != null
+            ? new Date(
+                this.userForm.value.birthDate.year,
+                this.userForm.value.birthDate.month,
+                this.userForm.value.birthDate.day
+              )
+            : null,
+        email: this.userForm.value.email,
+        project: this.userForm.value.project,
+        post: this.userForm.value.post,
+        admin: this.userForm.value.admin,
+        about: this.userForm.value.about,
+        photo: this.control.value,
+      };
 
-    const processId = nextProcessId + 1;
+      const processId = nextProcessId + 1;
 
-    this.actions$
-      .pipe(
-        ofType(editUser),
-        filter((action) => action.processId === processId)
-      )
-      .subscribe(() => {
-        return this.router.navigate(['/user/' + user.id]);
-      });
-      console.log(user.birthDate);
-      
-    this.store$.dispatch(editUser({ user: user, processId: processId }));
+      this.actions$
+        .pipe(
+          ofType(editUser),
+          filter((action) => action.processId === processId)
+        )
+        .subscribe(() => {
+          return this.router.navigate(['/user/' + user.id]);
+        });
+
+      this.store$.dispatch(editUser({ user: user, processId: processId }));
+      this.errors = false;
+    }
   }
 }

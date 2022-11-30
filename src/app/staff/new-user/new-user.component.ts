@@ -122,15 +122,19 @@ export class NewUserComponent implements OnInit {
 
       this.store$.dispatch(addNewUser({ user: user, processId: processId }));
 
-      
+      // это для картинки
       console.log(this.control.value);
       var fd = new FormData();
       fd.append('file', this.control.value);
+
+      // оно здесь временно!!!
       this.http
         .post('https://hr-automation-backend.onrender.com/test', fd)
         .subscribe((res) => console.log(res));
+        
+        this.errors = false;
     }
 
-    this.errors = false;
+    
   }
 }
