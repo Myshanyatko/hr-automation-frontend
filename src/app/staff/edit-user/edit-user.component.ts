@@ -139,6 +139,8 @@ export class EditUserComponent implements OnInit {
       .subscribe(() => {
         return this.router.navigate(['/user/' + user.id]);
       });
+      console.log(user.birthDate);
+      
     this.store$.dispatch(editUser({ user: user, processId: processId }));
   }
 }

@@ -71,3 +71,10 @@ tui-toggle [tuiWrapper][data-appearance="primary"] {
   padding-left: 5px;
   color: #ff7043;
 }
+tui-pagination [tuiWrapper][data-appearance="primary"],
+[tuiWrapper][data-appearance="secondary"] {
+  background-color: #ff7043;
+}
+tui-pagination [tuiWrapper][data-appearance="flat"] {
+  color: #ff7043;
+}

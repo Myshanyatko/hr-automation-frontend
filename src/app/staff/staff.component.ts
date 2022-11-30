@@ -13,18 +13,20 @@ import { selectUserList } from '../store/selectors/user.selectors';
   styleUrls: ['./staff.component.css'],
 })
 export class StaffComponent implements OnInit {
-  users$: Observable<User[]> | null;
+  index = 0;
+  users$: Observable<User[]> | null = this.store$.select(selectUserList);
   usersForm!: FormGroup;
   readonly urlNewUser = 'tuiIconUser';
-  constructor(private fb: FormBuilder, private store$: Store<AppState>) {
-    this.users$ = this.store$.select(selectUserList);
-  }
+  constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
 
   ngOnInit(): void {
     this.usersForm = this.fb.group({
       name: ['', []],
     });
-    this.store$.dispatch(getUsers());
+    this.store$.dispatch(getUsers({ pageNumber: this.index }));
   }
   searchUsers() {}
+  goToPage(index: number) {
+    this.store$.dispatch(getUsers({ pageNumber: index }));
+  }
 }

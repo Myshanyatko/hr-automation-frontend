@@ -1,9 +1,49 @@
 <div class="tui-container">
-  <a routerLink="/products">все продукты</a>
-
+  <h2 class="title-product">Заказанные продукты </h2>
   <div class="products" *ngIf="products$ | async as products">
-<div class="product" *ngFor="let product of products">
-<p>{{product.name}}</p>
-</div>
+    <div class="product" *ngFor="let product of products">
+      <div class="info">
+        <h3>{{ product.name }}</h3>
+        <p class="code">{{ product.code }}</p>
+      </div>
+      <tui-svg
+        class="icon"
+        src="tuiIconMinus"
+        onclick="deleteProduct(product.id)"
+      ></tui-svg>
+    </div>
+    <tui-input-files
+    link="Выберите фото профиля"
+    label=" "
+    class="user-form-item"
+    *ngIf="!control.value"
+    accept="application/pdf"
+    [formControl]="control"
+    
+  ></tui-input-files>
+    <div class="buttons">
+      <button
+        tuiButton
+        type="button"
+        appearance="accent"
+        class="new-product-button"
+
+        size="m"
+        (click)="submitProducts()"
+      >
+        Выгрузить в файл
+      </button>
+      <button
+        tuiButton
+        type="button"
+        appearance="second"
+        class="new-product-button"
+        routerLink="/products"
+        size="m"
+      >
+        Управление продуктами
+      </button>
+      <a  download="Ordered Products.pdf" id="link">{{url}}</a>
+    </div>
   </div>
 </div>

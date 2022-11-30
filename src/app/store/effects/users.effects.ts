@@ -23,8 +23,8 @@ export class USersEffects {
   getUsers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getUsers),
-      mergeMap(() =>
-        this.usersService.getUsers().pipe(
+      mergeMap((action) =>
+        this.usersService.getUsers(action.pageNumber).pipe(
           map((users) => setUsers({ userList: users })),
           catchError((err) => {
             this.dialogService.showDialog(err.error).subscribe();

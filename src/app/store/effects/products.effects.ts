@@ -8,6 +8,8 @@ import {
   setProduct,
   editProduct,
   editProductSuccess,
+  deleteProduct,
+  deleteProductSuccess,
 } from './../actions/products.actions';
 import { ProductsService } from './../../services/products.service';
 import { AlertService } from './../../services/alert.service';
@@ -127,9 +129,36 @@ export class ProductsEffects {
     { dispatch: false }
   );
 
+  deleteProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteProduct),
+      exhaustMap((action) =>
+        this.productsService.deleteProduct(action.id).pipe(
+          map(() => {
+            return deleteProductSuccess({id: action.id, categoryId: action.categoryId});
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  deleteProductSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(deleteProductSuccess),
+        map(() =>
+          this.alert.showNotificationSuccess('Продукт удален').subscribe()
+        )
+      ),
+
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
-    private router: Router,
     private productsService: ProductsService,
     private alert: AlertService
   ) {}

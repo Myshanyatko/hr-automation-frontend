@@ -12,13 +12,11 @@
   border-bottom-right-radius: 0%;
 }
 .staff-list-block {
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 400px auto;
   background-color: #fff;
   border-radius: var(--tui-radius-l);
   box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
   margin: 15px 0;
+  padding-bottom: 15px;
   width: 600px;
 }
 .staff-list {
@@ -48,4 +46,9 @@
 }
 .staff-user-post {
   color: #a6a2a2;
+}
+.pagination {
+  color: #ff7043;
+  display: inline;
+  width: 100%;
 }

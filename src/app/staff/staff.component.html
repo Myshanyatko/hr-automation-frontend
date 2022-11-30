@@ -59,5 +59,12 @@
         </button>
       </li>
     </ul>
-  </div>
+      <tui-pagination
+        [length]="3"
+        [index]="index"
+        class="pagination"
+        (indexChange)="goToPage($event)"
+      ></tui-pagination>
+    </div>
+  
 </div>

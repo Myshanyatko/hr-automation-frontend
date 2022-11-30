@@ -1,0 +1,32 @@
+.tui-container {
+  margin: 35px 0;
+  width: 560px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: var(--tui-radius-l);
+  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+}
+.title-product {
+  margin-bottom: 10px;
+}
+.products {
+  padding: 20px;
+}
+.product {
+
+  margin: 0 0 10px 15px;
+  display: grid;
+  grid-template-columns: 400px auto;
+}
+.icon{
+    color: #a6a2a2;
+    cursor: pointer;
+}
+.code {
+  color: #a6a2a2;
+}
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+}

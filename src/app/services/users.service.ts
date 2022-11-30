@@ -11,9 +11,9 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   // запрос на поучение списка юзеров
-  getUsers() {
+  getUsers(pageNumber: number ) {
     return this.http.get<User[]>(API, {
-      params: { pageNumber: 0, size: 10, sortBy: 'id' },
+      params: { pageNumber: pageNumber, size: 10, sortBy: 'id'},
     });
   }
   // запрос на получение юзера по id

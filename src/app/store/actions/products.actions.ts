@@ -51,3 +51,13 @@ export const setProduct = createAction(
   '[Products Page] Set Product',
   props<{ product: Product }>()
 );
+
+//удалить продукт
+export const deleteProduct = createAction(
+  '[Products Page] Delete Product',
+  props<{ id: number,  categoryId: number }>()
+);
+export const deleteProductSuccess = createAction(
+  '[Products Page] Delete Product Success',
+  props<{ id: number,  categoryId: number }>()
+);

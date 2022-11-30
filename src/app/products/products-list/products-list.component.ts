@@ -1,4 +1,4 @@
-import { getProductsCategories } from './../../store/actions/products.actions';
+import { deleteProduct, getProductsCategories } from './../../store/actions/products.actions';
 import { selectProductsCategories } from './../../store/selectors/products.selectors';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
@@ -19,6 +19,8 @@ this.store$.dispatch(getProductsCategories())
   editProduct(id: number){
     
   }
-  deleteProduct(id: number, categoryId: number){}
+  deleteProduct(id: number, categoryId: number){
+    this.store$.dispatch(deleteProduct({id: id, categoryId: categoryId}))
+  }
 
 }

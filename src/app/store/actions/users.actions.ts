@@ -3,7 +3,10 @@ import { User } from '../../models/user';
 import { createAction, props } from '@ngrx/store';
 
 // список всех пользователей
-export const getUsers = createAction('[Users Page] Get Users');
+export const getUsers = createAction(
+  '[Users Page] Get Users',
+  props<{ pageNumber: number }>()
+);
 
 export const setUsers = createAction(
   '[Users Page] Set Users',
@@ -22,11 +25,11 @@ export const setUser = createAction(
 //изменить выбранного пользователя
 export const editUser = createAction(
   '[Users Page] Edit User',
-  props<{ user: UserInfo ,processId: number }>()
+  props<{ user: UserInfo; processId: number }>()
 );
 export const editUserSuccess = createAction(
   '[Users Page] Edit User Success',
-  props<{ user: UserInfo ,processId: number }>()
+  props<{ user: UserInfo; processId: number }>()
 );
 //изменить выбранного пользователя
 export const addNewUser = createAction(
