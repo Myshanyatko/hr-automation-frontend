@@ -1,10 +1,9 @@
 import { initialFaqState } from './../state/faq.state';
 import {
   setFaq,
-  addNewFaqSuccess,
   setCategories,
   deleteFaqSuccess,
-  editFaq,
+  setEditedFaq,
 } from './../actions/faq.actions';
 import { createReducer, on } from '@ngrx/store';
 
@@ -19,9 +18,6 @@ export const faqReducer = createReducer(
       categories: categories,
     };
   }),
-  // on(addNewFaqSuccess, (state, { faq }) => {
-  //   return { ...state, categories: [...state.categories, ] };
-  // }),
   on(deleteFaqSuccess, (state, { faqId, categoryId }) => {
      if (state.categories != null){
     var category = state.categories.find((cat) => cat.id === categoryId) || {
@@ -54,7 +50,7 @@ export const faqReducer = createReducer(
     };}
     else return state
   }),
-  on(editFaq, (state, { faq }) => {
+  on(setEditedFaq, (state, { faq }) => {
     return {
       ...state,
       editedFaq: faq,

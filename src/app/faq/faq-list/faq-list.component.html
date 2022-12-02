@@ -43,8 +43,7 @@
         >
           {{ category.name }}
 
-          <ng-template tuiAccordionItemContent
-            >
+          <ng-template tuiAccordionItemContent>
             <div
               class="question-block"
               *ngFor="let question of category.questions"
@@ -57,14 +56,7 @@
                 <tui-svg
                   class="icon-faq"
                   src="tuiIconEdit"
-                  (click)="
-                    editFaq(
-                      question.id,
-                      question.title,
-                      question.description,
-                      category.id
-                    )
-                  "
+                  (click)="editFaq(question.id)"
                 ></tui-svg>
 
                 <tui-svg
@@ -94,10 +86,7 @@
             src="tuiIconEdit"
             (click)="
               editFaq(
-                question.id,
-                question.title,
-                question.description,
-                question.categoryId
+                question.id
               )
             "
           ></tui-svg>

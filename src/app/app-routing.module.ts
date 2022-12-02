@@ -32,16 +32,13 @@ const routes: Routes = [
   { path: 'new-user', component: NewUserComponent, canActivate: [AuthGuard] },
   { path: 'edit-user/:id', component: EditUserComponent, canActivate: [AuthGuard] },
   { path: 'edit-product/:id', component: ProductEditComponent, canActivate: [AuthGuard] },
+  { path: 'edit-faq/:id', component: FaqEditComponent, canActivate: [AuthGuard] },
   {
     path: 'new-category',
     component: NewCategoryComponent,
     canActivate: [AuthGuard],
-  },
-  {
-    path: 'edit-faq',
-    component: FaqEditComponent,
-    canActivate: [AuthGuard],
-  },
+  }
+ 
 ];
 
 @NgModule({

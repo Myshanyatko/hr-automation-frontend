@@ -5,8 +5,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   deleteFaq,
-  deleteFaqSuccess,
-  editFaq,
   getCategories,
   getFiltredFaq,
 } from './../../store/actions/faq.actions';
@@ -30,7 +28,6 @@ export class FaqListComponent implements OnInit {
 
   filtredFaq$ = this.store$.select(selectFiltredFaq);
   constructor(
-    private actions$: Actions,
     private fb: FormBuilder,
     private router: Router,
     private store$: Store<AppState>
@@ -42,30 +39,13 @@ export class FaqListComponent implements OnInit {
     });
     this.store$.dispatch(getCategories());
   }
-  deleteFaq(faqId: number, categoryId: number) {
-    const processId = nextProcessId + 1;
-    this.actions$.subscribe(() =>
-      pipe(
-        ofType(deleteFaqSuccess),
-        filter((action) => action.processId === processId),
-        tap(() => {
-          return this.router.navigate(['faq-edit']);
-        })
-      )
-    );
+  deleteFaq(faqId: number, categoryId: number) {   
     this.store$.dispatch(
-      deleteFaq({ faqId: faqId, categoryId: categoryId, processId: processId })
+      deleteFaq({ faqId: faqId, categoryId: categoryId})
     );
   }
-  editFaq(id: number, title: string, description: string, categoryId: number) {
-    const faq = { id, title, description, categoryId };
-
-    this.store$.dispatch(
-      editFaq({
-        faq: faq,
-      })
-    );
-    this.router.navigate(['edit-faq']);
+  editFaq(id: number) {
+    this.router.navigate(['edit-faq/'+id]);
   }
   searchFaq() {
     if (this.faqForm.value.name != '') {

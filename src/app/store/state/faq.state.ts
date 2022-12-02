@@ -3,11 +3,11 @@ import { Faq } from './../../models/faq';
 export interface FaqState {
   faqList: Faq[] | null;
   categories: Category[] | null;
-  editedFaq: Faq;
+  editedFaq: Faq | null;
 }
 
 export const initialFaqState: FaqState = {
   faqList: null,
   categories: null,
-  editedFaq: { id: 0, title: '', description: '', categoryId: 0 },
+  editedFaq: null,
 };

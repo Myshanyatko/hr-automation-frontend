@@ -14,6 +14,8 @@ import {
   getFiltredFaq,
   putFaq,
   putFaqSuccess,
+  getEditedFaq,
+  setEditedFaq,
 } from './../actions/faq.actions';
 import { Router } from '@angular/router';
 import { DialogService } from './../../services/dialog.service';
@@ -120,7 +122,6 @@ export class FaqEffects {
             return deleteFaqSuccess({
               faqId: action.faqId,
               categoryId: action.categoryId,
-              processId: action.processId,
             });
           }),
           catchError((err) => {
@@ -147,10 +148,9 @@ export class FaqEffects {
       exhaustMap((action) =>
         this.faqService.editFaq(action.faq).pipe(
           map(() => {
-            this.alert.showNotificationSuccess('Данные сохранены').subscribe();
-            this.router.navigate(['/faq-list']);
             return putFaqSuccess({
               faq: action.faq,
+              processId: action.processId 
             });
           }),
           catchError((err) => {
@@ -161,6 +161,35 @@ export class FaqEffects {
       )
     )
   );
+  putFaqSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(putFaqSuccess),
+        tap(() =>
+          this.alert.showNotificationSuccess('Данные сохранены').subscribe()
+        )
+      ),
+    { dispatch: false }
+  );
+  getEditedFaq$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getEditedFaq),
+      exhaustMap((action) =>
+        this.faqService.getEditedFaq(action.id).pipe(
+          map((res) => {
+            return  setEditedFaq({
+              faq: res,
+            })
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe()
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+ 
 
   constructor(
     private actions$: Actions,

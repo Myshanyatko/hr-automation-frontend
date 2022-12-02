@@ -36,22 +36,31 @@ export const addNewCategorySuccess = createAction(
 // удаление вопроса
 export const deleteFaq = createAction(
   '[Faq Page] Delete Faq',
-  props<{ faqId: number; categoryId: number; processId: number }>()
+  props<{ faqId: number; categoryId: number }>()
 );
 export const deleteFaqSuccess = createAction(
   '[Faq Page] Delete Faq Success',
-  props<{ faqId: number; categoryId: number; processId: number }>()
+  props<{ faqId: number; categoryId: number }>()
 );
-// изменение вопроса
-export const editFaq = createAction(
-  '[Faq Page] Edit Faq',
+// получение выбранного вопроса
+export const getEditedFaq = createAction(
+  '[Faq Page] Get Edited Faq',
+  props<{ id: number }>()
+);
+export const setEditedFaq = createAction(
+  '[Faq Page] Set Edited Faq',
   props<{ faq: Faq }>()
 );
-export const putFaq = createAction('[Faq Page] Put Faq', props<{ faq: Faq }>());
+
+// изменение вопроса
+export const putFaq = createAction(
+  '[Faq Page] Put Faq',
+  props<{ faq: Faq; processId: number }>()
+);
 
 export const putFaqSuccess = createAction(
   '[Faq Page] Put Faq Success',
-  props<{ faq: Faq }>()
+  props<{ faq: Faq; processId: number }>()
 );
 // получить отфильтрованные вопросы
 export const getFiltredFaq = createAction(

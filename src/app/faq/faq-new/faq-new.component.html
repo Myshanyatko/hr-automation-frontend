@@ -1,7 +1,14 @@
 <div class="tui-container">
-  <h2 class="title-new-faq">Добавьте ответ на часто задаваемый вопрос</h2>
+  <div class="back-and-title">
+    <tui-svg
+      src="tuiIconBackCircleLarge"
+      class="back"
+      routerLink="/faq-list"
+    ></tui-svg>
+    <h2 class="title-new-faq">Новый ответ</h2>
+  </div>
 
-  <form [formGroup]="faqForm" (ngSubmit)="saveFaq()">
+  <form [formGroup]="faqForm" (ngSubmit)="saveFaq()" class="faq-form">
     <div class="faq-form-block">
       <tui-input
         formControlName="title"
@@ -80,19 +87,16 @@
       >
         <span>Обязательное поле</span>
       </div>
-      <div class="faq-form-buttons">
-        <button tuiButton size="m" appearance="accent" class="save-faq-button" [showLoader]="loading">
-          Сохранить</button
-        ><button
-          tuiButton
-          size="m"
-          appearance="custom"
-          class="save-faq-button"
-          routerLink="/faq-list"
-        >
-          Все ответы
-        </button>
-      </div>
+
+      <button
+        tuiButton
+        size="m"
+        appearance="accent"
+        class="save-faq-button"
+        [showLoader]="loading"
+      >
+        Сохранить
+      </button>
     </div>
   </form>
 </div>

@@ -4,10 +4,25 @@
   border-radius: var(--tui-radius-l);
   box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
   padding: 20px;
-  width: 500px;
+  width: 560px;
 }
-.title-new-faq {
-  margin-bottom: 40px;
+.back-and-title{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 15px;
+  align-items: center;
+  margin-bottom: 30px;
+}  
+.back {
+  box-shadow: none;
+  color: #ff7043;
+  cursor: pointer;
+}
+.back:hover {
+  color: #f58e6e;
+}
+.faq-form{
+  margin: 0 35px;
 }
 .faq-form-item,
 .save-faq-button {

@@ -1,18 +1,14 @@
 import { TuiDestroyService } from '@taiga-ui/cdk';
-import { HttpClient } from '@angular/common/http';
 import {
   selectProductsCategories,
   selectSelectedProduct,
 } from './../../store/selectors/products.selectors';
 import {
-  addNewProduct,
-  addNewProductSuccess,
   editProduct,
   editProductSuccess,
   getProduct,
   getProductsCategories,
 } from './../../store/actions/products.actions';
-import { addNewFaq } from './../../store/actions/faq.actions';
 import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -43,7 +39,6 @@ export class ProductEditComponent implements OnInit ,  OnDestroy{
   errors = false;
   categories$ = this.store$.select(selectProductsCategories);
   product$ = this.store$.select(selectSelectedProduct);
-  product: Product | null = null;
 
   readonly control = new FormControl();
   readonly rejectedFiles$ = new Subject<TuiFileLike | null>();
@@ -83,7 +78,6 @@ export class ProductEditComponent implements OnInit ,  OnDestroy{
       else return this.productForm.get('category')?.setValue(categories[0]);
     });
     this.product$.subscribe((product) => {
-      this.product = product;
       for (var i in product) {
         this.productForm.get(i)?.setValue(product[i as keyof Product]);
       }

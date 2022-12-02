@@ -33,6 +33,13 @@ export class FaqService {
      API+ '/categories'
     );
   }
+  getEditedFaq(id: number) {
+    return this.http.get<Faq>(
+     API+ '/'+id
+    );
+    // const faq : Faq = {id: 1, categoryId: 1, title: 'test', description: 'test'}
+    // return faq
+  }
   deleteFaq(id: number) {
     return this.http.delete(API + '/' + id);
   }

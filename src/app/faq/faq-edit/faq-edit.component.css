@@ -6,8 +6,23 @@
   padding: 20px;
   width: 500px;
 }
-.title-edit-faq {
-  margin-bottom: 40px;
+.back-and-title{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 15px;
+  align-items: center;
+  margin-bottom: 30px;
+}  
+.back {
+  box-shadow: none;
+  color: #ff7043;
+  cursor: pointer;
+}
+.back:hover {
+  color: #f58e6e;
+}
+.faq-form{
+  margin: 0 35px;
 }
 .faq-form-item,
 .save-faq-button {
