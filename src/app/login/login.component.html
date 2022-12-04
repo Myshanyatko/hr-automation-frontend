@@ -1,16 +1,15 @@
 <div class="tui-container">
-<h1 class="tui-form__header">Log in</h1>
+  <h1 class="tui-form__header">Log in</h1>
 
-<form class="b-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+  <form class="b-form" [formGroup]="loginForm" (ngSubmit)="login()">
     <tui-input formControlName="email" tuiTextfieldSize="m" size="2">
-        Enter your email
-        <input tuiTextfield type="email" />
+      Enter your email
+      <input tuiTextfield type="email" />
     </tui-input>
-    <!-- <p *ngIf="this.loginForm.get('email')?.invalid && this.loginForm.get('email')?.touched">Email is invalid</p> -->
-    <!-- <tui-error formControlName="email"  ></tui-error> -->
     <div class="--tui-height-xs">
-    <button tuiButton [disabled]="loginForm.invalid" class="--tui-height-l">
+      <button tuiButton [disabled]="loginForm.invalid" class="--tui-height-l">
         Next
-    </button></div>
-</form>
+      </button>
+    </div>
+  </form>
 </div>

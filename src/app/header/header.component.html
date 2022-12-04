@@ -1,9 +1,9 @@
-<header class="header">
+<header class="header" *tuiLet=" loggedIn$ | async as loggedIn">
   <div class="header-title-block">
     <div class="header-title-circle"></div>
     <a routerLink="users" class="header-title"> Административная панель </a>
   </div>
-  <div class="header-menu" *ngIf="isLoggedIn">
+  <div class="header-menu" *ngIf="isLoggedIn || loggedIn">
     <tui-hosted-dropdown
       [content]="dropdown"
       [(open)]="open"
@@ -15,7 +15,7 @@
         class="header-menu-button"
         size="xs"
         appearance="custom"
-        [iconRight]="icon"
+        [iconRight]="icon" 
       >
         {{ username }}
       </button>
@@ -29,7 +29,7 @@
     </ng-template>
     <ng-template #dropdown>
       <tui-data-list role="menu" class="menu-dropdown"
-        ><button tuiOption class="menu-dropdown-item" (click)="OpenProfile()">
+        ><button tuiOption class="menu-dropdown-item" (click)="openProfile()">
           Профиль
         </button>
         <button tuiOption class="menu-dropdown-item" (click)="logout()">

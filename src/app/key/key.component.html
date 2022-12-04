@@ -1,26 +1,14 @@
-
-
 <div class="tui-container">
-    <h1 class="tui-form__header">Log in</h1>
-   
-    
-    <form class="b-form" [formGroup]="keyForm" (ngSubmit)="submitKey()">
-        <h3 class="tui-form__header">Введите код, отправленный на почту</h3>
-        <tui-input formControlName="key">
-            Enter a key
-            <input tuiTextfield type="text" />
-        </tui-input>
-        <!-- <p *ngIf="this.loginForm.get('email')?.invalid && this.loginForm.get('email')?.touched">Email is invalid</p> -->
-        <!-- <tui-error formControlName="email"  ></tui-error> -->
-        <div class="buttons-key"> 
-            <button tuiButton (click)="submitBack()">
-                Back
-            </button>
-            <button tuiButton [disabled]="keyForm.invalid">
-            Log in
-        </button>
-        
-        </div>
-
-    </form>
+  <h1 class="tui-form__header">Log in</h1>
+  <form class="b-form" [formGroup]="keyForm" (ngSubmit)="key()">
+    <h3 class="tui-form__header">Введите код, отправленный на почту</h3>
+    <tui-input formControlName="key">
+      Enter a key
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <div class="buttons-key">
+      <button tuiButton (click)="back()">Back</button>
+      <button tuiButton [disabled]="keyForm.invalid">Log in</button>
     </div>
+  </form>
+</div>

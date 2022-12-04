@@ -1,27 +1,19 @@
-import { AuthService } from '../services/auth.service';
+import { Store } from '@ngrx/store';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
+import { AppState } from '../store/state/app.state';
+import { login } from '../store/actions/auth.actions';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: TUI_VALIDATION_ERRORS,
-      useValue: {
-        required: `Enter this!`,
-        email: `Enter a valid email`,
-      },
-    },
-  ],
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private authService: AuthService) {}
+  constructor(private store$: Store<AppState>) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -29,7 +21,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  submitLogin() {
-    this.authService.getAPIEmail(this.loginForm.value.email);
+  login() {
+    this.store$.dispatch(login({ email: this.loginForm.value.email }));
   }
 }

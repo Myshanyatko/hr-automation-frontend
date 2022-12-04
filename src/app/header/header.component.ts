@@ -1,6 +1,8 @@
+import { selectisLoginIn} from './../store/selectors/auth.selectors';
+import { AppState } from './../store/state/app.state';
+import { Store } from '@ngrx/store';
 import { EventBusService } from './../shared/event-bus.service';
 import { TokenService } from './../services/token.service';
-import { AuthService } from './../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
@@ -11,6 +13,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { TuiHostedDropdownComponent } from '@taiga-ui/core';
+import { logout } from '../store/actions/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -21,28 +24,23 @@ import { TuiHostedDropdownComponent } from '@taiga-ui/core';
 export class HeaderComponent implements OnInit, OnDestroy {
   eventBusSub?: Subscription;
   isLoggedIn = false;
-  username?: string;
+  loggedIn$ = this.store$.select(selectisLoginIn)
+  username = this.tokenService.getUsername()
   @ViewChild(TuiHostedDropdownComponent)
   component?: TuiHostedDropdownComponent;
 
   constructor(
     public router: Router,
-    private authService: AuthService,
     private eventBusService: EventBusService,
+    private store$: Store<AppState>,
     private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
     if (this.tokenService.getAccessToken()) {
       this.isLoggedIn = true;
-      console.log(this.isLoggedIn);
     }
-
-    // if (this.isLoggedIn) {
-    this.username = this.tokenService.getAuthUserName();
-    console.log(this.username);
-    // }
-
+    this.username = this.tokenService.getUsername();
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
     });
@@ -53,15 +51,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   open = false;
   logout(): void {
-    this.authService.logout();
+    this.store$.dispatch(logout())
     this.isLoggedIn = false;
     this.open = false;
     this.component?.nativeFocusableElement?.focus();
+
   }
 
-  OpenProfile() {
+  openProfile() {
     this.open = false;
     this.component?.nativeFocusableElement?.focus();
-    this.router.navigate(['user/', 2]);
+    const id = this.tokenService.getUserId();
+    this.router.navigate(['user/', id]);
   }
 }

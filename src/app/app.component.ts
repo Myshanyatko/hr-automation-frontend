@@ -1,9 +1,6 @@
 import { Router } from '@angular/router';
-import { AuthService } from './services/auth.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
 import { TokenService } from './services/token.service';
-import { EventBusService } from './shared/event-bus.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

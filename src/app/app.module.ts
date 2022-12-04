@@ -1,3 +1,4 @@
+import { AuthEffects } from './store/effects/auth.effects';
 import { ProductsEffects } from './store/effects/products.effects';
 import { FaqEffects } from './store/effects/faq.effects';
 import { environment } from './../environments/environment';
@@ -121,7 +122,7 @@ import { ProductsOrderedComponent } from './products/products-ordered/products-o
     TuiInputNumberModule,
     TuiLoaderModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([USersEffects, FaqEffects, ProductsEffects]),
+    EffectsModule.forRoot([USersEffects, FaqEffects, ProductsEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,
       autoPause: true,
