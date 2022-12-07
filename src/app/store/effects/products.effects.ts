@@ -10,6 +10,8 @@ import {
   editProductSuccess,
   deleteProduct,
   deleteProductSuccess,
+  getFile,
+  getFileSuccess,
 } from './../actions/products.actions';
 import { ProductsService } from './../../services/products.service';
 import { AlertService } from './../../services/alert.service';
@@ -156,7 +158,22 @@ export class ProductsEffects {
 
     { dispatch: false }
   );
-
+  getFile$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(getFile),
+    exhaustMap(() =>
+      this.productsService.getFile().pipe(
+        map((res) => {
+          return getFileSuccess({file: res})
+        }),
+        catchError((err) => {
+          this.alert.showNotificationError(err.error).subscribe();
+          return EMPTY;
+        })
+      )
+    )
+  )
+);
   constructor(
     private actions$: Actions,
     private productsService: ProductsService,

@@ -61,3 +61,12 @@ export const deleteProductSuccess = createAction(
   '[Products Page] Delete Product Success',
   props<{ id: number,  categoryId: number }>()
 );
+
+//скачать файл
+export const getFile = createAction(
+  '[Products Page] Get File'
+);
+export const getFileSuccess = createAction(
+  '[Products Page] Get File',
+  props<{ file: Blob}>()
+);

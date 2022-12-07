@@ -22,6 +22,12 @@
     color: #a6a2a2;
     cursor: pointer;
 }
+
+.name-and-code{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 5px;
+}
 .code {
   color: #a6a2a2;
 }

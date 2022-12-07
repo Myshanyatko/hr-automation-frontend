@@ -12,11 +12,12 @@ export class ProductsService {
   constructor(private http: HttpClient) {}
 
   postProduct(product: Product) {
-    return this.http.post(API + '/category/' + product.categoryId, { 
+    return this.http.post(API + '/category/' + product.categoryId, {
       name: product.name,
       code: product.code,
       quantity: product.quantity,
-      ordered: product.ordered, });
+      ordered: product.ordered,
+    });
   }
   putProduct(product: Product) {
     return this.http.put(API + '/category/' + product.categoryId, {
@@ -38,5 +39,9 @@ export class ProductsService {
   }
   getProduct(id: number) {
     return this.http.get<Product>(API + '/' + id);
+  }
+  getFile() {
+    const type = 'blob' as 'json'
+    return this.http.get<Blob>(API + '/excel',  { responseType: type});
   }
 }

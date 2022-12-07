@@ -1,11 +1,14 @@
 <div class="tui-container">
-  <h2 class="title-product">Заказанные продукты </h2>
-  <div class="products"  *tuiLet="products$ | async as products">
+  <h2 class="title-product">Заказанные продукты</h2>
+  <div class="products" *tuiLet="products$ | async as products">
     <tui-loader *ngIf="products == null" class="loader"> </tui-loader>
     <div class="product" *ngFor="let product of products">
       <div class="info">
-        <h3>{{ product.name }}</h3>
-        <p class="code">{{ product.code }}</p>
+        <div class="name-and-code">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.code }} </p>
+        </div>
+        <p class="code">{{ product.quantity }} шт</p>
       </div>
       <tui-svg
         class="icon"
@@ -13,7 +16,7 @@
         onclick="deleteProduct(product.id)"
       ></tui-svg>
     </div>
-    <tui-input-files
+    <!-- <tui-input-files
     link="Выберите фото профиля"
     label=" "
     class="user-form-item"
@@ -21,15 +24,15 @@
     accept="application/pdf"
     [formControl]="control"
     
-  ></tui-input-files>
+  ></tui-input-files> -->
     <div class="buttons">
       <button
         tuiButton
         type="button"
         appearance="accent"
         class="new-product-button"
-
         size="m"
+        [showLoader]="download"
         (click)="submitProducts()"
       >
         Выгрузить в файл
@@ -40,11 +43,12 @@
         appearance="second"
         class="new-product-button"
         routerLink="/products"
+       
         size="m"
       >
         Управление продуктами
       </button>
-      <a  download="Ordered Products.pdf" id="link">{{url}}</a>
+      <a download="Ordered Products.xls" id="link" ></a>
     </div>
   </div>
 </div>

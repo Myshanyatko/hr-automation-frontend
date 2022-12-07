@@ -1,5 +1,4 @@
 import { ProductsState } from './../state/products.state';
-import { FaqState } from './../state/faq.state';
 import { createSelector } from '@ngrx/store';
 import { AppState } from './../state/app.state';
 const selectProducts = (state: AppState) => state.products
@@ -16,4 +15,8 @@ export const selectOrderedProducts = createSelector(
 export const selectSelectedProduct = createSelector(
   selectProducts,
   (state: ProductsState) => state.selectedProduct
+)
+export const selectFile = createSelector(
+  selectProducts,
+  (state: ProductsState) => state.file
 )
