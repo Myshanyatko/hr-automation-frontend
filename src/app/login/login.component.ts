@@ -1,5 +1,10 @@
 import { Store } from '@ngrx/store';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppState } from '../store/state/app.state';
 import { login } from '../store/actions/auth.actions';
@@ -10,9 +15,10 @@ import { login } from '../store/actions/auth.actions';
   styleUrls: ['./login.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
-
+  loading = false;
+  errors = false;
   constructor(private store$: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -22,6 +28,15 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.store$.dispatch(login({ email: this.loginForm.value.email }));
+    if (this.loginForm.get('email')?.invalid) {
+      this.errors = true;
+    } else {
+      this.loading = true;
+      this.store$.dispatch(login({ email: this.loginForm.value.email }));
+      this.errors = false;
+    }
+  }
+  ngOnDestroy() {
+    this.loading = false;
   }
 }

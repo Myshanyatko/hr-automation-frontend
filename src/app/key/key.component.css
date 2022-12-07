@@ -1,22 +1,24 @@
-form{
-    margin: 0 auto;
-    display: block;
-    width: 400px;
-}
-h1, h3{
+.tui-container {
+    background-color: #fff;
+    margin: 35px auto;
+    border-radius: var(--tui-radius-l);
+    box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+    padding: 40px;
+    width: 500px;
+  }
+  .tui-form__header {
+    margin-bottom: 30px;
     text-align: center;
-    
-}
-h1{
-    
-    margin: 50px;
-}
-
-button{
-    margin: 10px 30px;
-}
-.buttons-key{
+  }
+  .tui-form__h3{
+    margin-bottom: 10px;
+  }
+  .login-form {
+    padding: 0 15px;
+  }
+  .buttons-key{
+    margin-top: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin: 0 auto;
-}
+    grid-gap: 40px;
+  }

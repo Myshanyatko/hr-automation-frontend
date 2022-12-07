@@ -1,14 +1,25 @@
 <div class="tui-container">
-  <h1 class="tui-form__header">Log in</h1>
-  <form class="b-form" [formGroup]="keyForm" (ngSubmit)="key()">
-    <h3 class="tui-form__header">Введите код, отправленный на почту</h3>
+  <h1 class="tui-form__header">Авторизация</h1>
+  <form class="login-form" [formGroup]="keyForm" (ngSubmit)="key()">
+    <h3 class="tui-form__h3">На вашу почту отправлен код</h3>
     <tui-input formControlName="key">
-      Enter a key
+      Введите код
       <input tuiTextfield type="text" />
     </tui-input>
+    <div
+      class="error-message"
+      *ngIf="
+        keyForm.get('key')?.invalid &&
+        (keyForm.get('key')?.dirty || keyForm.get('key')?.touched || errors)
+      "
+    >
+      <span>Обязательное поле</span>
+    </div>
     <div class="buttons-key">
-      <button tuiButton (click)="back()">Back</button>
-      <button tuiButton [disabled]="keyForm.invalid">Log in</button>
+      <button tuiButton (click)="back()" appearance="second">Назад</button>
+      <button tuiButton appearance="accent" [showLoader]="loading">
+        Войти
+      </button>
     </div>
   </form>
 </div>
