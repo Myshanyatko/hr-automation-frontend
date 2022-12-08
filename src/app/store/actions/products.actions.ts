@@ -70,3 +70,12 @@ export const getFileSuccess = createAction(
   '[Products Page] Get File',
   props<{ file: Blob}>()
 );
+// удалить заказанный продукт
+export const deleteOrderedProduct = createAction(
+  '[Products Page] Delete Ordered Product',
+  props<{ id: number}>()
+);
+export const deleteOrderedProductSuccess = createAction(
+  '[Products Page] Delete Ordered Product Success',
+  props<{ id: number}>()
+);

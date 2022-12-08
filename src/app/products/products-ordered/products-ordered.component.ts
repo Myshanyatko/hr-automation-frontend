@@ -2,6 +2,7 @@ import { map, takeUntil, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { TuiDay, TuiDestroyService } from '@taiga-ui/cdk';
 import {
+  deleteOrderedProduct,
   getFile,
   getOrderedProducts,
 } from './../../store/actions/products.actions';
@@ -32,7 +33,7 @@ export class ProductsOrderedComponent implements OnInit {
     this.store$.dispatch(getOrderedProducts());
   }
   deleteProduct(id: number) {
-    console.log('delete');
+    this.store$.dispatch(deleteOrderedProduct({id: id}))
   }
 
   submitProducts() {

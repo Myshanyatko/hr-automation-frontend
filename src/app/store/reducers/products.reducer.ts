@@ -4,6 +4,7 @@ import {
   setProduct,
   deleteProductSuccess,
   getFileSuccess,
+  deleteOrderedProductSuccess,
 } from './../actions/products.actions';
 import { initialProductsState } from './../state/products.state';
 import { createReducer, on } from '@ngrx/store';
@@ -21,6 +22,15 @@ export const productsReducer = createReducer(
   }),
   on(getFileSuccess, (state, { file }) => {
     return { ...state, file: file };
+  }),
+  on(deleteOrderedProductSuccess, (state, { id }) => {
+    if (state.orderedProducts == null) return state;
+    return {
+      ...state,
+      orderedProducts: [
+        ...state.orderedProducts.filter((product) => product.id != id),
+      ],
+    };
   }),
   on(deleteProductSuccess, (state, { id, categoryId }) => {
     if (state.productsCategories == null) return state;

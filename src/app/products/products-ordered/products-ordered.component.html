@@ -13,18 +13,9 @@
       <tui-svg
         class="icon"
         src="tuiIconMinus"
-        onclick="deleteProduct(product.id)"
+        (click)="deleteProduct(product.id)"
       ></tui-svg>
     </div>
-    <!-- <tui-input-files
-    link="Выберите фото профиля"
-    label=" "
-    class="user-form-item"
-    *ngIf="!control.value"
-    accept="application/pdf"
-    [formControl]="control"
-    
-  ></tui-input-files> -->
     <div class="buttons">
       <button
         tuiButton

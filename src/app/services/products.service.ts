@@ -31,6 +31,10 @@ export class ProductsService {
   deleteProduct(id: number) {
     return this.http.delete(API + '/' + id);
   }
+  
+  deleteOrderedProduct(id: number) {
+    return this.http.get(API + '/unorder/' + id);
+  }
   getProductsCategories() {
     return this.http.get<ProductCategory[]>(API + '/categories');
   }

@@ -12,6 +12,8 @@ import {
   deleteProductSuccess,
   getFile,
   getFileSuccess,
+  deleteOrderedProduct,
+  deleteOrderedProductSuccess,
 } from './../actions/products.actions';
 import { ProductsService } from './../../services/products.service';
 import { AlertService } from './../../services/alert.service';
@@ -165,6 +167,22 @@ export class ProductsEffects {
       this.productsService.getFile().pipe(
         map((res) => {
           return getFileSuccess({file: res})
+        }),
+        catchError((err) => {
+          this.alert.showNotificationError(err.error).subscribe();
+          return EMPTY;
+        })
+      )
+    )
+  )
+);
+  deleteOrderedProduct$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(deleteOrderedProduct),
+    exhaustMap((action) =>
+      this.productsService.deleteOrderedProduct(action.id).pipe(
+        map(() => {
+          return deleteOrderedProductSuccess({id: action.id})
         }),
         catchError((err) => {
           this.alert.showNotificationError(err.error).subscribe();
