@@ -13,7 +13,12 @@ export class UsersService {
   // запрос на поучение списка юзеров
   getUsers(pageNumber: number ) {
     return this.http.get<User[]>(API, {
-      params: { pageNumber: pageNumber, size: 10, sortBy: 'id'},
+      params: { pageNumber: pageNumber, size: 5, sortBy: 'id'},
+    });
+  }
+  getFilteredUsers(pageNumber: number, filter: string ) {
+    return this.http.get<User[]>(API + '/filtered', {
+      params: { pageNumber: pageNumber, size: 5, sortBy: 'id', filter: filter},
     });
   }
   // запрос на получение юзера по id

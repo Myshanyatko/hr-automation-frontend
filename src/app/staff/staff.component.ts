@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { getUsers } from './../store/actions/users.actions';
+import { getFilteredUsers, getUsers } from './../store/actions/users.actions';
 import { AppState } from './../store/state/app.state';
 
 import { Observable } from 'rxjs';
@@ -14,7 +14,7 @@ import { selectUserList } from '../store/selectors/user.selectors';
 })
 export class StaffComponent implements OnInit {
   index = 0;
-  users$: Observable<User[]| null > | null = this.store$.select(selectUserList);
+  users$: Observable<User[] | null> | null = this.store$.select(selectUserList);
   usersForm!: FormGroup;
   readonly urlNewUser = 'tuiIconUser';
   constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
@@ -25,7 +25,14 @@ export class StaffComponent implements OnInit {
     });
     this.store$.dispatch(getUsers({ pageNumber: this.index }));
   }
-  searchUsers() {}
+  searchUsers() {
+    this.store$.dispatch(
+      getFilteredUsers({
+        pageNumber: this.index,
+        filter: this.usersForm.value.name,
+      })
+    );
+  }
   goToPage(index: number) {
     this.store$.dispatch(getUsers({ pageNumber: index }));
   }

@@ -7,12 +7,16 @@ export const getUsers = createAction(
   '[Users Page] Get Users',
   props<{ pageNumber: number }>()
 );
-
 export const setUsers = createAction(
   '[Users Page] Set Users',
   props<{ userList: User[] }>()
 );
 
+// список отфильтрованных пользователей
+export const getFilteredUsers = createAction(
+  '[Users Page] Get Filtered Users',
+  props<{ pageNumber: number, filter: string }>()
+);
 // выбранный пользователь
 export const getUser = createAction(
   '[Users Page] Get User',

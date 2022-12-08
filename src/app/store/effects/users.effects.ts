@@ -14,6 +14,7 @@ import {
   deleteUser,
   deleteUserSuccess,
   editUserSuccess,
+  getFilteredUsers,
 } from './../actions/users.actions';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -27,10 +28,26 @@ export class USersEffects {
         this.usersService.getUsers(action.pageNumber).pipe(
           map((users) => setUsers({ userList: users })),
           catchError((err) => {
-            this.dialogService.showDialog(err.error).subscribe();
+            this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
         )
+      )
+    )
+  );
+  getFiltredUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getFilteredUsers),
+      mergeMap((action) =>
+        this.usersService
+          .getFilteredUsers(action.pageNumber, action.filter)
+          .pipe(
+            map((users) => setUsers({ userList: users })),
+            catchError((err) => {
+              this.alert.showNotificationError(err.error).subscribe();
+              return EMPTY;
+            })
+          )
       )
     )
   );
@@ -41,7 +58,7 @@ export class USersEffects {
         this.usersService.getUser(action.userId).pipe(
           map((user) => setUser({ user })),
           catchError((err) => {
-            this.dialogService.showDialog(err.error).subscribe();
+            this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
         )
@@ -58,7 +75,7 @@ export class USersEffects {
           map(() => {
             return editUserSuccess({
               user: action.user,
-              processId: action.processId
+              processId: action.processId,
             });
           }),
 
@@ -70,19 +87,17 @@ export class USersEffects {
       )
     )
   );
-  editUserSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(editUserSuccess),
+  editUserSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(editUserSuccess),
 
-        map((action) =>{this.alert.showNotificationSuccess('Изменения сохранены').subscribe()
-          return setUser({
-            user: action.user,
-            
-          })}
-          
-        )
-      )
+      map((action) => {
+        this.alert.showNotificationSuccess('Изменения сохранены').subscribe();
+        return setUser({
+          user: action.user,
+        });
+      })
+    )
   );
 
   AddNewUser$ = createEffect(() =>
