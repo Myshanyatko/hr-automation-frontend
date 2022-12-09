@@ -86,7 +86,7 @@ export class FaqNewComponent implements OnInit, OnDestroy {
     }
   }
   complete() {
-    return this.router.navigate(['faq-list']);
+    return this.router.navigate(['faq']);
   }
   ngOnDestroy(): void {
     this.loading = false;

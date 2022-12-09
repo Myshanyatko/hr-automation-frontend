@@ -43,7 +43,7 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
         ofType(addNewCategorySuccess),
         filter((action) => action.processId === processId),
         tap(() => {
-          return this.router.navigate(['faq-list']);
+          return this.router.navigate(['faq']);
         })
       )
     );

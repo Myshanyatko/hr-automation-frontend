@@ -8,10 +8,22 @@ import { Component } from '@angular/core';
 export class MenuComponent {
   showLoader = false;
   public menuItems = [
-    { name: 'Сотрудники', url: 'users'},
-    { name: 'FAQ', url: 'faq-list' },
-    { name: 'Продукты', url: 'products-ordered' },
-    { name: 'Рестораны', url: 'restorans' },
+    {
+      name: 'Сотрудники',
+      url: 'users',
+    },
+    {
+      name: 'FAQ',
+      url: 'faq',
+    },
+    {
+      name: 'Продукты',
+      url: 'products',
+    },
+    {
+      name: 'Рестораны',
+      url: 'restorans',
+    },
   ];
 
   constructor() {}

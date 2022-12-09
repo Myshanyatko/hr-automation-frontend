@@ -104,7 +104,7 @@ export class FaqEditComponent implements OnInit, OnDestroy {
         filter((action) => action.processId === processId)
       )
       .subscribe(() => {
-        this.router.navigate(['/faq-list']);
+        this.router.navigate(['/faq']);
       });
     }
   }

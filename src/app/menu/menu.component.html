@@ -5,11 +5,11 @@
         <button
           size="l"
           tuiButton
-          routerLink="{{ item.url }}"
+          [routerLink]="item.url"
           appearance="menu"
           class="menu-item-button"
           routerLinkActive="accent"
-          [pseudoActive]="true"
+          
         >
           {{ item.name }}
         </button>

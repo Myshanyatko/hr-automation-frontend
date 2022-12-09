@@ -23,7 +23,7 @@ import { exhaustMap, mergeMap, catchError, EMPTY } from 'rxjs';
 export class USersEffects {
   getUsers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(getUsers),
+      ofType(getUsers), 
       mergeMap((action) =>
         this.usersService.getUsers(action.pageNumber).pipe(
           map((users) => setUsers({ userList: users })),

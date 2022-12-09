@@ -1,3 +1,4 @@
+import { RestoransComponent } from './restorans/restorans.component';
 import { ProductsOrderedComponent } from './products/products-ordered/products-ordered.component';
 import { ProductEditComponent } from './products/product-edit/product-edit.component';
 import { ProductNewComponent } from './products/product-new/product-new.component';
@@ -20,25 +21,60 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'users', component: StaffComponent, canActivate: [AuthGuard] },
-  { path: 'user/:id', component: UserComponent, canActivate: [AuthGuard] },
+  {
+    path: 'users/user/:id',
+    component: UserComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'key', canActivate: [KeyGuard], component: KeyComponent },
   { path: '', redirectTo: 'users', pathMatch: 'full' },
-  { path: 'restorans', redirectTo: 'users', pathMatch: 'full' },
-  { path: 'faq', component: FaqNewComponent, canActivate: [AuthGuard] },
-  { path: 'faq-list', component: FaqListComponent, canActivate: [AuthGuard] },
-  { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] },
-  { path: 'products-ordered', component: ProductsOrderedComponent, canActivate: [AuthGuard] },
-  { path: 'product-new', component: ProductNewComponent, canActivate: [AuthGuard] },
-  { path: 'new-user', component: NewUserComponent, canActivate: [AuthGuard] },
-  { path: 'edit-user/:id', component: EditUserComponent, canActivate: [AuthGuard] },
-  { path: 'edit-product/:id', component: ProductEditComponent, canActivate: [AuthGuard] },
-  { path: 'edit-faq/:id', component: FaqEditComponent, canActivate: [AuthGuard] },
   {
-    path: 'new-category',
+    path: 'restorans',
+    component: RestoransComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'faq/faq-new', component: FaqNewComponent, canActivate: [AuthGuard] },
+  { path: 'faq', component: FaqListComponent, canActivate: [AuthGuard] },
+  {
+    path: 'products/products-list',
+    component: ProductsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'products',
+    component: ProductsOrderedComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'products/product-new',
+    component: ProductNewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'users/new-user',
+    component: NewUserComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'users/edit-user/:id',
+    component: EditUserComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'products/edit-product/:id',
+    component: ProductEditComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'faq/edit-faq/:id',
+    component: FaqEditComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'faq/new-category',
     component: NewCategoryComponent,
     canActivate: [AuthGuard],
-  }
- 
+  },
 ];
 
 @NgModule({

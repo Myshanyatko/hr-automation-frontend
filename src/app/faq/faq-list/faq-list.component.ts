@@ -45,7 +45,7 @@ export class FaqListComponent implements OnInit {
     );
   }
   editFaq(id: number) {
-    this.router.navigate(['edit-faq/'+id]);
+    this.router.navigate(['/faq/edit-faq/'+id]);
   }
   searchFaq() {
     if (this.faqForm.value.name != '') {

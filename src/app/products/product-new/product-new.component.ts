@@ -127,7 +127,7 @@ export class ProductNewComponent implements OnInit, OnDestroy {
           filter((action) => action.processId === processId)
         )
         .subscribe(() => {
-          this.router.navigate(['/products']);
+          this.router.navigate(['/products/products-list']);
         });
     }
   }

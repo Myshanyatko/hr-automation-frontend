@@ -66,6 +66,7 @@ import { ProductsComponent } from './products/products-list/products-list.compon
 import { ProductNewComponent } from './products/product-new/product-new.component';
 import { ProductEditComponent } from './products/product-edit/product-edit.component';
 import { ProductsOrderedComponent } from './products/products-ordered/products-ordered.component';
+import { RestoransComponent } from './restorans/restorans.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,6 +86,7 @@ import { ProductsOrderedComponent } from './products/products-ordered/products-o
     ProductNewComponent,
     ProductEditComponent,
     ProductsOrderedComponent,
+    RestoransComponent,
   ],
   imports: [
     FormsModule,

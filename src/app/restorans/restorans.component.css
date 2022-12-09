@@ -1,0 +1,12 @@
+.tui-container {
+    margin: 35px 0;
+    width: 560px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: var(--tui-radius-l);
+    box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+  }
+  .title{
+    margin: 82px 0;
+    text-align: center;
+  }

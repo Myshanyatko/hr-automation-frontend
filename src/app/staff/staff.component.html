@@ -29,7 +29,7 @@
       appearance="accent"
       class="new-user-button"
       size="l"
-      [routerLink]="['/new-user']"
+      [routerLink]="['/users/new-user']"
     >
       new
     </button>
@@ -43,7 +43,7 @@
           tuiButton
           appearance="custom"
           class="staff-list-button"
-          [routerLink]="['/user/', user.id]"
+          [routerLink]="['/users/user/', user.id]"
         >
           <tui-avatar
             class="icon-user-avatar"

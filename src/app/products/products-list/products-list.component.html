@@ -3,7 +3,7 @@
     <tui-svg
       src="tuiIconBackCircleLarge"
       class="back"
-      routerLink="/products-ordered"
+      routerLink="/products"
     ></tui-svg>
     <h2 class="title-new-product">Продукты</h2>
   </div>
@@ -32,7 +32,7 @@
                 <tui-svg
                   class="icon-faq"
                   src="tuiIconEdit"
-                  [routerLink]="['/edit-product/' + product.id]"
+                  [routerLink]="['/products/edit-product/' + product.id]"
                 ></tui-svg>
 
                 <tui-svg
@@ -51,7 +51,7 @@
       type="button"
       appearance="accent"
       class="new-product-button"
-      [routerLink]="['/product-new']"
+      [routerLink]="['/products/product-new']"
       size="m"
     >
       Добавить новый продукт

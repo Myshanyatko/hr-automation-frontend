@@ -20,10 +20,12 @@ h4 {
   font-style: normal;
   padding: var(--tui-padding-l);
 }
-[data-appearance="menu"] {
+ [data-appearance="menu"] {
   font-weight: 100;
+  display: flex;
   font-style: normal;
   text-align: left;
+  padding: 2px 2px;
   justify-content: start;
   padding: var(--tui-padding-l);
 }

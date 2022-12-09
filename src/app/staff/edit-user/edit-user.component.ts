@@ -147,7 +147,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
           filter((action) => action.processId === processId)
         )
         .subscribe(() => {
-          return this.router.navigate(['/user/' + user.id]);
+          return this.router.navigate(['/users/user/' + user.id]);
         });
 
       this.store$.dispatch(editUser({ user: user, processId: processId }));
