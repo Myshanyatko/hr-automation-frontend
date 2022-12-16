@@ -2,7 +2,7 @@ import { AlertService } from './../../services/alert.service';
 import { Router } from '@angular/router';
 import { DialogService } from './../../services/dialog.service';
 import { UsersService } from './../../services/users.service';
-import { map, tap } from 'rxjs/operators';
+import { concatMap, map, switchMap, tap } from 'rxjs/operators';
 import {
   getUser,
   getUsers,
@@ -23,18 +23,36 @@ import { exhaustMap, mergeMap, catchError, EMPTY } from 'rxjs';
 export class USersEffects {
   getUsers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(getUsers), 
-      mergeMap((action) =>
-        this.usersService.getUsers(action.pageNumber).pipe(
-          map((users) => setUsers({ userList: users })),
-          catchError((err) => {
-            this.alert.showNotificationError(err.error).subscribe();
-            return EMPTY;
-          })
-        )
-      )
+      ofType(getUsers),
+      mergeMap((action) => {
+        if (
+          sessionStorage.getItem('usersFilter') == null ||
+          sessionStorage.getItem('usersFilter') == ''
+        ) {
+          return this.usersService.getUsers(action.pageNumber).pipe(
+            map((res) => setUsers({ userList: res.users, pages: res.pages })),
+            catchError((err) => {
+              this.alert.showNotificationError(err.error).subscribe();
+              return EMPTY;
+            })
+          );
+        } else
+          return this.usersService
+            .getFilteredUsers(
+              action.pageNumber,
+              String(sessionStorage.getItem('usersFilter'))
+            )
+            .pipe(
+              map((res) => setUsers({ userList: res.users, pages: res.pages })),
+              catchError((err) => {
+                this.alert.showNotificationError(err.error).subscribe();
+                return EMPTY;
+              })
+            );
+      })
     )
   );
+
   getFiltredUsers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getFilteredUsers),
@@ -42,7 +60,7 @@ export class USersEffects {
         this.usersService
           .getFilteredUsers(action.pageNumber, action.filter)
           .pipe(
-            map((users) => setUsers({ userList: users })),
+            map((res) => setUsers({ userList: res.users, pages: res.pages })),
             catchError((err) => {
               this.alert.showNotificationError(err.error).subscribe();
               return EMPTY;
@@ -75,6 +93,7 @@ export class USersEffects {
           map(() => {
             return editUserSuccess({
               user: action.user,
+              photo: action.photo,
               processId: action.processId,
             });
           }),
@@ -90,13 +109,29 @@ export class USersEffects {
   editUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(editUserSuccess),
-
-      map((action) => {
-        this.alert.showNotificationSuccess('Изменения сохранены').subscribe();
-        return setUser({
-          user: action.user,
-        });
-      })
+      tap((action) =>  
+      {  if (action.photo != null) 
+          return this.usersService.postPhoto(action.photo, action.user.id).pipe(
+            map(() => {
+              this.alert
+                .showNotificationSuccess('Изменения сохранены и фото тоже')
+                .subscribe();
+              return setUser({
+                user: action.user,
+              });
+            }),
+            catchError((err) => {
+              this.alert.showNotificationError(err.error).subscribe();
+              return EMPTY;
+            })
+          )
+        else  {
+            this.alert.showNotificationSuccess('Изменения сохранены').subscribe();
+           return setUser({
+              user: action.user,
+            });
+          }})
+       
     )
   );
 
@@ -108,6 +143,7 @@ export class USersEffects {
           map(() => {
             return addNewUserSuccess({
               user: action.user,
+              photo: action.photo,
               processId: action.processId,
             });
           }),
@@ -119,14 +155,28 @@ export class USersEffects {
       )
     )
   );
-  AddNewUserSuccess$ = createEffect(
+
+  addNewUserSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(addNewUserSuccess),
-        tap(() => {
-          this.alert
-            .showNotificationSuccess('Новый сотрудник добавлен')
-            .subscribe();
+        map((action) => {
+          if (action.photo != null)
+            return this.usersService.postPhoto(action.photo, -1).pipe(
+              map(() => {
+                this.alert
+                  .showNotificationSuccess('Новый сотрудник добавлен')
+                  .subscribe();
+              }),
+              catchError((err) => {
+                this.alert.showNotificationError(err.message).subscribe();
+                return EMPTY;
+              })
+            );
+          else
+            return this.alert
+              .showNotificationSuccess('Новый сотрудник добавлен')
+              .subscribe();
         })
       ),
     { dispatch: false }
@@ -151,7 +201,6 @@ export class USersEffects {
   );
   constructor(
     private actions$: Actions,
-    private dialogService: DialogService,
     private alert: AlertService,
     private router: Router,
     private usersService: UsersService

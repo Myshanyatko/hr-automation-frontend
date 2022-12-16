@@ -28,6 +28,11 @@ export class FaqService {
       params: { pageNumber: 1, size: 5, sortBy: 'id' },
     });
   }
+  getFiltredFaq() {
+    return this.http.get<Faq[]>(API+'/search', {
+      params: { pageNumber: 1, size: 10, sortBy: 'id' },
+    });
+  }
   getCategories() {
     return this.http.get<Category[]>(
      API+ '/categories'
@@ -37,8 +42,6 @@ export class FaqService {
     return this.http.get<Faq>(
      API+ '/'+id
     );
-    // const faq : Faq = {id: 1, categoryId: 1, title: 'test', description: 'test'}
-    // return faq
   }
   deleteFaq(id: number) {
     return this.http.delete(API + '/' + id);

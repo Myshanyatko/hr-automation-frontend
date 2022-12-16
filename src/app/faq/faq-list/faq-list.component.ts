@@ -25,8 +25,8 @@ export class FaqListComponent implements OnInit {
   categories$ = this.store$.select(selectCategories);
   search = '';
   faqForm!: FormGroup;
-
   filtredFaq$ = this.store$.select(selectFiltredFaq);
+  isFiltered = false
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -35,23 +35,24 @@ export class FaqListComponent implements OnInit {
 
   ngOnInit(): void {
     this.faqForm = this.fb.group({
-      name: ['', []],
+      name: [sessionStorage.getItem('faqFilter'), []],
     });
-    this.store$.dispatch(getCategories());
+    if (this.faqForm.value.name != '' && this.faqForm.value.name != null) {
+      this.isFiltered = true
+      this.store$.dispatch(getFiltredFaq({ name: this.faqForm.value.name }));
+    } else this.store$.dispatch(getCategories());
   }
-  deleteFaq(faqId: number, categoryId: number) {   
-    this.store$.dispatch(
-      deleteFaq({ faqId: faqId, categoryId: categoryId})
-    );
+  deleteFaq(faqId: number, categoryId: number) {
+    this.store$.dispatch(deleteFaq({ faqId: faqId, categoryId: categoryId }));
   }
   editFaq(id: number) {
-    this.router.navigate(['/faq/edit-faq/'+id]);
+    this.router.navigate(['/faq/edit-faq/' + id]);
   }
   searchFaq() {
-    if (this.faqForm.value.name != '') {
+    if (this.faqForm.value.name != '' && this.faqForm.value.name != null) {
+      // отдать вопросы, удовлетворяющие поиску по слову в заголовке
+      sessionStorage.setItem('faqFilter', this.faqForm.value.name);
+      this.store$.dispatch(getFiltredFaq({ name: this.faqForm.value.name }));
     }
-    console.log(this.faqForm.value.name);
-    // отдать вопросы, удовлетворяющие поиску по слову в заголовке
-    this.store$.dispatch(getFiltredFaq({ name: 'name' }));
   }
 }

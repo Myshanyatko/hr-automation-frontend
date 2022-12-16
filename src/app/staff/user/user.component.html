@@ -1,5 +1,5 @@
 <div *ngIf="user$ | async as user" class="tui-container">
-  <tui-svg src="tuiIconBackCircleLarge" class="back" routerLink="/.."></tui-svg>
+  <tui-svg src="tuiIconBackCircleLarge" class="back"  (click)="backClicked()"> </tui-svg>
   <div class="user-info-block">
     <div class="avatar-and-buttons-block">
       <tui-avatar
@@ -8,7 +8,7 @@
         [rounded]="false"
         text="avatar"
         size="xxl"
-        avatarUrl="tuiIconUser"
+        [avatarUrl]="user.pictureUrl"
       ></tui-avatar>
 
       <ul class="user-buttons">

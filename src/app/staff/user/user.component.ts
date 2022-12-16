@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../../store/selectors/user.selectors';
 import { TuiDestroyService, TuiDay } from '@taiga-ui/cdk';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-user',
@@ -21,14 +22,15 @@ import { TuiDestroyService, TuiDay } from '@taiga-ui/cdk';
   providers: [TuiDestroyService],
 })
 export class UserComponent implements OnInit {
-  public user$: Observable<UserInfo> = this.store$.select(selectUser);
+  public user$: Observable<UserInfo | null> = this.store$.select(selectUser);
   public birthDate$ = this.store$.select(selectUserBirthDate);
   tuiday$?: Observable<TuiDay | null>;
 
   constructor(
     private store$: Store<AppState>,
     private destroy$: TuiDestroyService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -55,5 +57,8 @@ export class UserComponent implements OnInit {
 }
   deleteUser(user: UserInfo) {
     this.store$.dispatch(deleteUser({ id: user.id }));
+  }
+  backClicked() {
+    this.location.back();
   }
 }

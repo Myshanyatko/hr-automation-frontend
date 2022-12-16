@@ -14,10 +14,13 @@ import {
   getFileSuccess,
   deleteOrderedProduct,
   deleteOrderedProductSuccess,
+  getProducts,
+  setProducts,
+  addOrderedProduct,
+  addOrderedProductSuccess,
 } from './../actions/products.actions';
 import { ProductsService } from './../../services/products.service';
 import { AlertService } from './../../services/alert.service';
-import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -45,6 +48,20 @@ export class ProductsEffects {
       mergeMap(() =>
         this.productsService.getOrderedProducts().pipe(
           map((res) => setOrderedProducts({ orderedProducts: res })),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  getProducts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getProducts),
+      mergeMap(() =>
+        this.productsService.getOrderedProducts().pipe(
+          map((res) => setProducts({ products: res })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
@@ -139,7 +156,10 @@ export class ProductsEffects {
       exhaustMap((action) =>
         this.productsService.deleteProduct(action.id).pipe(
           map(() => {
-            return deleteProductSuccess({id: action.id, categoryId: action.categoryId});
+            return deleteProductSuccess({
+              id: action.id,
+              categoryId: action.categoryId,
+            });
           }),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
@@ -161,37 +181,54 @@ export class ProductsEffects {
     { dispatch: false }
   );
   getFile$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(getFile),
-    exhaustMap(() =>
-      this.productsService.getFile().pipe(
-        map((res) => {
-          return getFileSuccess({file: res})
-        }),
-        catchError((err) => {
-          this.alert.showNotificationError(err.error).subscribe();
-          return EMPTY;
-        })
+    this.actions$.pipe(
+      ofType(getFile),
+      exhaustMap(() =>
+        this.productsService.getFile().pipe(
+          map((res) => {
+            return getFileSuccess({ file: res });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
       )
     )
-  )
-);
+  );
   deleteOrderedProduct$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(deleteOrderedProduct),
-    exhaustMap((action) =>
-      this.productsService.deleteOrderedProduct(action.id).pipe(
-        map(() => {
-          return deleteOrderedProductSuccess({id: action.id})
-        }),
-        catchError((err) => {
-          this.alert.showNotificationError(err.error).subscribe();
-          return EMPTY;
-        })
+    this.actions$.pipe(
+      ofType(deleteOrderedProduct),
+      exhaustMap((action) =>
+        this.productsService.deleteOrderedProduct(action.id).pipe(
+          map(() => {
+            return deleteOrderedProductSuccess({ id: action.id });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
       )
     )
-  )
-);
+  );
+  addOrderedProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addOrderedProduct),
+      exhaustMap(({ id }) =>
+        this.productsService.addOrderedProduct(id).pipe(
+          map(() => {
+            return addOrderedProductSuccess();
+          }),
+
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
   constructor(
     private actions$: Actions,
     private productsService: ProductsService,

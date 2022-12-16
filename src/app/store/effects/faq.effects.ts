@@ -29,8 +29,8 @@ export class FaqEffects {
     this.actions$.pipe(
       ofType(getFiltredFaq),
       mergeMap(() =>
-        this.faqService.getFaqList().pipe(
-          map((res) => setFaq({ faqList: res.content })),
+        this.faqService.getFiltredFaq().pipe(
+          map((res) => setFaq({ faqList: res })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
@@ -87,14 +87,14 @@ export class FaqEffects {
       exhaustMap((action) =>
         this.faqService.postCategory(action.name).pipe(
           map(() => {
-            this.router.navigate(['faq']);
+            this.router.navigate(['faq/faq-new']);
             return addNewCategorySuccess({
               name: action.name,
               processId: action.processId,
             });
           }),
           catchError((err) => {
-            this.alert.showNotificationError(err.message).subscribe();
+            this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
         )
@@ -154,7 +154,7 @@ export class FaqEffects {
             });
           }),
           catchError((err) => {
-            this.alert.showNotificationError(err.message).subscribe();
+            this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
         )

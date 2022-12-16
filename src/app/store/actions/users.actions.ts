@@ -9,13 +9,13 @@ export const getUsers = createAction(
 );
 export const setUsers = createAction(
   '[Users Page] Set Users',
-  props<{ userList: User[] }>()
+  props<{ userList: User[]; pages: number }>()
 );
 
 // список отфильтрованных пользователей
 export const getFilteredUsers = createAction(
   '[Users Page] Get Filtered Users',
-  props<{ pageNumber: number, filter: string }>()
+  props<{ pageNumber: number; filter: string }>()
 );
 // выбранный пользователь
 export const getUser = createAction(
@@ -29,20 +29,20 @@ export const setUser = createAction(
 //изменить выбранного пользователя
 export const editUser = createAction(
   '[Users Page] Edit User',
-  props<{ user: UserInfo; processId: number }>()
+  props<{ user: UserInfo; photo: FormData | null; processId: number }>()
 );
 export const editUserSuccess = createAction(
   '[Users Page] Edit User Success',
-  props<{ user: UserInfo; processId: number }>()
+  props<{ user: UserInfo; photo: FormData | null; processId: number }>()
 );
 //изменить выбранного пользователя
 export const addNewUser = createAction(
   '[Users Page] Add New User',
-  props<{ user: UserInfo; processId: number }>()
+  props<{ user: UserInfo; photo: FormData | null; processId: number }>()
 );
 export const addNewUserSuccess = createAction(
   '[Users Page] Add New User Succes',
-  props<{ user: UserInfo; processId: number }>()
+  props<{ user: UserInfo; photo: FormData | null; processId: number }>()
 );
 //удалить выбранного пользователя
 export const deleteUser = createAction(

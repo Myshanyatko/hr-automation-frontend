@@ -10,8 +10,8 @@ import { initialUserState } from './../state/users.state';
 
 export const userReducer = createReducer(
   initialUserState,
-  on(setUsers, (state, { userList }) => {
-    return { ...state, users: userList };
+  on(setUsers, (state, { userList, pages}) => {
+    return { ...state, users: userList , pages: pages};
   }),
   on(setUser, (state, { user }) => {
     return {

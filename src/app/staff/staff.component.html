@@ -35,7 +35,7 @@
     </button>
   </form>
 
-  <div class="staff-list-block" *tuiLet="users$ | async as users">
+  <div class="staff-list-block" *ngIf="users$ | async as users">
     <ul class="staff-list">
       <tui-loader *ngIf="users == null" class="loader"> </tui-loader>
       <li *ngFor="let user of users$ | async" class="staff-list-item">
@@ -46,6 +46,15 @@
           [routerLink]="['/users/user/', user.id]"
         >
           <tui-avatar
+          *ngIf="user.pictureUrl"
+            class="icon-user-avatar"
+            [rounded]="true"
+            text="avatar"
+            size="l"
+            [avatarUrl]="user.pictureUrl"
+          ></tui-avatar>
+          <tui-avatar
+          *ngIf="user.pictureUrl == null"
             class="icon-user-avatar"
             [rounded]="true"
             text="avatar"
@@ -60,11 +69,17 @@
         </button>
       </li>
     </ul>
-    <tui-pagination
-      [length]="3"
+    <tui-pagination 
+    *ngIf="pages$ | async as pages"
+      [length]="pages"
       [index]="index"
       class="pagination"
       (indexChange)="goToPage($event)"
     ></tui-pagination>
+  </div>
+  <div class="" *tuiLet="users$ | async as users">
+    <div class="not-users" *ngIf="users == []">
+      <p>Сотрудников по данному запросу не найдено </p>
+    </div>
   </div>
 </div>

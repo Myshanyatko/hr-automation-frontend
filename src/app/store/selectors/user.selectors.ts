@@ -13,5 +13,13 @@ export const selectUser = createSelector(
 );
 export const selectUserBirthDate = createSelector(
   selectUsers,
-  (state: UserState) => state.selectedUser.birthDate
+  (state: UserState) => {
+    if (state.selectedUser != null) return state.selectedUser.birthDate;
+    else return new Date();
+  }
+);
+export const selectPages = createSelector(
+  selectUsers,
+  (state: UserState) => state.pages
+  
 );

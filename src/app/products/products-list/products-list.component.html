@@ -24,9 +24,9 @@
               *ngFor="let product of category.products"
             >
               <div class="product">
-                <tui-avatar></tui-avatar>
                 <h4 class="product-title">{{ product.name }}</h4>
                 <p class="product-code">{{ product.code }}</p>
+                <tui-avatar size="l" text="{{product.name}}"></tui-avatar>
               </div>
               <div class="icons-faq">
                 <tui-svg

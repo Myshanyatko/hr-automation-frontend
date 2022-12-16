@@ -4,6 +4,7 @@ import {
   setCategories,
   deleteFaqSuccess,
   setEditedFaq,
+  setFiltredFaq,
 } from './../actions/faq.actions';
 import { createReducer, on } from '@ngrx/store';
 

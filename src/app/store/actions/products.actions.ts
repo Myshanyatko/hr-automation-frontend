@@ -21,6 +21,13 @@ export const setOrderedProducts = createAction(
   '[Products Page] Set Ordered Products',
   props<{ orderedProducts: Product[] }>()
 );
+// список aвсех продуктов
+export const getProducts = createAction('[Products Page] Get Products');
+
+export const setProducts = createAction(
+  '[Products Page] Set Products',
+  props<{ products: Product[] }>()
+);
 
 //добавить новоый продукт
 export const addNewProduct = createAction(
@@ -30,6 +37,16 @@ export const addNewProduct = createAction(
 export const addNewProductSuccess = createAction(
   '[Products Page] Add New Product Success',
   props<{ product: Product; processId: number }>()
+);
+
+//заказать продукт
+export const addOrderedProduct = createAction(
+  '[Products Page] Add Ordered Product',
+  props<{ id: number }>()
+);
+export const addOrderedProductSuccess = createAction(
+  '[Products Page] Add Ordered Product Success',
+  // props<{ product: Product }>()
 );
 
 //добавить новоый продукт
@@ -55,27 +72,25 @@ export const setProduct = createAction(
 //удалить продукт
 export const deleteProduct = createAction(
   '[Products Page] Delete Product',
-  props<{ id: number,  categoryId: number }>()
+  props<{ id: number; categoryId: number }>()
 );
 export const deleteProductSuccess = createAction(
   '[Products Page] Delete Product Success',
-  props<{ id: number,  categoryId: number }>()
+  props<{ id: number; categoryId: number }>()
 );
 
 //скачать файл
-export const getFile = createAction(
-  '[Products Page] Get File'
-);
+export const getFile = createAction('[Products Page] Get File');
 export const getFileSuccess = createAction(
   '[Products Page] Get File',
-  props<{ file: Blob}>()
+  props<{ file: Blob }>()
 );
 // удалить заказанный продукт
 export const deleteOrderedProduct = createAction(
   '[Products Page] Delete Ordered Product',
-  props<{ id: number}>()
+  props<{ id: number }>()
 );
 export const deleteOrderedProductSuccess = createAction(
   '[Products Page] Delete Ordered Product Success',
-  props<{ id: number}>()
+  props<{ id: number }>()
 );

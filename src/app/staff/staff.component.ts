@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
-import { selectUserList } from '../store/selectors/user.selectors';
+import { selectPages, selectUserList } from '../store/selectors/user.selectors';
 @Component({
   selector: 'app-staff',
   templateUrl: './staff.component.html',
@@ -14,6 +14,7 @@ import { selectUserList } from '../store/selectors/user.selectors';
 })
 export class StaffComponent implements OnInit {
   index = 0;
+  pages$ = this.store$.select(selectPages);
   users$: Observable<User[] | null> | null = this.store$.select(selectUserList);
   usersForm!: FormGroup;
   readonly urlNewUser = 'tuiIconUser';
@@ -21,17 +22,14 @@ export class StaffComponent implements OnInit {
 
   ngOnInit(): void {
     this.usersForm = this.fb.group({
-      name: ['', []],
+      name: [ sessionStorage.getItem('usersFilter'), []],
     });
-    this.store$.dispatch(getUsers({ pageNumber: this.index }));
+     this.store$.dispatch(getUsers({ pageNumber: this.index }));
   }
   searchUsers() {
-    this.store$.dispatch(
-      getFilteredUsers({
-        pageNumber: this.index,
-        filter: this.usersForm.value.name,
-      })
-    );
+    
+    sessionStorage.setItem('usersFilter', this.usersForm.value.name)
+    this.store$.dispatch(getUsers({ pageNumber: this.index }));
   }
   goToPage(index: number) {
     this.store$.dispatch(getUsers({ pageNumber: index }));

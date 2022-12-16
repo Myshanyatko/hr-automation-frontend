@@ -73,10 +73,10 @@ export class ProductEditComponent implements OnInit ,  OnDestroy{
       category: [[Validators.required]],
     });
 
-    this.categories$.subscribe((categories) => {
-      if (categories == null) return null;
-      else return this.productForm.get('category')?.setValue(categories[0]);
-    });
+    // this.categories$.subscribe((categories) => {
+    //   if (categories == null) return null;
+    //   else return this.productForm.get('category')?.setValue(categories[0]);
+    // });
     this.product$.subscribe((product) => {
       for (var i in product) {
         this.productForm.get(i)?.setValue(product[i as keyof Product]);

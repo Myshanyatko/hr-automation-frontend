@@ -11,14 +11,14 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   // запрос на поучение списка юзеров
-  getUsers(pageNumber: number ) {
-    return this.http.get<User[]>(API, {
-      params: { pageNumber: pageNumber, size: 5, sortBy: 'id'},
+  getUsers(pageNumber: number) {
+    return this.http.get<{users: User[], pages: number}>(API, {
+      params: { pageNumber: pageNumber, size: 5, sortBy: 'id' },
     });
   }
-  getFilteredUsers(pageNumber: number, filter: string ) {
-    return this.http.get<User[]>(API + '/search', {
-      params: { pageNumber: pageNumber, size: 5, sortBy: 'id', filter: filter},
+  getFilteredUsers(pageNumber: number, filter: string) {
+    return this.http.get<{users: User[], pages: number}>(API + '/search', {
+      params: { pageNumber: pageNumber, size: 5, sortBy: 'id', filter: filter },
     });
   }
   // запрос на получение юзера по id
@@ -39,6 +39,14 @@ export class UsersService {
       post: user.post,
       about: user.about,
     });
+  }
+  postPhoto(fd: FormData, id: number) {
+    console.log('photo было загружено');
+    
+    return this.http.post(
+      'https://hr-automation-backend.onrender.com/file/'+id,
+      fd
+    );
   }
 
   // запрос на удаление сотрудника

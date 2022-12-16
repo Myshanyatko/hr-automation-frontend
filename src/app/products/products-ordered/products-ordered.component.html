@@ -6,15 +6,64 @@
       <div class="info">
         <div class="name-and-code">
           <h3>{{ product.name }}</h3>
-          <p>{{ product.code }} </p>
+          <p>{{ product.code }}</p>
         </div>
         <p class="code">{{ product.quantity }} шт</p>
       </div>
       <tui-svg
         class="icon"
-        src="tuiIconMinus"
+        src="tuiIconTrash"
         (click)="deleteProduct(product.id)"
       ></tui-svg>
+    </div>
+    <h3 class="title-new">Добавьте еще продукты в список</h3>
+    <div class="new">
+      <form [formGroup]="productForm">
+        <tui-select
+          class="product-form-item"
+          tuiTextfieldSize="m"
+          formControlName="product"
+          *ngIf="allProducts$ | async as products"
+          [valueContent]="productsContent"
+        >
+          Выберите продукт
+
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="products"
+            [itemContent]="productsContent"
+          ></tui-data-list-wrapper>
+        </tui-select>
+
+        <ng-template #productsContent let-item>
+          <div class="category-item">
+            {{ item.name }}
+          </div>
+        </ng-template>
+
+        <div
+          class="error-message"
+          *ngIf="
+            productForm.get('product')?.invalid &&
+            (productForm.get('product')?.dirty ||
+              productForm.get('product')?.touched ||
+              errors)
+          "
+        >
+          <span>Обязательное поле</span>
+        </div>
+      </form>
+      <button
+        tuiButton
+        type="button"
+        appearance="accent"
+        class="new-product-button"
+        size="m"
+        [showLoader]="loading"
+        (click)="addProducts()"
+      >
+        Добавить
+      </button>
     </div>
     <div class="buttons">
       <button
@@ -34,12 +83,11 @@
         appearance="second"
         class="new-product-button"
         routerLink="/products/products-list"
-       
         size="m"
       >
         Управление продуктами
       </button>
-      <a download="Ordered Products.xls" id="link" ></a>
+      <a download="Ordered Products.xls" id="link"></a>
     </div>
   </div>
 </div>

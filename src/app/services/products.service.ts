@@ -19,6 +19,9 @@ export class ProductsService {
       ordered: product.ordered,
     });
   }
+  addOrderedProduct(id: number) {
+    return this.http.get(API + '/order/' + id);
+  }
   putProduct(product: Product) {
     return this.http.put(API + '/category/' + product.categoryId, {
       id: product.id,
@@ -31,7 +34,7 @@ export class ProductsService {
   deleteProduct(id: number) {
     return this.http.delete(API + '/' + id);
   }
-  
+
   deleteOrderedProduct(id: number) {
     return this.http.get(API + '/unorder/' + id);
   }
@@ -41,11 +44,16 @@ export class ProductsService {
   getOrderedProducts() {
     return this.http.get<Product[]>(API + '/ordered');
   }
+  getProducts() {
+    return this.http.get<Product[]>(API, {
+      params: { pageNumber: 1, size: 20, sortBy: 'id' },
+    });
+  }
   getProduct(id: number) {
     return this.http.get<Product>(API + '/' + id);
   }
   getFile() {
-    const type = 'blob' as 'json'
-    return this.http.get<Blob>(API + '/excel',  { responseType: type});
+    const type = 'blob' as 'json';
+    return this.http.get<Blob>(API + '/excel', { responseType: type });
   }
 }

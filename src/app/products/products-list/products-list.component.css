@@ -29,8 +29,11 @@
   display: grid;
   grid-template-columns: 300px auto;
 }
+.product-title{
+  color: #ff7043;
+}
 .product-code {
-  color: #a6a2a2;
+  margin-bottom: 10px;
 }
 .new-product-button {
   margin-top: 20px;

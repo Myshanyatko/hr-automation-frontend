@@ -26,7 +26,7 @@ let nextProcessId = 1;
   providers: [TuiDestroyService],
 })
 export class EditUserComponent implements OnInit, OnDestroy {
-  public user$: Observable<UserInfo> = this.store$.select(selectUser);
+  public user$: Observable<UserInfo | null> = this.store$.select(selectUser);
   userForm!: FormGroup;
   errors = false;
   loading = false;
@@ -50,7 +50,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.user$
       .pipe(
-        tap((item) => (this.id = item.id)),
+        tap((item) => {
+          if (item != null) this.id = item.id;
+        }),
         takeUntil(this.destroy$)
       )
       .subscribe();
@@ -92,13 +94,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
     return timer(1000).pipe(
       map(() => {
-        if (Math.random() > 0.5) {
-          return file;
-        }
-
-        this.rejectedFiles$.next(file);
-
-        return null;
+        return file;
       }),
       finalize(() => this.loadingFiles$.next(null))
     );
@@ -137,6 +133,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
         admin: this.userForm.value.admin,
         about: this.userForm.value.about,
         photo: this.control.value,
+        pictureUrl: this.userForm.value.pictureUrl,
       };
 
       const processId = nextProcessId + 1;
@@ -150,7 +147,14 @@ export class EditUserComponent implements OnInit, OnDestroy {
           return this.router.navigate(['/users/user/' + user.id]);
         });
 
-      this.store$.dispatch(editUser({ user: user, processId: processId }));
+        if(this.control.value != null){
+          var fd = new FormData();
+      fd.append('file', this.control.value);
+      this.store$.dispatch(editUser({ user: user, photo: fd, processId: processId }));
+
+        }
+        else   this.store$.dispatch(editUser({ user: user, photo: null, processId: processId }));
+     
       this.errors = false;
     }
   }

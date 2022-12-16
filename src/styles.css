@@ -13,7 +13,11 @@ h4 {
   margin: 0;
   padding: 0;
 }
-
+body, html{
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
 /* здесь попытки изменить элементы тайги */
 [data-appearance="custom"] {
   font-weight: 100;

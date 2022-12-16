@@ -5,6 +5,7 @@ import {
   deleteProductSuccess,
   getFileSuccess,
   deleteOrderedProductSuccess,
+  setProducts,
 } from './../actions/products.actions';
 import { initialProductsState } from './../state/products.state';
 import { createReducer, on } from '@ngrx/store';
@@ -16,6 +17,9 @@ export const productsReducer = createReducer(
   }),
   on(setOrderedProducts, (state, { orderedProducts }) => {
     return { ...state, orderedProducts: orderedProducts };
+  }),
+  on(setProducts, (state, { products }) => {
+    return { ...state, products: products };
   }),
   on(setProduct, (state, { product }) => {
     return { ...state, selectedProduct: product };

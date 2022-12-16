@@ -1,4 +1,4 @@
-<header class="header" *tuiLet=" loggedIn$ | async as loggedIn">
+<header class="header" *tuiLet="loggedIn$ | async as loggedIn">
   <div class="header-title-block">
     <div class="header-title-circle"></div>
     <a routerLink="users" class="header-title"> Административная панель </a>
@@ -15,7 +15,7 @@
         class="header-menu-button"
         size="xs"
         appearance="custom"
-        [iconRight]="icon" 
+        [iconRight]="icon"
       >
         {{ username }}
       </button>

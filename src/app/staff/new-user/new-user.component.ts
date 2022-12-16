@@ -110,6 +110,7 @@ export class NewUserComponent implements OnInit, OnDestroy {
         post: this.createUserForm.value.post,
         admin: this.createUserForm.value.admin,
         about: this.createUserForm.value.about,
+        pictureUrl: ''
       };
 
       const processId = nextProcessId + 1;
@@ -121,20 +122,22 @@ export class NewUserComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           return this.router.navigate(['/users']);
         });
-
-      this.store$.dispatch(addNewUser({ user: user, processId: processId }));
-
-      // это для картинки
-      console.log(this.control.value);
-      var fd = new FormData();
+        if(this.control.value != null){
+          var fd = new FormData();
       fd.append('file', this.control.value);
+      this.store$.dispatch(addNewUser({ user: user, photo: fd, processId: processId }));
+
+        }
+        else   this.store$.dispatch(addNewUser({ user: user, photo: null, processId: processId }));
+
+      
 
       // оно здесь временно!!!
-      this.http
-        .post('https://hr-automation-backend.onrender.com/test', fd)
-        .subscribe((res) => console.log(res));
+    //   this.http
+    //     .post('https://hr-automation-backend.onrender.com/test', fd)
+    //     .subscribe((res) => console.log(res));
         
-        this.errors = false;
+    //     this.errors = false;
     }
 
     
