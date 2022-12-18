@@ -12,7 +12,7 @@ export class ProductsService {
   constructor(private http: HttpClient) {}
 
   postProduct(product: Product) {
-    return this.http.post(API + '/category/' + product.categoryId, {
+    return this.http.post<number>(API + '/category/' + product.categoryId, {
       name: product.name,
       code: product.code,
       quantity: product.quantity,

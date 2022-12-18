@@ -136,7 +136,7 @@ export class ProductEditComponent implements OnInit ,  OnDestroy{
                     code: this.productForm.value.code,
                     quantity: this.productForm.value.quantity,
                     categoryId: this.productForm.value.category.id,
-                    photo: this.productForm.value.photo,
+                    pictureUrl: prod.pictureUrl,
                   },
                   processId: processId,
                 })

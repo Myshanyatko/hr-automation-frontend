@@ -2,8 +2,8 @@ export interface Product {
   id: number;
   code: string;
   name: string;
-  photo: string | File | null;
+  pictureUrl: string | null;
   quantity: number;
   categoryId: number;
-  ordered: boolean
+  ordered: boolean;
 }
