@@ -1,7 +1,8 @@
+import { Product } from './../../models/product';
 import { Actions, ofType } from '@ngrx/effects';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { TuiDay, TuiDestroyService } from '@taiga-ui/cdk';
+import { TuiDay, TuiDestroyService, tuiPure, TuiStringHandler } from '@taiga-ui/cdk';
 import {
   addOrderedProduct,
   addOrderedProductSuccess,
@@ -18,6 +19,8 @@ import {
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from 'src/app/store/state/app.state';
+import { TuiValueContentContext } from '@taiga-ui/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-products-ordered',
@@ -33,6 +36,8 @@ export class ProductsOrderedComponent implements OnInit {
   allProducts$ = this.store$.select(selectAllProducts);
   errors = false;
   loading = false;
+  value: readonly string[] = [];
+
   constructor(
     private actions$: Actions,
     private fb: FormBuilder,
@@ -41,7 +46,9 @@ export class ProductsOrderedComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productForm = this.fb.group({});
+    this.productForm = this.fb.group({
+      product: []
+    });
     this.allProducts$.subscribe((products) => {
       if (products != null)
         this.productForm.addControl('product', new FormControl(products[0]));
@@ -58,7 +65,7 @@ export class ProductsOrderedComponent implements OnInit {
     } else {
       this.loading = true;
       this.store$.dispatch(
-        addOrderedProduct({id: Number(this.productForm.value.product.id)})
+        addOrderedProduct({idList: this.productForm.value.product.map((product: Product) => product.id)})
       );
       this.actions$
         .pipe(
@@ -92,4 +99,8 @@ export class ProductsOrderedComponent implements OnInit {
       )
       .subscribe();
   }
+
+  get content(): string {
+    return `Выбрано ${this.value.length} продуктов`;
+}
 }

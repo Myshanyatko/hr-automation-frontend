@@ -35,6 +35,7 @@ import {
   TuiInputFilesModule,
   TuiInputDateModule,
   TuiInputNumberModule,
+  TuiMultiSelectModule,
   TuiPaginationModule,
 } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -123,6 +124,7 @@ import { RestoransComponent } from './restorans/restorans.component';
     TuiPaginationModule,
     TuiInputNumberModule,
     TuiLoaderModule,
+    TuiMultiSelectModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([USersEffects, FaqEffects, ProductsEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({

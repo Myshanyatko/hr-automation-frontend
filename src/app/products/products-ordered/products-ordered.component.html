@@ -19,26 +19,29 @@
     <h3 class="title-new">Добавьте еще продукты в список</h3>
     <div class="new">
       <form [formGroup]="productForm">
-        <tui-select
+        <tui-multi-select
+          [tuiTextfieldLabelOutside]="true"
           class="product-form-item"
           tuiTextfieldSize="m"
           formControlName="product"
-          *ngIf="allProducts$ | async as products"
-          [valueContent]="productsContent"
+          *tuiLet="allProducts$ | async as products"
+          [editable]="false"
+          [valueContent]="content"
+          [(ngModel)]="value"
+      
         >
           Выберите продукт
 
           <tui-data-list-wrapper
             *tuiDataList
+            tuiMultiSelectGroup
             [items]="products"
             [itemContent]="productsContent"
           ></tui-data-list-wrapper>
-        </tui-select>
+        </tui-multi-select>
 
         <ng-template #productsContent let-item>
-          <div class="category-item">
-            {{ item.name }}
-          </div>
+          <p class="category-item">{{ item.name }}</p>
         </ng-template>
 
         <div

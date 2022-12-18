@@ -60,7 +60,7 @@ export class ProductsEffects {
     this.actions$.pipe(
       ofType(getProducts),
       mergeMap(() =>
-        this.productsService.getOrderedProducts().pipe(
+        this.productsService.getProducts().pipe(
           map((res) => setProducts({ products: res })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
@@ -215,8 +215,8 @@ export class ProductsEffects {
   addOrderedProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addOrderedProduct),
-      exhaustMap(({ id }) =>
-        this.productsService.addOrderedProduct(id).pipe(
+      exhaustMap(({ idList }) =>
+        this.productsService.addOrderedProducts(idList).pipe(
           map(() => {
             return addOrderedProductSuccess();
           }),

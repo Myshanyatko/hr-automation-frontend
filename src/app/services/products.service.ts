@@ -19,8 +19,8 @@ export class ProductsService {
       ordered: product.ordered,
     });
   }
-  addOrderedProduct(id: number) {
-    return this.http.get(API + '/order/' + id);
+  addOrderedProducts(idList: number[]) {
+    return this.http.post(API + '/order/', idList);
   }
   putProduct(product: Product) {
     return this.http.put(API + '/category/' + product.categoryId, {
@@ -46,7 +46,7 @@ export class ProductsService {
   }
   getProducts() {
     return this.http.get<Product[]>(API, {
-      params: { pageNumber: 1, size: 20, sortBy: 'id' },
+      params: { pageNumber: 0, size: 20, sortBy: 'id' },
     });
   }
   getProduct(id: number) {

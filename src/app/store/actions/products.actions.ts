@@ -42,7 +42,7 @@ export const addNewProductSuccess = createAction(
 //заказать продукт
 export const addOrderedProduct = createAction(
   '[Products Page] Add Ordered Product',
-  props<{ id: number }>()
+  props<{ idList: number[] }>()
 );
 export const addOrderedProductSuccess = createAction(
   '[Products Page] Add Ordered Product Success',
