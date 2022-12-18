@@ -17,7 +17,7 @@ export class UsersService {
     });
   }
   getFilteredUsers(pageNumber: number, filter: string) {
-    return this.http.get<{users: User[], pages: number}>(API + '/search', {
+    return this.http.get< User[]>(API + '/search', {
       params: { pageNumber: pageNumber, size: 5, sortBy: 'id', filter: filter },
     });
   }
@@ -38,13 +38,12 @@ export class UsersService {
       project: user.project,
       post: user.post,
       about: user.about,
+      pictureUrl: user.pictureUrl
     });
   }
   postPhoto(fd: FormData, id: number) {
-    console.log('photo было загружено');
-    
     return this.http.post(
-      'https://hr-automation-backend.onrender.com/file/'+id,
+      'https://hr-automation-backend.onrender.com/file/user/'+id,
       fd
     );
   }
@@ -56,7 +55,7 @@ export class UsersService {
 
   // запрос на добавление сотрудника
   postUser(user: UserInfo) {
-    return this.http.post(API, {
+    return this.http.post<number>(API, {
       id: user.id,
       email: user.email,
       birthDate: user.birthDate,

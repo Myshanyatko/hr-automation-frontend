@@ -42,7 +42,7 @@ export const addNewUser = createAction(
 );
 export const addNewUserSuccess = createAction(
   '[Users Page] Add New User Succes',
-  props<{ user: UserInfo; photo: FormData | null; processId: number }>()
+  props<{ user: UserInfo; photo: FormData | null; processId: number, id: number }>()
 );
 //удалить выбранного пользователя
 export const deleteUser = createAction(

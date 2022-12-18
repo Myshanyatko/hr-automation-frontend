@@ -1,6 +1,9 @@
 <div *ngIf="user$ | async as user" class="tui-container">
-  <tui-svg src="tuiIconBackCircleLarge" class="back"  (click)="backClicked()"> </tui-svg>
-  <div class="user-info-block">
+  <tui-svg src="tuiIconBackCircleLarge" class="back" (click)="backClicked()">
+  </tui-svg>
+  <tui-loader *ngIf="loading" class="loader"> </tui-loader>
+
+  <div class="user-info-block" *ngIf="!loading">
     <div class="avatar-and-buttons-block">
       <tui-avatar
         new
@@ -8,7 +11,7 @@
         [rounded]="false"
         text="avatar"
         size="xxl"
-        [avatarUrl]="user.pictureUrl"
+        [avatarUrl]="user.pictureUrl || 'tuiIconUser' "
       ></tui-avatar>
 
       <ul class="user-buttons">

@@ -43,7 +43,7 @@ export class USersEffects {
               String(sessionStorage.getItem('usersFilter'))
             )
             .pipe(
-              map((res) => setUsers({ userList: res.users, pages: res.pages })),
+              map((res) => setUsers({ userList: res, pages: 1 })),
               catchError((err) => {
                 this.alert.showNotificationError(err.error).subscribe();
                 return EMPTY;
@@ -60,7 +60,7 @@ export class USersEffects {
         this.usersService
           .getFilteredUsers(action.pageNumber, action.filter)
           .pipe(
-            map((res) => setUsers({ userList: res.users, pages: res.pages })),
+            map((res) => setUsers({ userList: res, pages: 1 })),
             catchError((err) => {
               this.alert.showNotificationError(err.error).subscribe();
               return EMPTY;
@@ -109,12 +109,12 @@ export class USersEffects {
   editUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(editUserSuccess),
-      tap((action) =>  
+      mergeMap((action) =>  
       {  if (action.photo != null) 
           return this.usersService.postPhoto(action.photo, action.user.id).pipe(
             map(() => {
               this.alert
-                .showNotificationSuccess('Изменения сохранены и фото тоже')
+                .showNotificationSuccess('Изменения сохранены')
                 .subscribe();
               return setUser({
                 user: action.user,
@@ -127,9 +127,10 @@ export class USersEffects {
           )
         else  {
             this.alert.showNotificationSuccess('Изменения сохранены').subscribe();
-           return setUser({
+            setUser({
               user: action.user,
             });
+            return EMPTY
           }})
        
     )
@@ -140,11 +141,12 @@ export class USersEffects {
       ofType(addNewUser),
       exhaustMap((action) =>
         this.usersService.postUser(action.user).pipe(
-          map(() => {
+          map((id) => {
             return addNewUserSuccess({
               user: action.user,
               photo: action.photo,
               processId: action.processId,
+              id: id
             });
           }),
           catchError((err) => {
@@ -162,7 +164,7 @@ export class USersEffects {
         ofType(addNewUserSuccess),
         map((action) => {
           if (action.photo != null)
-            return this.usersService.postPhoto(action.photo, -1).pipe(
+            return this.usersService.postPhoto(action.photo, action.id).pipe(
               map(() => {
                 this.alert
                   .showNotificationSuccess('Новый сотрудник добавлен')

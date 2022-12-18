@@ -1,9 +1,11 @@
+import { Actions, ofType } from '@ngrx/effects';
 import { map } from 'rxjs/operators';
 import { selectUserBirthDate } from './../../store/selectors/user.selectors';
 import {
   getUser,
   deleteUser,
   editUser,
+  setUser,
 } from './../../store/actions/users.actions';
 import { AppState } from './../../store/state/app.state';
 import { UserInfo } from '../../models/userInfo';
@@ -25,8 +27,10 @@ export class UserComponent implements OnInit {
   public user$: Observable<UserInfo | null> = this.store$.select(selectUser);
   public birthDate$ = this.store$.select(selectUserBirthDate);
   tuiday$?: Observable<TuiDay | null>;
+  loading = true
 
   constructor(
+    private actions$: Actions,
     private store$: Store<AppState>,
     private destroy$: TuiDestroyService,
     private route: ActivatedRoute,
@@ -50,6 +54,13 @@ export class UserComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe();
+this.actions$.pipe(
+  ofType(setUser),
+  map(() => this.loading = false
+  
+  ),
+  takeUntil(this.destroy$)
+).subscribe()
   }
  fromLocalNativeDate(date: Date): TuiDay {
   date = new Date(date)

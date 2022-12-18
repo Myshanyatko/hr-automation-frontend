@@ -16,7 +16,12 @@ import {
   FormBuilder,
   FormControl,
 } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Subject, timer, Observable, of } from 'rxjs';
 let nextProcessId = 1;
 
@@ -64,15 +69,9 @@ export class NewUserComponent implements OnInit, OnDestroy {
     this.loadingFiles$.next(file);
 
     return timer(1000).pipe(
-      map(() => {
-        if (Math.random() > 0.5) {
-          return file;
-        }
-
-        this.rejectedFiles$.next(file);
-
-        return null;
-      }),
+      map(() => 
+           file
+      ),
       finalize(() => this.loadingFiles$.next(null))
     );
   }
@@ -110,7 +109,7 @@ export class NewUserComponent implements OnInit, OnDestroy {
         post: this.createUserForm.value.post,
         admin: this.createUserForm.value.admin,
         about: this.createUserForm.value.about,
-        pictureUrl: ''
+        pictureUrl: '',
       };
 
       const processId = nextProcessId + 1;
@@ -122,25 +121,17 @@ export class NewUserComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           return this.router.navigate(['/users']);
         });
-        if(this.control.value != null){
-          var fd = new FormData();
-      fd.append('file', this.control.value);
-      this.store$.dispatch(addNewUser({ user: user, photo: fd, processId: processId }));
-
-        }
-        else   this.store$.dispatch(addNewUser({ user: user, photo: null, processId: processId }));
-
-      
-
-      // оно здесь временно!!!
-    //   this.http
-    //     .post('https://hr-automation-backend.onrender.com/test', fd)
-    //     .subscribe((res) => console.log(res));
-        
-    //     this.errors = false;
+      if (this.control.value != null) {
+        var fd = new FormData();
+        fd.append('file', this.control.value);
+        this.store$.dispatch(
+          addNewUser({ user: user, photo: fd, processId: processId })
+        );
+      } else
+        this.store$.dispatch(
+          addNewUser({ user: user, photo: null, processId: processId })
+        );
     }
-
-    
   }
   ngOnDestroy(): void {
     this.loading = false;

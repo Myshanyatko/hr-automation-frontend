@@ -35,51 +35,53 @@
     </button>
   </form>
 
-  <div class="staff-list-block" *ngIf="users$ | async as users">
-    <ul class="staff-list">
-      <tui-loader *ngIf="users == null" class="loader"> </tui-loader>
-      <li *ngFor="let user of users$ | async" class="staff-list-item">
-        <button
-          tuiButton
-          appearance="custom"
-          class="staff-list-button"
-          [routerLink]="['/users/user/', user.id]"
-        >
-          <tui-avatar
-          *ngIf="user.pictureUrl"
-            class="icon-user-avatar"
-            [rounded]="true"
-            text="avatar"
-            size="l"
-            [avatarUrl]="user.pictureUrl"
-          ></tui-avatar>
-          <tui-avatar
-          *ngIf="user.pictureUrl == null"
-            class="icon-user-avatar"
-            [rounded]="true"
-            text="avatar"
-            size="l"
-            avatarUrl="tuiIconUser"
-          ></tui-avatar>
+  <div class="staff-list-block">
+    <tui-loader *ngIf="loading" class="loader"> </tui-loader>
+    <div class="" *ngIf="!loading">
+      <ul class="staff-list" *ngIf="users$ | async as users">
+        <li *ngFor="let user of users$ | async" class="staff-list-item">
+          <button
+            tuiButton
+            appearance="custom"
+            class="staff-list-button"
+            [routerLink]="['/users/user/', user.id]"
+          >
+            <tui-avatar
+              *ngIf="user.pictureUrl"
+              class="icon-user-avatar"
+              [rounded]="true"
+              text="avatar"
+              size="l"
+              [avatarUrl]="user.pictureUrl || 'tuiIconUser'"
+            ></tui-avatar>
+            <tui-avatar
+              *ngIf="user.pictureUrl == null"
+              class="icon-user-avatar"
+              [rounded]="true"
+              text="avatar"
+              size="l"
+              avatarUrl="tuiIconUser"
+            ></tui-avatar>
 
-          <section>
-            <p class="staff-user-name">{{ user.username }}</p>
-            <p class="staff-user-post">{{ user.post }}</p>
-          </section>
-        </button>
-      </li>
-    </ul>
-    <tui-pagination 
-    *ngIf="pages$ | async as pages"
-      [length]="pages"
-      [index]="index"
-      class="pagination"
-      (indexChange)="goToPage($event)"
-    ></tui-pagination>
-  </div>
-  <div class="" *tuiLet="users$ | async as users">
-    <div class="not-users" *ngIf="users == []">
-      <p>Сотрудников по данному запросу не найдено </p>
+            <section>
+              <p class="staff-user-name">{{ user.username }}</p>
+              <p class="staff-user-post">{{ user.post }}</p>
+            </section>
+          </button>
+        </li>
+      </ul>
+      <tui-pagination
+        *ngIf="pages$ | async as pages"
+        [length]="pages"
+        [index]="index"
+        class="pagination"
+        (indexChange)="goToPage($event)"
+      ></tui-pagination>
     </div>
+  </div>
+</div>
+<div class="" *tuiLet="users$ | async as users">
+  <div class="not-users" *ngIf="users == null && !loading">
+    <p>Сотрудников по данному запросу не найдено</p>
   </div>
 </div>

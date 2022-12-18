@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { selectUser } from './../../store/selectors/user.selectors';
 import { switchMap, map, finalize, tap, filter } from 'rxjs/operators';
 import { Subject, timer, Observable, of, takeUntil } from 'rxjs';
-import { editUser } from './../../store/actions/users.actions';
+import { editUser, editUserSuccess } from './../../store/actions/users.actions';
 import { Store } from '@ngrx/store';
 import { UserInfo } from '../../models/userInfo';
 import {
@@ -140,21 +140,24 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
       this.actions$
         .pipe(
-          ofType(editUser),
+          ofType(editUserSuccess),
           filter((action) => action.processId === processId)
         )
         .subscribe(() => {
           return this.router.navigate(['/users/user/' + user.id]);
         });
 
-        if(this.control.value != null){
-          var fd = new FormData();
-      fd.append('file', this.control.value);
-      this.store$.dispatch(editUser({ user: user, photo: fd, processId: processId }));
+      if (this.control.value != null) {
+        var fd = new FormData();
+        fd.append('file', this.control.value);
+        this.store$.dispatch(
+          editUser({ user: user, photo: fd, processId: processId })
+        );
+      } else
+        this.store$.dispatch(
+          editUser({ user: user, photo: null, processId: processId })
+        );
 
-        }
-        else   this.store$.dispatch(editUser({ user: user, photo: null, processId: processId }));
-     
       this.errors = false;
     }
   }
