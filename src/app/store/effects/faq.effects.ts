@@ -28,8 +28,8 @@ export class FaqEffects {
   getfaqList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getFiltredFaq),
-      mergeMap(() =>
-        this.faqService.getFiltredFaq().pipe(
+      mergeMap((action) =>
+        this.faqService.getFiltredFaq(action.name).pipe(
           map((res) => setFaq({ faqList: res })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();

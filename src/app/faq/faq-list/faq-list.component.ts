@@ -1,4 +1,4 @@
-import { filter, tap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { pipe } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -7,6 +7,9 @@ import {
   deleteFaq,
   getCategories,
   getFiltredFaq,
+  setCategories,
+  setFaq,
+  setFiltredFaq,
 } from './../../store/actions/faq.actions';
 import {
   selectCategories,
@@ -26,8 +29,11 @@ export class FaqListComponent implements OnInit {
   search = '';
   faqForm!: FormGroup;
   filtredFaq$ = this.store$.select(selectFiltredFaq);
-  isFiltered = false
+  isFiltered = false;
+  loading = true;
+
   constructor(
+    private actions$: Actions,
     private fb: FormBuilder,
     private router: Router,
     private store$: Store<AppState>
@@ -38,9 +44,15 @@ export class FaqListComponent implements OnInit {
       name: [sessionStorage.getItem('faqFilter'), []],
     });
     if (this.faqForm.value.name != '' && this.faqForm.value.name != null) {
-      this.isFiltered = true
+      this.isFiltered = true;
       this.store$.dispatch(getFiltredFaq({ name: this.faqForm.value.name }));
     } else this.store$.dispatch(getCategories());
+    this.actions$
+      .pipe(
+        ofType(setCategories, setFaq),
+        map(() => (this.loading = false))
+      )
+      .subscribe();
   }
   deleteFaq(faqId: number, categoryId: number) {
     this.store$.dispatch(deleteFaq({ faqId: faqId, categoryId: categoryId }));
@@ -50,9 +62,20 @@ export class FaqListComponent implements OnInit {
   }
   searchFaq() {
     if (this.faqForm.value.name != '' && this.faqForm.value.name != null) {
+      this.loading = true;
+      this.isFiltered = true;
       // отдать вопросы, удовлетворяющие поиску по слову в заголовке
       sessionStorage.setItem('faqFilter', this.faqForm.value.name);
       this.store$.dispatch(getFiltredFaq({ name: this.faqForm.value.name }));
+    } else {
+      this.isFiltered = false;
+      this.store$.dispatch(getCategories());
     }
+    this.actions$
+      .pipe(
+        ofType(setFaq),
+        map(() => (this.loading = false))
+      )
+      .subscribe();
   }
 }

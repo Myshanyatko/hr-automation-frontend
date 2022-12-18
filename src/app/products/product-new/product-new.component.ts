@@ -75,15 +75,7 @@ export class ProductNewComponent implements OnInit, OnDestroy {
     this.loadingFiles$.next(file);
 
     return timer(1000).pipe(
-      map(() => {
-        if (Math.random() > 0.5) {
-          return file;
-        }
-
-        this.rejectedFiles$.next(file);
-
-        return null;
-      }),
+      map(() => file),
       finalize(() => this.loadingFiles$.next(null))
     );
   }
@@ -112,15 +104,21 @@ export class ProductNewComponent implements OnInit, OnDestroy {
         quantity: this.productForm.value.quantity,
         categoryId: this.productForm.value.category.id,
         ordered: false,
-        pictureUrl: null
+        pictureUrl: null,
       };
 
       const processId = nextProcessId + 1;
-      this.store$.dispatch(
-        addNewProduct({ product: product, processId: processId })
-      );
       this.errors = false;
-
+      if (this.control.value != null) {
+        var fd = new FormData();
+        fd.append('file', this.control.value);
+        this.store$.dispatch(
+          addNewProduct({ product: product, photo: fd, processId: processId })
+        );
+      } else
+        this.store$.dispatch(
+          addNewProduct({ product: product, photo: null, processId: processId })
+        );
       this.actions$
         .pipe(
           ofType(addNewProductSuccess),

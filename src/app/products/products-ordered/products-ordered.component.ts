@@ -19,8 +19,6 @@ import {
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from 'src/app/store/state/app.state';
-import { TuiValueContentContext } from '@taiga-ui/core';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-products-ordered',
@@ -37,6 +35,7 @@ export class ProductsOrderedComponent implements OnInit {
   errors = false;
   loading = false;
   value: readonly string[] = [];
+  today = `Заказанные продукты на ` + new Date().getDate() + '.'+ (new Date().getMonth()+1) +'.xls'
 
   constructor(
     private actions$: Actions,

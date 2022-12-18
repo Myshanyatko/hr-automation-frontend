@@ -4,6 +4,8 @@ import { User } from '../models/user';
 import { UserInfo } from '../models/userInfo';
 
 const API = 'https://hr-automation-backend.onrender.com/users';
+// const API = 'http://localhost:8080/users'
+
 @Injectable({
   providedIn: 'root',
 })

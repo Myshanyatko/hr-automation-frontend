@@ -33,8 +33,8 @@
   </form>
 
   <div class="category-block" *tuiLet="categories$ | async as categories">
-    <tui-loader *ngIf="categories == null" class="loader"> </tui-loader>
-    <div class="categories-list" *ngIf="filtredFaq$ ">
+    <tui-loader *ngIf="loading" class="loader"> </tui-loader>
+    <div class="categories-list" *ngIf="!loading && !isFiltered">
       <tui-accordion [closeOthers]="false">
         >
         <tui-accordion-item
@@ -71,7 +71,7 @@
       </tui-accordion>
     </div>
 
-    <div class="filtred-faq-block" *ngIf="filtredFaq$">
+    <div class="filtred-faq-block" *ngIf="isFiltered && !loading">
       <div
         class="filtred-faq-item"
         *ngFor="let question of filtredFaq$ | async"

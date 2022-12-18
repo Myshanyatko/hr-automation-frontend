@@ -15,7 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { Product } from './../../models/product';
 import { TuiFileLike } from '@taiga-ui/kit';
-import { map, finalize, switchMap, filter, tap } from 'rxjs/operators';
+import { map, finalize, switchMap, filter, tap, take } from 'rxjs/operators';
 import { timer, Observable, Subject, of, takeUntil } from 'rxjs';
 import {
   FormGroup,
@@ -32,7 +32,7 @@ let nextProcessId = 1;
   styleUrls: ['./product-edit.component.css'],
   providers: [TuiDestroyService],
 })
-export class ProductEditComponent implements OnInit ,  OnDestroy{
+export class ProductEditComponent implements OnInit, OnDestroy {
   id = -1;
   loading = false;
   productForm!: FormGroup;
@@ -73,10 +73,10 @@ export class ProductEditComponent implements OnInit ,  OnDestroy{
       category: [[Validators.required]],
     });
 
-    // this.categories$.subscribe((categories) => {
-    //   if (categories == null) return null;
-    //   else return this.productForm.get('category')?.setValue(categories[0]);
-    // });
+    this.categories$.subscribe((categories) => {
+      if (categories != null)
+        this.productForm.get('category')?.setValue(categories[0]);
+    });
     this.product$.subscribe((product) => {
       for (var i in product) {
         this.productForm.get(i)?.setValue(product[i as keyof Product]);
@@ -91,15 +91,7 @@ export class ProductEditComponent implements OnInit ,  OnDestroy{
     this.loadingFiles$.next(file);
 
     return timer(1000).pipe(
-      map(() => {
-        if (Math.random() > 0.5) {
-          return file;
-        }
-
-        this.rejectedFiles$.next(file);
-
-        return null;
-      }),
+      map(() => file),
       finalize(() => this.loadingFiles$.next(null))
     );
   }
@@ -125,22 +117,43 @@ export class ProductEditComponent implements OnInit ,  OnDestroy{
       const processId = nextProcessId + 1;
       this.product$
         .pipe(
+          take(1),
           map((prod) => {
             if (prod != null) {
-              this.store$.dispatch(
-                editProduct({
-                  product: {
-                    id: prod.id,
-                    ordered: prod.ordered,
-                    name: this.productForm.value.name,
-                    code: this.productForm.value.code,
-                    quantity: this.productForm.value.quantity,
-                    categoryId: this.productForm.value.category.id,
-                    pictureUrl: prod.pictureUrl,
-                  },
-                  processId: processId,
-                })
-              );
+              if (this.control.value != null) {
+                var fd = new FormData();
+                fd.append('file', this.control.value);
+                this.store$.dispatch(
+                  editProduct({
+                    product: {
+                      id: prod.id,
+                      ordered: prod.ordered,
+                      name: this.productForm.value.name,
+                      code: this.productForm.value.code,
+                      quantity: this.productForm.value.quantity,
+                      categoryId: this.productForm.value.category.id,
+                      pictureUrl: prod.pictureUrl,
+                    },
+                    processId: processId,
+                    photo: fd,
+                  })
+                );
+              } else
+                this.store$.dispatch(
+                  editProduct({
+                    product: {
+                      id: prod.id,
+                      ordered: prod.ordered,
+                      name: this.productForm.value.name,
+                      code: this.productForm.value.code,
+                      quantity: this.productForm.value.quantity,
+                      categoryId: this.productForm.value.category.id,
+                      pictureUrl: prod.pictureUrl,
+                    },
+                    processId: processId,
+                    photo: null,
+                  })
+                );
             }
           }),
           takeUntil(this.destroy$)

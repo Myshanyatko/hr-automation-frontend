@@ -28,9 +28,9 @@ export class FaqService {
       params: { pageNumber: 1, size: 5, sortBy: 'id' },
     });
   }
-  getFiltredFaq() {
+  getFiltredFaq(filter: string) {
     return this.http.get<Faq[]>(API+'/search', {
-      params: { pageNumber: 1, size: 10, sortBy: 'id' },
+      params: { pageNumber: 0, size: 10, sortBy: 'id' , filter:filter},
     });
   }
   getCategories() {

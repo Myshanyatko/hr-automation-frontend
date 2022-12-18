@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 const API = 'https://hr-automation-backend.onrender.com/products';
+// const API = 'http://localhost:8080/products';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ export class ProductsService {
       code: product.code,
       quantity: product.quantity,
       ordered: product.ordered,
+      pictureUrl: product.pictureUrl
     });
   }
   deleteProduct(id: number) {
@@ -55,5 +57,13 @@ export class ProductsService {
   getFile() {
     const type = 'blob' as 'json';
     return this.http.get<Blob>(API + '/excel', { responseType: type });
+  }
+  postPhoto(fd: FormData, id: number) {
+    console.log('product photo');
+    
+    return this.http.post(
+      'https://hr-automation-backend.onrender.com/file/product/'+id,
+      fd
+    );
   }
 }

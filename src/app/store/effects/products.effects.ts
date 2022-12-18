@@ -74,12 +74,14 @@ export class ProductsEffects {
   addNewProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addNewProduct),
-      exhaustMap(({ processId, product }) =>
+      exhaustMap(({ processId, product, photo }) =>
         this.productsService.postProduct(product).pipe(
-          map(() => {
+          map((id) => {
             return addNewProductSuccess({
               processId: processId,
+              photo: photo,
               product: product,
+              id: id,
             });
           }),
 
@@ -95,8 +97,23 @@ export class ProductsEffects {
     () =>
       this.actions$.pipe(
         ofType(addNewProductSuccess),
-        tap(() => {
-          this.alert.showNotificationSuccess('Продукт создан').subscribe();
+        map((action) => {
+          if (action.photo != null)
+            return this.productsService.postPhoto(action.photo, action.id).pipe(
+              map(() => {
+                this.alert
+                  .showNotificationSuccess('Продукт создан')
+                  .subscribe();
+              }),
+              catchError((err) => {
+                this.alert.showNotificationError(err.error).subscribe();
+                return EMPTY;
+              })
+            ).subscribe()
+          else
+            return this.alert
+              .showNotificationSuccess('Продукт создан')
+              .subscribe();
         })
       ),
     { dispatch: false }
@@ -128,7 +145,11 @@ export class ProductsEffects {
       exhaustMap((action) =>
         this.productsService.putProduct(action.product).pipe(
           map(() => {
-            return editProductSuccess({ processId: action.processId });
+            return editProductSuccess({
+              processId: action.processId,
+              product: action.product,
+              photo: action.photo,
+            });
           }),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
@@ -142,12 +163,31 @@ export class ProductsEffects {
     () =>
       this.actions$.pipe(
         ofType(editProductSuccess),
-        map(() =>
-          this.alert.showNotificationSuccess('Изменения сохранены').subscribe()
-        )
-      ),
-
-    { dispatch: false }
+        mergeMap((action) =>  
+      {  if (action.photo != null) 
+          return this.productsService.postPhoto(action.photo, action.product.id).pipe(
+            map(() => {
+              this.alert
+                .showNotificationSuccess('Изменения сохранены')
+                .subscribe();
+              return setProduct({
+                product: action.product,
+              });
+            }),
+            catchError((err) => {
+              this.alert.showNotificationError(err.error).subscribe();
+              return EMPTY;
+            })
+          )
+        else  {
+            this.alert.showNotificationSuccess('Изменения сохранены').subscribe();
+            setProduct({
+              product: action.product,
+            });
+            return EMPTY
+          }})
+       
+    )
   );
 
   deleteProduct$ = createEffect(() =>
