@@ -61,11 +61,10 @@ export class FaqListComponent implements OnInit {
     this.router.navigate(['/faq/edit-faq/' + id]);
   }
   searchFaq() {
+    sessionStorage.setItem('faqFilter', this.faqForm.value.name);
     if (this.faqForm.value.name != '' && this.faqForm.value.name != null) {
       this.loading = true;
       this.isFiltered = true;
-      // отдать вопросы, удовлетворяющие поиску по слову в заголовке
-      sessionStorage.setItem('faqFilter', this.faqForm.value.name);
       this.store$.dispatch(getFiltredFaq({ name: this.faqForm.value.name }));
     } else {
       this.isFiltered = false;

@@ -19,7 +19,7 @@ export class UsersService {
     });
   }
   getFilteredUsers(pageNumber: number, filter: string) {
-    return this.http.get< User[]>(API + '/search', {
+    return this.http.get< {users: User[], pages: number}>(API + '/search', {
       params: { pageNumber: pageNumber, size: 5, sortBy: 'id', filter: filter },
     });
   }

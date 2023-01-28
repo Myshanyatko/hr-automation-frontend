@@ -1,16 +1,16 @@
+import { apiKey } from './../../apiKey';
+
 import { AuthEffects } from './store/effects/auth.effects';
 import { ProductsEffects } from './store/effects/products.effects';
 import { FaqEffects } from './store/effects/faq.effects';
 import { environment } from './../environments/environment';
 import { appReducers } from './store/reducers/app.reducers';
 import { USersEffects } from './store/effects/users.effects';
-import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import {
   TuiRootModule,
   TuiLabelModule,
   TuiDialogModule,
   TuiAlertModule,
-  TUI_SANITIZER,
   TuiButtonModule,
   TuiSvgModule,
   TuiDataListModule,
@@ -38,6 +38,8 @@ import {
   TuiMultiSelectModule,
   TuiPaginationModule,
 } from '@taiga-ui/kit';
+
+import { AgmMarkerClustererModule } from '@agm/markerclusterer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { NgModule } from '@angular/core';
@@ -68,6 +70,9 @@ import { ProductNewComponent } from './products/product-new/product-new.componen
 import { ProductEditComponent } from './products/product-edit/product-edit.component';
 import { ProductsOrderedComponent } from './products/products-ordered/products-ordered.component';
 import { RestoransComponent } from './restorans/restorans.component';
+import { AgmCoreModule } from '@agm/core';
+import { CreateRestaurantComponent } from './restorans/create-restaurant/create-restaurant.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,6 +93,7 @@ import { RestoransComponent } from './restorans/restorans.component';
     ProductEditComponent,
     ProductsOrderedComponent,
     RestoransComponent,
+    CreateRestaurantComponent,
   ],
   imports: [
     FormsModule,
@@ -125,8 +131,17 @@ import { RestoransComponent } from './restorans/restorans.component';
     TuiInputNumberModule,
     TuiLoaderModule,
     TuiMultiSelectModule,
+    AgmCoreModule.forRoot({
+      apiKey: apiKey,
+    }),
+    AgmMarkerClustererModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([USersEffects, FaqEffects, ProductsEffects, AuthEffects]),
+    EffectsModule.forRoot([
+      USersEffects,
+      FaqEffects,
+      ProductsEffects,
+      AuthEffects,
+    ]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,
       autoPause: true,
@@ -137,11 +152,6 @@ import { RestoransComponent } from './restorans/restorans.component';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
-    },
-
-    {
-      provide: TUI_SANITIZER,
-      useClass: NgDompurifySanitizer,
     },
   ],
   bootstrap: [AppComponent],

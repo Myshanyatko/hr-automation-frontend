@@ -1,3 +1,20 @@
 <div class="tui-container">
-  <h2 class="title">Здесь будут рестораны!</h2>
+  <h1 class="title">Рестораны</h1>
+  <agm-map style="height: 300px" [latitude]="markers[0].lat" [longitude]="markers[0].lng">
+    <agm-marker-cluster>
+      <agm-marker
+        *ngFor="let marker of markers"
+        [latitude]="marker.lat"
+        [longitude]="marker.lng"
+      ></agm-marker> </agm-marker-cluster
+  ></agm-map>
+<div class="list">
+  <div class="list__restaurant" *ngFor="let rest of restaurants">
+    <h3>{{rest.name}}</h3>
+    <p>адрес: {{rest.address}}</p>
+    <p>рейтинг: {{rest.rating}}</p>
+    <p>средний чек: {{rest.check}}</p>
+  </div>
+</div>
+  <button tuiButton routerLink='/restaurants/create-restaurant' class="create-button">create restaurant</button>
 </div>

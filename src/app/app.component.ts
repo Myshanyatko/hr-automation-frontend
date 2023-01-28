@@ -8,6 +8,7 @@ import { TokenService } from './services/token.service';
 })
 export class AppComponent implements OnDestroy {
   title = 'hr-automation';
+  str = ', ';
 
   constructor(public router: Router, public tokenService: TokenService) {}
   ngOnDestroy(): void {

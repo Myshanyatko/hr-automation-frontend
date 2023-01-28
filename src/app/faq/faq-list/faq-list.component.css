@@ -39,3 +39,9 @@
 .icon-faq:hover {
   color: #000;
 }
+.filtred-faq-item{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 30px;
+  margin-bottom: 20px;
+}

@@ -22,7 +22,7 @@ export class MenuComponent {
     },
     {
       name: 'Рестораны',
-      url: 'restorans',
+      url: 'restaurants',
     },
   ];
 

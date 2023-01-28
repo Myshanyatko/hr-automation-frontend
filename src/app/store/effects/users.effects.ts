@@ -43,7 +43,7 @@ export class USersEffects {
               String(sessionStorage.getItem('usersFilter'))
             )
             .pipe(
-              map((res) => setUsers({ userList: res, pages: 1 })),
+              map((res) => setUsers({ userList: res.users, pages: res.pages })),
               catchError((err) => {
                 this.alert.showNotificationError(err.error).subscribe();
                 return EMPTY;
@@ -60,7 +60,7 @@ export class USersEffects {
         this.usersService
           .getFilteredUsers(action.pageNumber, action.filter)
           .pipe(
-            map((res) => setUsers({ userList: res, pages: 1 })),
+            map((res) => setUsers({ userList: res.users, pages: res.pages })),
             catchError((err) => {
               this.alert.showNotificationError(err.error).subscribe();
               return EMPTY;
@@ -174,7 +174,7 @@ export class USersEffects {
                 this.alert.showNotificationError(err.message).subscribe();
                 return EMPTY;
               })
-            );
+            ).subscribe()
           else
             return this.alert
               .showNotificationSuccess('Новый сотрудник добавлен')

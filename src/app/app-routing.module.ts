@@ -1,3 +1,4 @@
+import { CreateRestaurantComponent } from './restorans/create-restaurant/create-restaurant.component';
 import { RestoransComponent } from './restorans/restorans.component';
 import { ProductsOrderedComponent } from './products/products-ordered/products-ordered.component';
 import { ProductEditComponent } from './products/product-edit/product-edit.component';
@@ -29,7 +30,7 @@ const routes: Routes = [
   { path: 'key', canActivate: [KeyGuard], component: KeyComponent },
   { path: '', redirectTo: 'users', pathMatch: 'full' },
   {
-    path: 'restorans',
+    path: 'restaurants',
     component: RestoransComponent,
     canActivate: [AuthGuard],
   },
@@ -73,6 +74,11 @@ const routes: Routes = [
   {
     path: 'faq/new-category',
     component: NewCategoryComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'restaurants/create-restaurant',
+    component: CreateRestaurantComponent,
     canActivate: [AuthGuard],
   },
 ];
