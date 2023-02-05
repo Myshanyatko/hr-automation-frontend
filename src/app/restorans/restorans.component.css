@@ -1,10 +1,25 @@
 .tui-container {
   margin: 35px 0;
-  width: 560px;
-  padding: 20px;
+  width: 600px;
+}
+.search-and-new-block {
+  display: grid;
+  grid-template-columns: 400px auto auto;
+  width: 600px;
+  align-items: flex-start;
+}
+.search {
+  border-top-right-radius: 0%;
+  border-bottom-right-radius: 0%;
+}
+.content {
   background-color: #fff;
   border-radius: var(--tui-radius-l);
   box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+  margin: 15px 0;
+  padding: 36px;
+  box-sizing: border-box;
+  width: 600px;
 }
 .title {
   margin-bottom: 20px;
@@ -13,9 +28,44 @@ agm-map {
   height: 300px;
   margin: 20px 0;
 }
-.create-button{
+.create-button {
   margin-top: 10px;
 }
-.list{
+.filter {
+  margin-top: 10px;
+}
+.filters {
+  margin-bottom: 20px;
+}
+.list {
   margin: 20px 0;
+}
+.city {
+  text-decoration: underline;
+  cursor: pointer
+}
+.list__restaurant {
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.address {
+  color: #292929;
+  text-decoration: solid;
+}
+.raiting {
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr;
+}
+.icon {
+  color: #ff7043;
+  padding: 0 5px;
+  cursor: pointer;
+}
+.label {
+  color: darkgray;
+}
+.star {
+  color: #ff7043;
 }

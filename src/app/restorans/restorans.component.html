@@ -1,20 +1,124 @@
 <div class="tui-container">
-  <h1 class="title">Рестораны</h1>
-  <agm-map style="height: 300px" [latitude]="markers[0].lat" [longitude]="markers[0].lng">
+  <form
+    [formGroup]="restForm"
+    (ngSubmit)="search()"
+    class="search-and-new-block"
+  >
+    <div class="search-block">
+      <tui-input
+        [tuiTextfieldCleaner]="true"
+        class="search"
+        formControlName="name"
+      >
+        Поиск
+      </tui-input>
+    </div>
+
+    <button
+      tuiIconButton
+      type="submit"
+      icon="tuiIconSearch"
+      appearance="white"
+      size="l"
+      class="search-user-button"
+    ></button>
+
+    <button
+      tuiButton
+      type="button"
+      appearance="accent"
+      class="new-button"
+      size="l"
+      routerLink="/restaurants/create-restaurant"
+    >
+      new
+    </button>
+  </form>
+  <div class="content">
+    <h2>Заведения в городе <a class="city" (click)="showDialog()">Томск</a></h2>
+    <form [formGroup]="filterForm" class="filters">
+      <tui-filter
+        class="filter"
+        formControlName="filters"
+        size="s"
+        [items]="statuses1"
+      ></tui-filter>
+      <tui-filter
+        class="filter"
+        formControlName="filters"
+        size="s"
+        [items]="statuses2"
+      ></tui-filter>
+    </form>
+    <!-- <agm-map style="height: 300px" [latitude]="markers[0].lat" [longitude]="markers[0].lng">
     <agm-marker-cluster>
       <agm-marker
         *ngFor="let marker of markers"
         [latitude]="marker.lat"
         [longitude]="marker.lng"
       ></agm-marker> </agm-marker-cluster
-  ></agm-map>
-<div class="list">
-  <div class="list__restaurant" *ngFor="let rest of restaurants">
-    <h3>{{rest.name}}</h3>
-    <p>адрес: {{rest.address}}</p>
-    <p>рейтинг: {{rest.rating}}</p>
-    <p>средний чек: {{rest.check}}</p>
+  ></agm-map> -->
+    <ng-template #template
+      ><div class="category-item">
+        <p>ff</p>
+        <p></p></div
+    ></ng-template>
+    <button tuiButton type="button" size="xs" appearance="flat">
+      Показать на карте
+    </button>
+    <div class="list" *ngIf="restaurants$ | async as rests">
+      <div class="list__restaurant" *ngFor="let rest of rests">
+        <div class="info">
+          <h3>{{ rest.name }}</h3>
+
+          <p class="address">
+            {{ rest.address }}
+          </p>
+          <p class="label">средний чек: {{ rest.check }}</p>
+          <div class="raiting">
+            <div class="stars">
+              <tui-svg
+                class="star"
+                [src]="rest.rating < 0.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
+              ></tui-svg>
+              <tui-svg
+                class="star"
+                [src]="rest.rating < 1.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
+              ></tui-svg>
+              <tui-svg
+                class="star"
+                [src]="rest.rating < 2.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
+              ></tui-svg>
+              <tui-svg
+                class="star"
+                [src]="rest.rating < 3.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
+              ></tui-svg>
+              <tui-svg
+                class="star"
+                [src]="rest.rating < 4.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
+              ></tui-svg>
+            </div>
+            <div class="rating_number">
+              <p>{{ rest.rating }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="icons">
+          <tui-svg class="icon" src="tuiIconEdit"></tui-svg>
+
+          <tui-svg class="icon" src="tuiIconTrash"></tui-svg>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-  <button tuiButton routerLink='/restaurants/create-restaurant' class="create-button">create restaurant</button>
-</div>
+<ng-template
+  let-observer
+  [tuiDialogOptions]="{ label: 'Выберите город', size: 's' }"
+  [(tuiDialog)]="open"
+>
+  <p>Томск</p>
+  <p>Новосибирск</p>
+  <p>Москва</p>
+  <p>Екатеринбург</p>
+</ng-template>

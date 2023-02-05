@@ -1,3 +1,4 @@
+import { RestaurantsEffects } from './store/effects/restaurants.effects';
 import { apiKey } from './../../apiKey';
 
 import { AuthEffects } from './store/effects/auth.effects';
@@ -19,6 +20,7 @@ import {
   TuiNotificationModule,
   TuiTextfieldControllerModule,
   TuiLoaderModule,
+  
 } from '@taiga-ui/core';
 import {
   TuiInputModule,
@@ -37,6 +39,7 @@ import {
   TuiInputNumberModule,
   TuiMultiSelectModule,
   TuiPaginationModule,
+  TuiFilterModule
 } from '@taiga-ui/kit';
 
 import { AgmMarkerClustererModule } from '@agm/markerclusterer';
@@ -131,6 +134,7 @@ import { CreateRestaurantComponent } from './restorans/create-restaurant/create-
     TuiInputNumberModule,
     TuiLoaderModule,
     TuiMultiSelectModule,
+    TuiFilterModule,
     AgmCoreModule.forRoot({
       apiKey: apiKey,
     }),
@@ -141,6 +145,7 @@ import { CreateRestaurantComponent } from './restorans/create-restaurant/create-
       FaqEffects,
       ProductsEffects,
       AuthEffects,
+      RestaurantsEffects
     ]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,

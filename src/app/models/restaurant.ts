@@ -8,6 +8,7 @@ export interface Restaurant {
     statusId: number, //id статусa (ресторан, кафе...)
     check: number, //средний чек
     address: String, //адрес рестика ('Ленина 1')
-    coordinates: Сoordinates, //координаты в гугл мапе{lat: 5.456564, lng: 5.353354}
-    reviews: Review[] //отзывы
+    lat: number,
+    lng: number, //координаты в гугл мапе{lat: 5.456564, lng: 5.353354}
+    reviews: Review[]  //отзывы
 }

@@ -1,3 +1,4 @@
+import { restaurantsReducer } from './restaurants.reducer';
 import { authReducer } from './auth.reducer';
 import { productsReducer } from './products.reducer';
 import { faqReducer } from './faq.reducer';
@@ -9,5 +10,6 @@ export const appReducers: ActionReducerMap<AppState, any> = {
   users: userReducer,
   faq: faqReducer,
   products: productsReducer,
-  auth: authReducer
+  auth: authReducer,
+  restaurants: restaurantsReducer
 };

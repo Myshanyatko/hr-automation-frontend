@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
 import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
@@ -25,6 +26,7 @@ export class CreateRestaurantComponent implements OnInit {
   constructor(
     private actions$: Actions,
     private fb: FormBuilder,
+    private http: HttpClient,
     private router: Router,
     private store$: Store<AppState>
   ) {}
@@ -51,7 +53,11 @@ export class CreateRestaurantComponent implements OnInit {
       this.errors = true;
     } else {
       if (this.loading == false) this.loading = true;
-     
+      console.log('запрос ушел');
+      
+      this.http.post('http://localhost:8080/restaurants/add', {name:  this.restaurantForm.value.name,
+      status:  {id: 0, naame: this.restaurantForm.value.status}, address:  this.restaurantForm.value.address, lat: 5.5, lng: 6.6, city: 'Томск' } ).subscribe(res => console.log(res)
+      )
 
      this.router.navigate(['restaurants'])
     }
