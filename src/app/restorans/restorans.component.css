@@ -31,23 +31,30 @@ agm-map {
 .create-button {
   margin-top: 10px;
 }
-.filter {
-  margin-top: 10px;
+.city {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
-.filters {
-  margin-bottom: 20px;
+.city_btn {
+  text-align: right;
+}
+.map-btn{
+  margin-top: 15px;
 }
 .list {
   margin: 20px 0;
 }
-.city {
-  text-decoration: underline;
-  cursor: pointer
-}
+
 .list__restaurant {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   display: grid;
   grid-template-columns: 2fr 1fr;
+}
+.name-and-status {
+  display: grid;
+  grid-template-columns: auto 1fr;
+
+  grid-gap: 10px;
 }
 .address {
   color: #292929;
@@ -65,7 +72,22 @@ agm-map {
 }
 .label {
   color: darkgray;
+  font-style: italic;
+}
+.stars{
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto  1fr;
 }
 .star {
   color: #ff7043;
+}
+.star-after{
+  position: absolute;
+}
+.box {
+  overflow: hidden;
+}
+.star1 {
+  object-fit: cover;
 }

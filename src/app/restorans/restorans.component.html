@@ -35,53 +35,74 @@
     </button>
   </form>
   <div class="content">
-    <h2>Заведения в городе <a class="city" (click)="showDialog()">Томск</a></h2>
-    <form [formGroup]="filterForm" class="filters">
-      <tui-filter
-        class="filter"
-        formControlName="filters"
-        size="s"
-        [items]="statuses1"
-      ></tui-filter>
-      <tui-filter
-        class="filter"
-        formControlName="filters"
-        size="s"
-        [items]="statuses2"
-      ></tui-filter>
-    </form>
-    <!-- <agm-map style="height: 300px" [latitude]="markers[0].lat" [longitude]="markers[0].lng">
-    <agm-marker-cluster>
-      <agm-marker
-        *ngFor="let marker of markers"
-        [latitude]="marker.lat"
-        [longitude]="marker.lng"
-      ></agm-marker> </agm-marker-cluster
-  ></agm-map> -->
-    <ng-template #template
-      ><div class="category-item">
-        <p>ff</p>
-        <p></p></div
-    ></ng-template>
-    <button tuiButton type="button" size="xs" appearance="flat">
+    <div class="city">
+      <h2>Заведения в городе Томск</h2>
+      <button
+        tuiButton
+        type="button"
+        class="city_btn"
+        size="xs"
+        appearance="flat"
+        (click)="showDialog()"
+      >
+        выбрать город
+      </button>
+      <!-- <tui-svg src="tuiIconChevronDown"></tui-svg> -->
+    </div>
+    <button
+      tuiButton
+      type="button"
+      class="map-btn"
+      size="xs"
+      appearance="flat"
+      (click)="showDialog()"
+    >
       Показать на карте
     </button>
     <div class="list" *ngIf="restaurants$ | async as rests">
       <div class="list__restaurant" *ngFor="let rest of rests">
         <div class="info">
-          <h3>{{ rest.name }}</h3>
+          <div class="">
+            <h3>{{ rest.name }}</h3>
+          </div>
 
-          <p class="address">
-            {{ rest.address }}
-          </p>
-          <p class="label">средний чек: {{ rest.check }}</p>
           <div class="raiting">
-            <div class="stars">
+            <div class="star-after">
               <tui-svg
+                *ngFor="let rait of [].constructor(5)"
                 class="star"
-                [src]="rest.rating < 0.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
+                src="tuiIconStar"
               ></tui-svg>
-              <tui-svg
+            </div>
+            <div class="stars">
+              <div>
+                <tui-svg
+                  *ngFor="
+                    let rait of [].constructor(
+                      rest.rating > 4
+                        ? 4
+                        : rest.rating > 3
+                        ? 3
+                        : rest.rating > 2
+                        ? 2
+                        : rest.rating > 1
+                        ? 1
+                        : 0
+                    )
+                  "
+                  class="star"
+                  src="tuiIconStarFilled"
+                ></tui-svg>
+              </div>
+              <div class="box" [style.width]="(rest.rating - (+rest.rating.toFixed()) )*32 + 'px'">
+                <tui-svg class="star star1" src="tuiIconStarFilled"></tui-svg>
+              </div>
+            </div>
+           
+
+
+
+            <!-- <tui-svg
                 class="star"
                 [src]="rest.rating < 1.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
               ></tui-svg>
@@ -93,21 +114,32 @@
                 class="star"
                 [src]="rest.rating < 3.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
               ></tui-svg>
-              <tui-svg
-                class="star"
-                [src]="rest.rating < 4.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
-              ></tui-svg>
-            </div>
+              <div class="box">
+                <tui-svg
+                  class="star star1"
+                  [src]="
+                    rest.rating < 4.5 ? 'tuiIconStar' : 'tuiIconStarFilled'
+                  "
+                ></tui-svg>
+              </div> -->
+
             <div class="rating_number">
-              <p>{{ rest.rating }}</p>
+              <!-- <p>{{ rest.rating }}</p> -->
             </div>
           </div>
+          <span class="">{{ rest.status }}</span>
+          <div class="address">
+            <!-- <span class="label">адрес: </span> -->
+            {{ rest.address }}
+          </div>
+          <!-- <p class="label">средний чек:</p> -->
+          {{ rest.average }}
         </div>
-        <div class="icons">
+        <!-- <div class="icons">
           <tui-svg class="icon" src="tuiIconEdit"></tui-svg>
 
           <tui-svg class="icon" src="tuiIconTrash"></tui-svg>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -121,4 +153,22 @@
   <p>Новосибирск</p>
   <p>Москва</p>
   <p>Екатеринбург</p>
+</ng-template>
+<ng-template
+  let-observer2
+  [tuiDialogOptions]="{ label: 'Заведения в Томске', size: 's' }"
+  [(tuiDialog)]="open"
+>
+  <agm-map
+    style="height: 300px"
+    [latitude]="markers[0].lat"
+    [longitude]="markers[0].lng"
+  >
+    <agm-marker-cluster>
+      <agm-marker
+        *ngFor="let marker of markers"
+        [latitude]="marker.lat"
+        [longitude]="marker.lng"
+      ></agm-marker> </agm-marker-cluster
+  ></agm-map>
 </ng-template>

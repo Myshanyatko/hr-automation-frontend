@@ -1,33 +1,15 @@
 import { RestaurantsService } from './../../services/restaurants.service';
-import { getRestaurants, setRestaurants } from './../actions/restaurants.actions';
 import {
-  setProductsCategories,
-  addNewProduct,
-  addNewProductSuccess,
-  getOrderedProducts,
-  setOrderedProducts,
-  getProduct,
-  setProduct,
-  editProduct,
-  editProductSuccess,
-  deleteProduct,
-  deleteProductSuccess,
-  getFile,
-  getFileSuccess,
-  deleteOrderedProduct,
-  deleteOrderedProductSuccess,
-  getProducts,
-  setProducts,
-  addOrderedProduct,
-  addOrderedProductSuccess,
-} from './../actions/products.actions';
-import { ProductsService } from './../../services/products.service';
+  createRestaurant,
+  getRestaurants,
+  setRestaurants,
+  createRestaurantSuccess,
+} from './../actions/restaurants.actions';
 import { AlertService } from './../../services/alert.service';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, mergeMap, catchError, EMPTY, tap } from 'rxjs';
-import { getProductsCategories } from '../actions/products.actions';
 @Injectable()
 export class RestaurantsEffects {
   getRestaurants$ = createEffect(() =>
@@ -43,6 +25,35 @@ export class RestaurantsEffects {
         )
       )
     )
+  );
+  createRestaurant$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createRestaurant),
+      mergeMap(({ restaurant, processId }) =>
+        this.restaurantsService.createRestaurant(restaurant).pipe(
+          map(() => {
+            return createRestaurantSuccess({
+              processId: processId,
+              restaurant: restaurant,
+            });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  createRestaurantSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(createRestaurantSuccess),
+        map(() => {
+          this.alert.showNotificationSuccess('Ресторан создан').subscribe();
+        })
+      ),
+    { dispatch: false }
   );
   constructor(
     private actions$: Actions,

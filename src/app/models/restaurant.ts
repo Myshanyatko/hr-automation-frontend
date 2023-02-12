@@ -5,10 +5,11 @@ export interface Restaurant {
     id: number,
     name: String, //название рестика
     rating: number, //звезды
-    statusId: number, //id статусa (ресторан, кафе...)
-    check: number, //средний чек
+    status: number, //id статусa (ресторан, кафе...)
+    average: number, //средний чек
     address: String, //адрес рестика ('Ленина 1')
     lat: number,
     lng: number, //координаты в гугл мапе{lat: 5.456564, lng: 5.353354}
+    city: number,
     reviews: Review[]  //отзывы
 }

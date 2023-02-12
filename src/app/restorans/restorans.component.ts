@@ -40,14 +40,14 @@ export class RestoransComponent implements OnInit {
   //     reviews: [],
   //   },
   // ];
-  // markers = [
-  //   { lat: 56.465152202424484, lng: 84.95378432534983 },
-  //   { lat: 56.464413315407455, lng: 84.95530196728016 },
-  //   { lat: 56.456114865250285, lng: 84.95185844214778 },
-  // ];
+  markers = [
+    { lat: 56.465152202424484, lng: 84.95378432534983 },
+    { lat: 56.464413315407455, lng: 84.95530196728016 },
+    { lat: 56.456114865250285, lng: 84.95185844214778 },
+  ];
   open = false;
-
-  constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
+  public aa = Math.round(4)
+  constructor(private fb: FormBuilder, private store$: Store<AppState>, ) {}
 
   ngOnInit(): void {
     this.restForm = this.fb.group({
