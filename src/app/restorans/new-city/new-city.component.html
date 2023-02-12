@@ -1,0 +1,41 @@
+<div class="tui-container">
+  <div class="create-city">
+    <div class="back-and-title">
+      <tui-svg
+        src="tuiIconBackCircleLarge"
+        class="back"
+        routerLink="/restaurants"
+      ></tui-svg>
+      <h2 class="title-new-product">Добавление города</h2>
+    </div>
+
+    <form [formGroup]="cityForm" (ngSubmit)="saveCity()" class="form">
+      <tui-input formControlName="name" class="product-form-item">
+        название города
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <div
+        class="error-message"
+        *ngIf="
+          cityForm.get('name')?.invalid &&
+          (cityForm.get('name')?.dirty ||
+            cityForm.get('name')?.touched ||
+            errors)
+        "
+      >
+        <span>Обязательное поле</span>
+      </div>
+
+      <button
+        tuiButton
+        type="submit"
+        size="m"
+        [showLoader]="loading"
+        appearance="accent"
+        class="save-button"
+      >
+        Сохранить
+      </button>
+    </form>
+  </div>
+</div>

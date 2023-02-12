@@ -29,7 +29,23 @@ export const createRestaurantSuccess = createAction(
   '[Restaurants Page] Create Restaurant Success',
   props<{ restaurant: Restaurant; processId: number }>()
 );
+export const createCity = createAction(
+  '[Restaurants Page] Create City',
+  props<{ city: City; processId: number }>()
+);
+export const createCitySuccess = createAction(
+  '[Restaurants Page] Create City Success',
+  props<{ city: City; processId: number }>()
+);
 export const setCurrentCity = createAction(
   '[Restaurants Page] Set Current City',
   props<{ city: City}>()
+);
+export const deleteCity = createAction(
+  '[Restaurants Page] Delete City',
+  props<{ id: number}>()
+);
+export const deleteCitySuccess = createAction(
+  '[Restaurants Page] Delete City Success',
+  props<{ id: number}>()
 );

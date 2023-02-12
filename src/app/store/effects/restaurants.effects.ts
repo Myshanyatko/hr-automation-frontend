@@ -8,6 +8,10 @@ import {
   setCities,
   getStatuses,
   setStatuses,
+  createCity,
+  createCitySuccess,
+  deleteCity,
+  deleteCitySuccess,
 } from './../actions/restaurants.actions';
 import { AlertService } from './../../services/alert.service';
 import { map } from 'rxjs/operators';
@@ -73,11 +77,40 @@ export class RestaurantsEffects {
       ),
     { dispatch: false }
   );
+  createCity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createCity),
+      mergeMap(({ city, processId }) =>
+        this.restaurantsService.createCity(city).pipe(
+          map(() => {
+            return createCitySuccess({
+              processId: processId,
+              city: city,
+            });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  createCitySuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(createCitySuccess),
+        map(() => {
+          this.alert.showNotificationSuccess('Город добавлен').subscribe();
+        })
+      ),
+    { dispatch: false }
+  );
   getCities$ = createEffect(() =>
     this.actions$.pipe(
-      ofType( getCities),
+      ofType(getCities),
       mergeMap(() =>
-        this.restaurantsService. getCities().pipe(
+        this.restaurantsService.getCities().pipe(
           map((res) => setCities({ cities: res })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
@@ -87,6 +120,33 @@ export class RestaurantsEffects {
       )
     )
   );
+  deleteCity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteCity),
+      mergeMap((res) =>
+        this.restaurantsService.deleteCity(res.id).pipe(
+          map(
+            () => deleteCitySuccess({ id: res.id }),
+            catchError((err) => {
+              this.alert.showNotificationError(err.error).subscribe();
+              return EMPTY;
+            })
+          )
+        )
+      )
+    )
+  );
+  deleteCitySuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(deleteCitySuccess),
+        map(() =>
+          this.alert.showNotificationSuccess('Город удален').subscribe()
+        )
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private restaurantsService: RestaurantsService,

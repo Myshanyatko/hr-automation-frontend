@@ -25,7 +25,7 @@ export class RestaurantsService {
     return this.http.get<RestStatus[]>(API + '/get/all/statuses');
   }
   createRestaurant(restaurant: Restaurant) {
-    return this.http.post<Restaurant[]>(
+    return this.http.post(
       API + `/add/status/${restaurant.status}/city/${restaurant.city}`,
       {
         name: restaurant.name, 
@@ -35,6 +35,17 @@ export class RestaurantsService {
         lat: restaurant.lat,
         lng: restaurant.lng,
       }
+    );
+  }
+  createCity(city: City) {
+    return this.http.post(
+      `https://hr-automation-backend.onrender.com/cities/add`,
+      city
+    );
+  }
+  deleteCity(id: number) {
+    return this.http.delete(
+      `https://hr-automation-backend.onrender.com/cities/delete/${id}`
     );
   }
   getCities() {

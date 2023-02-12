@@ -36,7 +36,7 @@
   </form>
   <div class="content">
     <div class="city" *ngIf="currentCity$ | async as city">
-      <h2>Заведения в городе {{city.name}}</h2>
+      <h2>Заведения в городе {{ city.name }}</h2>
       <button
         tuiButton
         type="button"
@@ -151,16 +151,21 @@
   [tuiDialogOptions]="{ label: 'Выберите город', size: 's' }"
   [(tuiDialog)]="open"
 >
-    <a
-    tuiLink
-      *ngFor="let city of cities$ | async as cities"
-      (click)="changeCity(city)"
-      class="a__city"
-    >
+  <div class="city" *ngFor="let city of cities$ | async as cities">
+    <a tuiLink (click)="changeCity(city)" class="a__city">
       {{ city.name }}
-  </a>
-  </ng-template
->
+    </a>
+    <tui-svg src="tuiIconTrash" (click)="deleteCity(city.id)"> </tui-svg>
+  </div>
+  <button
+    tuiButton
+    routerLink="/restaurants/create-city"
+    size="m"
+    class="create"
+  >
+    Добавить новый город
+  </button>
+</ng-template>
 <!-- <ng-template
   let-observer2
   [tuiDialogOptions]="{ label: 'Заведения в Томске', size: 's' }"

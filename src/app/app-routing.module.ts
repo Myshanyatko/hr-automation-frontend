@@ -1,3 +1,4 @@
+import { NewCityComponent } from './restorans/new-city/new-city.component';
 import { CreateRestaurantComponent } from './restorans/create-restaurant/create-restaurant.component';
 import { RestoransComponent } from './restorans/restorans.component';
 import { ProductsOrderedComponent } from './products/products-ordered/products-ordered.component';
@@ -79,6 +80,11 @@ const routes: Routes = [
   {
     path: 'restaurants/create-restaurant',
     component: CreateRestaurantComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'restaurants/create-city',
+    component: NewCityComponent,
     canActivate: [AuthGuard],
   },
 ];

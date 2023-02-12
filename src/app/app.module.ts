@@ -76,6 +76,7 @@ import { ProductsOrderedComponent } from './products/products-ordered/products-o
 import { RestoransComponent } from './restorans/restorans.component';
 import { AgmCoreModule } from '@agm/core';
 import { CreateRestaurantComponent } from './restorans/create-restaurant/create-restaurant.component';
+import { NewCityComponent } from './restorans/new-city/new-city.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { CreateRestaurantComponent } from './restorans/create-restaurant/create-
     ProductsOrderedComponent,
     RestoransComponent,
     CreateRestaurantComponent,
+    NewCityComponent,
   ],
   imports: [
     FormsModule,

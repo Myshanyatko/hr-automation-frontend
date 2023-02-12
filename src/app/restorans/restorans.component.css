@@ -37,6 +37,7 @@ agm-map {
 }
 .a__city {
   display: block;
+  margin-top: 10px;
 }
 .city_btn {
   text-align: right;
@@ -93,4 +94,7 @@ agm-map {
 }
 .star1 {
   object-fit: cover;
+}
+.create{
+  margin-top: 20px;
 }

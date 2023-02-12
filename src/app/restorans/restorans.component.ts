@@ -8,6 +8,7 @@ import {
   getRestaurants,
   getCities,
   setCurrentCity,
+  deleteCity,
 } from './../store/actions/restaurants.actions';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Restaurant } from './../models/restaurant';
@@ -24,7 +25,7 @@ export class RestoransComponent implements OnInit, OnDestroy {
   restForm!: FormGroup;
   filterForm!: FormGroup;
   cities$ = this.store$.select(selectCities);
-  currentCity$= this.store$.select(selectCurrentCity)
+  currentCity$ = this.store$.select(selectCurrentCity);
   restaurants$ = this.store$.select(selectAllRestaurants);
   markers = [
     { lat: 56.465152202424484, lng: 84.95378432534983 },
@@ -43,10 +44,9 @@ export class RestoransComponent implements OnInit, OnDestroy {
     this.filterForm = this.fb.group({
       filters: [],
     });
-    this.currentCity$
-      .subscribe((city) =>
-        this.store$.dispatch(getRestaurants({ cityId: city.id }))
-      );
+    this.currentCity$.subscribe((city) =>
+      this.store$.dispatch(getRestaurants({ cityId: city.id }))
+    );
   }
   showDialog() {
     this.store$.dispatch(getCities());
@@ -54,8 +54,10 @@ export class RestoransComponent implements OnInit, OnDestroy {
   }
   changeCity(city: City) {
     this.open = false;
-    this.store$.dispatch(setCurrentCity({city: city}))
-    
+    this.store$.dispatch(setCurrentCity({ city: city }));
+  }
+  deleteCity(id: number) {
+    this.store$.dispatch(deleteCity({ id: id }));
   }
   ngOnDestroy() {
     this.open = false;
