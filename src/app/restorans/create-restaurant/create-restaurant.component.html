@@ -1,4 +1,5 @@
 <div class="tui-container">
+  <div class="create-restaurant">
     <div class="back-and-title">
       <tui-svg
         src="tuiIconBackCircleLarge"
@@ -9,6 +10,32 @@
     </div>
   
     <form [formGroup]="restaurantForm" (ngSubmit)="saveRestaurant()" class="form">
+      <tui-select
+        class="product-form-item"
+        tuiTextfieldSize="l"
+        formControlName="status"
+        *ngIf="statuses$ | async as status "
+        [valueContent]="categoryContent"
+      >
+        Статус заведения
+  
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="status"
+          [itemContent]="categoryContent"
+        ></tui-data-list-wrapper>
+      </tui-select>
+      <div
+      class="error-message"
+      *ngIf="
+      restaurantForm.get('status')?.invalid &&
+        (restaurantForm.get('status')?.dirty ||
+        restaurantForm.get('status')?.touched ||
+          errors)
+      "
+    >
+      <span>Обязательное поле</span>
+    </div>
       <tui-input formControlName="name" class="product-form-item">
         название 
         <input tuiTextfield type="text" />
@@ -39,25 +66,11 @@
       >
         <span>Обязательное поле</span>
       </div>
-      <a>указать на карте</a>
+      <a tuiLink class="map">указать на карте</a>
   
     
   
-      <tui-select
-        class="product-form-item"
-        tuiTextfieldSize="l"
-        formControlName="status"
-        *ngIf="status "
-        [valueContent]="categoryContent"
-      >
-        Статус заведения
-  
-        <tui-data-list-wrapper
-          *tuiDataList
-          [items]="status"
-          [itemContent]="categoryContent"
-        ></tui-data-list-wrapper>
-      </tui-select>
+      
   
       <ng-template #categoryContent let-item>
         <div class="category-item">
@@ -83,10 +96,10 @@
         size="m"
         [showLoader]="loading"
         appearance="accent"
-        class="save-product-button"
+        class="save-button"
       >
         Сохранить
       </button>
     </form>
-  </div>
+  </div></div>
   

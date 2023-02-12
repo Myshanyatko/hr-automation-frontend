@@ -4,6 +4,10 @@ import {
   getRestaurants,
   setRestaurants,
   createRestaurantSuccess,
+  getCities,
+  setCities,
+  getStatuses,
+  setStatuses,
 } from './../actions/restaurants.actions';
 import { AlertService } from './../../services/alert.service';
 import { map } from 'rxjs/operators';
@@ -15,9 +19,23 @@ export class RestaurantsEffects {
   getRestaurants$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getRestaurants),
-      mergeMap(() =>
-        this.restaurantsService.getRestaurants().pipe(
+      mergeMap((res) =>
+        this.restaurantsService.getRestaurants(res.cityId).pipe(
           map((res) => setRestaurants({ restaurants: res })),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  getStatuses$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getStatuses),
+      mergeMap(() =>
+        this.restaurantsService.getStatuses().pipe(
+          map((res) => setStatuses({ statuses: res })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
@@ -54,6 +72,20 @@ export class RestaurantsEffects {
         })
       ),
     { dispatch: false }
+  );
+  getCities$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType( getCities),
+      mergeMap(() =>
+        this.restaurantsService. getCities().pipe(
+          map((res) => setCities({ cities: res })),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
   );
   constructor(
     private actions$: Actions,

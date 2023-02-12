@@ -17,6 +17,7 @@ import {
   TuiDataListModule,
   TuiHostedDropdownModule,
   TuiDropdownModule,
+  TuiLinkModule,
   TuiNotificationModule,
   TuiTextfieldControllerModule,
   TuiLoaderModule,
@@ -135,6 +136,7 @@ import { CreateRestaurantComponent } from './restorans/create-restaurant/create-
     TuiLoaderModule,
     TuiMultiSelectModule,
     TuiFilterModule,
+    TuiLinkModule,
     AgmCoreModule.forRoot({
       apiKey: apiKey,
     }),

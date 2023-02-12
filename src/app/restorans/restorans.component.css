@@ -35,10 +35,13 @@ agm-map {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+.a__city {
+  display: block;
+}
 .city_btn {
   text-align: right;
 }
-.map-btn{
+.map-btn {
   margin-top: 15px;
 }
 .list {
@@ -74,15 +77,15 @@ agm-map {
   color: darkgray;
   font-style: italic;
 }
-.stars{
+.stars {
   display: grid;
   align-items: center;
-  grid-template-columns: auto  1fr;
+  grid-template-columns: auto 1fr;
 }
 .star {
   color: #ff7043;
 }
-.star-after{
+.star-after {
   position: absolute;
 }
 .box {

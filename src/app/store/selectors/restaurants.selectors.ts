@@ -8,3 +8,15 @@ export const selectAllRestaurants = createSelector(
   selectRestaurants,
   (state: RestaurantsState) => state.restaurants
 );
+export const selectCities = createSelector(
+  selectRestaurants,
+  (state: RestaurantsState) => state.cities
+);
+export const selectCurrentCity = createSelector(
+  selectRestaurants,
+  (state: RestaurantsState) => state.currentCity
+);
+export const selectStatuses = createSelector(
+  selectRestaurants,
+  (state: RestaurantsState) => state.statuses
+);

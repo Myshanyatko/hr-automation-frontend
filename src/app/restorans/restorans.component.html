@@ -35,8 +35,8 @@
     </button>
   </form>
   <div class="content">
-    <div class="city">
-      <h2>Заведения в городе Томск</h2>
+    <div class="city" *ngIf="currentCity$ | async as city">
+      <h2>Заведения в городе {{city.name}}</h2>
       <button
         tuiButton
         type="button"
@@ -94,13 +94,15 @@
                   src="tuiIconStarFilled"
                 ></tui-svg>
               </div>
-              <div class="box" [style.width]="(rest.rating - (+rest.rating.toFixed()) )*32 + 'px'">
+              <div
+                class="box"
+                [style.width]="
+                  (rest.rating - +rest.rating.toFixed()) * 32 + 'px'
+                "
+              >
                 <tui-svg class="star star1" src="tuiIconStarFilled"></tui-svg>
               </div>
             </div>
-           
-
-
 
             <!-- <tui-svg
                 class="star"
@@ -149,12 +151,17 @@
   [tuiDialogOptions]="{ label: 'Выберите город', size: 's' }"
   [(tuiDialog)]="open"
 >
-  <p>Томск</p>
-  <p>Новосибирск</p>
-  <p>Москва</p>
-  <p>Екатеринбург</p>
-</ng-template>
-<ng-template
+    <a
+    tuiLink
+      *ngFor="let city of cities$ | async as cities"
+      (click)="changeCity(city)"
+      class="a__city"
+    >
+      {{ city.name }}
+  </a>
+  </ng-template
+>
+<!-- <ng-template
   let-observer2
   [tuiDialogOptions]="{ label: 'Заведения в Томске', size: 's' }"
   [(tuiDialog)]="open"
@@ -171,4 +178,4 @@
         [longitude]="marker.lng"
       ></agm-marker> </agm-marker-cluster
   ></agm-map>
-</ng-template>
+</ng-template> -->

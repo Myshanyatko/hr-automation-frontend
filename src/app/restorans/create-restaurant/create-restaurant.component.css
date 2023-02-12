@@ -3,8 +3,10 @@
     margin: 35px 0;
     border-radius: var(--tui-radius-l);
     box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+    width: 600px;
+  }
+  .create-restaurant{
     padding: 20px;
-    width: 550px;
   }
  .back-and-title{
     display: grid;
@@ -21,10 +23,16 @@
   .back:hover {
     color: #f58e6e;
   }
- 
+ .map{
+  margin-left: 10px;
+ }
   .product-form-item,
-.save-product-button {
+.save-button {
   margin-top: 15px;
+}
+.save-button {
+  display: block;
+text-align-last: left;
 }
 .form{
     margin: 0 35px;
