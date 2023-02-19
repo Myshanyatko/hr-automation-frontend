@@ -26,7 +26,7 @@ export class RestoransComponent implements OnInit, OnDestroy {
   filterForm!: FormGroup;
   cities$ = this.store$.select(selectCities);
   currentCity$ = this.store$.select(selectCurrentCity);
-  restaurants$ = this.store$.select(selectAllRestaurants);
+  builds$ = this.store$.select(selectAllRestaurants);
   markers = [
     { lat: 56.465152202424484, lng: 84.95378432534983 },
     { lat: 56.464413315407455, lng: 84.95530196728016 },

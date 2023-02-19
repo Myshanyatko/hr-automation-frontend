@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { url } from './url';
 
 export interface DataUser {
   username: string;
@@ -11,8 +12,7 @@ export interface Tokens {
   refreshToken: string;
   accessToken: string;
 }
-const AUTH_API = 'https://hr-automation-backend.onrender.com/';
-
+const AUTH_API = url
 @Injectable({
   providedIn: 'root',
 })

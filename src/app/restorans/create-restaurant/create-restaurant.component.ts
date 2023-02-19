@@ -53,7 +53,6 @@ export class CreateRestaurantComponent implements OnInit {
 
   ngOnInit(): void {
     this.store$.dispatch(getStatuses());
-    this.store$.dispatch(getProductsCategories());
 
     this.restaurantForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -76,36 +75,28 @@ export class CreateRestaurantComponent implements OnInit {
       this.errors = true;
     } else {
       if (this.loading == false) this.loading = true;
-      let currentCity = 2;
+      let currentCity = 0;
       this.store$
         .select(selectCurrentCity)
         .subscribe((city) => (currentCity = city.id));
-        const processId = nextProcessId + 1;
-      this.mapsAPILoader.load().then(() => {
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode(
-          { address: this.restaurantForm.value.address },
-          (res) => {
-            this.store$.dispatch(
-              createRestaurant({
-                restaurant: {
-                  id: -1,
-                  name: this.restaurantForm.value.name,
-                  rating: 0,
-                  status: this.restaurantForm.value.status.id,
-                  average: 0,
-                  address: this.restaurantForm.value.address,
-                  lat: res[0].geometry.location.lat(),
-                  lng: res[0].geometry.location.lng(),
-                  city: currentCity,
-                  reviews: [],
-                },
-                processId: processId,
-              })
-            );
-          }
-        );
-      });
+      const processId = nextProcessId + 1;
+      // this.mapsAPILoader.load().then(() => {
+      //   const geocoder = new google.maps.Geocoder();
+      //   geocoder.geocode(
+      //     { address: this.restaurantForm.value.address },
+      //     (res) => {
+      this.store$.dispatch(
+        createRestaurant({
+          restaurant: {
+            name: this.restaurantForm.value.name,
+            statusId: this.restaurantForm.value.status.id,
+            address: this.restaurantForm.value.address,
+            cityId: currentCity,
+          },
+          processId: processId,
+        })
+      );
+
       this.actions$
         .pipe(
           ofType(createRestaurantSuccess),

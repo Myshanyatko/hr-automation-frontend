@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { UserInfo } from '../models/userInfo';
+import { url } from './url';
 
-const API = 'https://hr-automation-backend.onrender.com/users';
-// const API = 'http://localhost:8080/users'
+const API = url + 'users'
 
 @Injectable({
   providedIn: 'root',

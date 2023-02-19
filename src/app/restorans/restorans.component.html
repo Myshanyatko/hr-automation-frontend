@@ -59,89 +59,75 @@
     >
       Показать на карте
     </button>
-    <div class="list" *ngIf="restaurants$ | async as rests">
-      <div class="list__restaurant" *ngFor="let rest of rests">
-        <div class="info">
-          <div class="">
-            <h3>{{ rest.name }}</h3>
-          </div>
-
-          <div class="raiting">
-            <div class="star-after">
-              <tui-svg
-                *ngFor="let rait of [].constructor(5)"
-                class="star"
-                src="tuiIconStar"
-              ></tui-svg>
+    <div class="list" *ngIf="builds$ | async as builds">
+      <div class="" *ngFor="let build of builds">
+        <div
+          class="list__restaurant"
+          *ngFor="let rest of build.restaurants"
+          [routerLink]="['/restaurants/', rest.id]"
+        >
+          <div class="info">
+            <div class="">
+              <h3>{{ rest.name }}</h3>
             </div>
-            <div class="stars">
-              <div>
+
+            <div class="raiting">
+              <div class="star-after">
                 <tui-svg
-                  *ngFor="
-                    let rait of [].constructor(
-                      rest.rating > 4
-                        ? 4
-                        : rest.rating > 3
-                        ? 3
-                        : rest.rating > 2
-                        ? 2
-                        : rest.rating > 1
-                        ? 1
-                        : 0
-                    )
-                  "
+                  *ngFor="let rait of [].constructor(5)"
                   class="star"
-                  src="tuiIconStarFilled"
+                  src="tuiIconStar"
                 ></tui-svg>
               </div>
-              <div
-                class="box"
-                [style.width]="
-                  (rest.rating - +rest.rating.toFixed()) * 32 + 'px'
-                "
-              >
-                <tui-svg class="star star1" src="tuiIconStarFilled"></tui-svg>
-              </div>
-            </div>
-
-            <!-- <tui-svg
-                class="star"
-                [src]="rest.rating < 1.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
-              ></tui-svg>
-              <tui-svg
-                class="star"
-                [src]="rest.rating < 2.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
-              ></tui-svg>
-              <tui-svg
-                class="star"
-                [src]="rest.rating < 3.5 ? 'tuiIconStar' : 'tuiIconStarFilled'"
-              ></tui-svg>
-              <div class="box">
-                <tui-svg
-                  class="star star1"
-                  [src]="
-                    rest.rating < 4.5 ? 'tuiIconStar' : 'tuiIconStarFilled'
+              <div class="stars">
+                <div>
+                  <tui-svg
+                    *ngFor="
+                      let rait of [].constructor(
+                        rest.rating > 4
+                          ? 4
+                          : rest.rating > 3
+                          ? 3
+                          : rest.rating > 2
+                          ? 2
+                          : rest.rating > 1
+                          ? 1
+                          : 0
+                      )
+                    "
+                    class="star"
+                    src="tuiIconStarFilled"
+                  ></tui-svg>
+                </div>
+                <div
+                  class="box"
+                  [style.width]="
+                    (rest.rating - +rest.rating.toFixed()) * 32 + 'px'
                   "
-                ></tui-svg>
-              </div> -->
+                >
+                  <tui-svg class="star star1" src="tuiIconStarFilled"></tui-svg>
+                </div>
+              </div>
 
-            <div class="rating_number">
-              <!-- <p>{{ rest.rating }}</p> -->
+
+              <div class="rating_number">
+                <!-- <p>{{ rest.rating }}</p> -->
+              </div>
             </div>
+            <span class="">{{ rest.status }}</span>
+            <div class="address">
+              <!-- <span class="label">адрес: </span> -->
+              {{ rest.address }}
+            </div>
+            <!-- <p class="label">средний чек:</p> -->
+            {{ rest.average }}
           </div>
-          <span class="">{{ rest.status }}</span>
-          <div class="address">
-            <!-- <span class="label">адрес: </span> -->
-            {{ rest.address }}
-          </div>
-          <!-- <p class="label">средний чек:</p> -->
-          {{ rest.average }}
-        </div>
-        <!-- <div class="icons">
+          <!-- <div class="icons">
           <tui-svg class="icon" src="tuiIconEdit"></tui-svg>
 
           <tui-svg class="icon" src="tuiIconTrash"></tui-svg>
         </div> -->
+        </div>
       </div>
     </div>
   </div>

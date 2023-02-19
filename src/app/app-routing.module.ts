@@ -1,3 +1,5 @@
+import { RestaurantComponent } from './restorans/restaurant/restaurant.component';
+import { Restaurant } from './models/restaurant';
 import { NewCityComponent } from './restorans/new-city/new-city.component';
 import { CreateRestaurantComponent } from './restorans/create-restaurant/create-restaurant.component';
 import { RestoransComponent } from './restorans/restorans.component';
@@ -80,6 +82,11 @@ const routes: Routes = [
   {
     path: 'restaurants/create-restaurant',
     component: CreateRestaurantComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'restaurants/:id',
+    component: RestaurantComponent,
     canActivate: [AuthGuard],
   },
   {

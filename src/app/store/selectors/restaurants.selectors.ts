@@ -6,7 +6,11 @@ const selectRestaurants = (state: AppState) => state.restaurants
 
 export const selectAllRestaurants = createSelector(
   selectRestaurants,
-  (state: RestaurantsState) => state.restaurants
+  (state: RestaurantsState) => state.builds
+);
+export const selectRestaurant = createSelector(
+  selectRestaurants,
+  (state: RestaurantsState) => state.currentRest
 );
 export const selectCities = createSelector(
   selectRestaurants,

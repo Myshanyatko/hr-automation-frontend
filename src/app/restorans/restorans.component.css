@@ -53,6 +53,7 @@ agm-map {
   margin-bottom: 30px;
   display: grid;
   grid-template-columns: 2fr 1fr;
+  cursor: pointer;
 }
 .name-and-status {
   display: grid;

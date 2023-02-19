@@ -1,0 +1,28 @@
+<div class="tui-container">
+  <div class="content" *ngIf="restaurant$ | async as rest">
+    <div class="back-and-title">
+      <tui-svg
+        src="tuiIconBackCircleLarge"
+        class="back"
+        routerLink="/restaurants"
+      ></tui-svg>
+      <h2 class="title-new-product">{{ rest.name }}</h2>
+    </div>
+    <agm-map style="height: 150px" [latitude]="rest.lat" [longitude]="rest.lng">
+      <agm-marker-cluster>
+        <agm-marker
+          [latitude]="rest.lat"
+          [longitude]="rest.lng"
+        ></agm-marker> </agm-marker-cluster
+    ></agm-map>
+    <p>{{ rest.address }}</p>
+    <p>{{ rest.average }}</p>
+    <p>{{ rest.rating }}</p>
+    <div class="reviews" *ngIf="rest.reviews">
+      <span>Отзывы</span>
+      <div class="review" *ngFor="let review of rest.reviews">
+        {{ review.content }}
+      </div>
+    </div>
+  </div>
+</div>
