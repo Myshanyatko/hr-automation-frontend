@@ -1,7 +1,10 @@
+import { Restaurant } from './../../models/restaurant';
 import { filter } from 'rxjs/operators';
 import {
   deleteCitySuccess,
+  deleteReviewSuccess,
   setCurrentCity,
+  setFiltredRestaurants,
   setRestaurant,
   setStatuses,
 } from './../actions/restaurants.actions';
@@ -17,6 +20,9 @@ export const restaurantsReducer = createReducer(
   initialRestaurantsState,
   on(setRestaurants, (state, { builds }) => {
     return { ...state, builds: builds };
+  }),
+  on(setFiltredRestaurants, (state, { restaurants }) => {
+    return { ...state, filtredRestaurants: restaurants };
   }),
   on(setRestaurant, (state, { restaurant }) => {
     return { ...state, currentRest: restaurant };
@@ -38,6 +44,18 @@ export const restaurantsReducer = createReducer(
     return {
       ...state,
       cities: [...state.cities.filter((city) => city.id != id)],
+    };
+  }),
+  on(deleteReviewSuccess, (state, { id }) => {
+    if (state.currentRest == null) return state;
+    return {
+      ...state,
+      currentRest: {
+        ...state.currentRest,
+        reviews: [
+          ...state.currentRest.reviews.filter((review) => review.id != id),
+        ],
+      },
     };
   })
 );

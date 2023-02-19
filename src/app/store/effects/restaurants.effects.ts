@@ -14,6 +14,12 @@ import {
   deleteCitySuccess,
   getRestaurant,
   setRestaurant,
+  getFiltredRestaurants,
+  setFiltredRestaurants,
+  deleteRestaurant,
+  deleteRestaurantSuccess,
+  deleteReview,
+  deleteReviewSuccess,
 } from './../actions/restaurants.actions';
 import { AlertService } from './../../services/alert.service';
 import { map } from 'rxjs/operators';
@@ -28,6 +34,20 @@ export class RestaurantsEffects {
       mergeMap((res) =>
         this.restaurantsService.getRestaurants(res.cityId).pipe(
           map((res) => setRestaurants({ builds: res })),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  getFiltredRestaurants$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getFiltredRestaurants),
+      mergeMap((res) =>
+        this.restaurantsService.getFiltredRestaurants(res.filter).pipe(
+          map((res) => setFiltredRestaurants({ restaurants: res })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
@@ -159,6 +179,58 @@ export class RestaurantsEffects {
         ofType(deleteCitySuccess),
         map(() =>
           this.alert.showNotificationSuccess('Город удален').subscribe()
+        )
+      ),
+    { dispatch: false }
+  );
+  deleteRestaurant$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteRestaurant),
+      mergeMap((res) =>
+        this.restaurantsService.deleteRestaurant(res.id).pipe(
+          map(
+            () => deleteRestaurantSuccess({ id: res.id, processId: res.processId }),
+            catchError((err) => {
+              this.alert.showNotificationError(err.error).subscribe();
+              return EMPTY;
+            })
+          )
+        )
+      )
+    )
+  );
+  deleteRestaurantSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(deleteRestaurantSuccess),
+        map(() =>
+          this.alert.showNotificationSuccess('Ресторан удален').subscribe()
+        )
+      ),
+    { dispatch: false }
+  );
+  deleteReview$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteReview),
+      mergeMap((res) =>
+        this.restaurantsService.deleteReview(res.id).pipe(
+          map(
+            () => deleteReviewSuccess({ id: res.id }),
+            catchError((err) => {
+              this.alert.showNotificationError(err.error).subscribe();
+              return EMPTY;
+            })
+          )
+        )
+      )
+    )
+  );
+  deleteReviewSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(deleteReviewSuccess),
+        map(() =>
+          this.alert.showNotificationSuccess('Отзыв удален').subscribe()
         )
       ),
     { dispatch: false }

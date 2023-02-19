@@ -8,6 +8,10 @@ export const selectAllRestaurants = createSelector(
   selectRestaurants,
   (state: RestaurantsState) => state.builds
 );
+export const selectFiltredRestaurants = createSelector(
+  selectRestaurants,
+  (state: RestaurantsState) => state.filtredRestaurants
+);
 export const selectRestaurant = createSelector(
   selectRestaurants,
   (state: RestaurantsState) => state.currentRest

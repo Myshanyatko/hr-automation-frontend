@@ -1,0 +1,94 @@
+<div class="tui-container">
+  <div class="edit-restaurant" *ngIf="restaurant$ | async as rest">
+    <div class="back-and-title">
+      <tui-svg
+        src="tuiIconBackCircleLarge"
+        class="back"
+        [routerLink]="['/restaurants/' + rest.id]"
+      ></tui-svg>
+      <h2 class="title-new-product">Редактирование ресторана</h2>
+    </div>
+
+    <form
+      [formGroup]="restaurantForm"
+      (ngSubmit)="saveRestaurant()"
+      class="form"
+    >
+      <tui-select
+        class="product-form-item"
+        tuiTextfieldSize="l"
+        formControlName="status"
+        *ngIf="statuses$ | async as status"
+        [valueContent]="categoryContent"
+      >
+        Статус заведения
+
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="status"
+          [itemContent]="categoryContent"
+        ></tui-data-list-wrapper>
+      </tui-select>
+      <div
+        class="error-message"
+        *ngIf="
+          restaurantForm.get('status')?.invalid &&
+          (restaurantForm.get('status')?.dirty ||
+            restaurantForm.get('status')?.touched ||
+            errors)
+        "
+      >
+        <span>Обязательное поле</span>
+      </div>
+      <tui-input formControlName="name" class="product-form-item">
+        название
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <div
+        class="error-message"
+        *ngIf="
+          restaurantForm.get('name')?.invalid &&
+          (restaurantForm.get('name')?.dirty ||
+            restaurantForm.get('name')?.touched ||
+            errors)
+        "
+      >
+        <span>Обязательное поле</span>
+      </div>
+      <tui-input formControlName="address" class="product-form-item">
+        адрес
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <div
+        class="error-message"
+        *ngIf="
+          restaurantForm.get('address')?.invalid &&
+          (restaurantForm.get('address')?.dirty ||
+            restaurantForm.get('address')?.touched ||
+            errors)
+        "
+      >
+        <span>Обязательное поле</span>
+      </div>
+      <a tuiLink class="map">указать на карте</a>
+
+      <ng-template #categoryContent let-item>
+        <div class="category-item">
+          {{ item.name }}
+        </div>
+      </ng-template>
+     
+
+      <button
+        tuiButton
+        type="submit"
+        size="m"
+        [showLoader]="loading"
+        appearance="accent"
+        class="save-button"
+      >
+        Сохранить
+      </button>
+    </form>
+  </div>
+</div>

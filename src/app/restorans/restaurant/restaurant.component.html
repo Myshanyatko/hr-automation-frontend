@@ -1,12 +1,27 @@
 <div class="tui-container">
   <div class="content" *ngIf="restaurant$ | async as rest">
-    <div class="back-and-title">
-      <tui-svg
-        src="tuiIconBackCircleLarge"
-        class="back"
-        routerLink="/restaurants"
-      ></tui-svg>
-      <h2 class="title-new-product">{{ rest.name }}</h2>
+    <div class="title-block">
+      <div class="back-and-title">
+        <tui-svg
+          src="tuiIconBackCircleLarge"
+          class="back"
+          routerLink="/restaurants"
+        ></tui-svg>
+        <h2 class="title-rest">{{ rest.name }}</h2>
+      </div>
+      <div class="icons-faq">
+        <tui-svg
+          class="icon-faq"
+          src="tuiIconEdit"
+          [routerLink]="['/restaurants/edit/' + rest.id]"
+        ></tui-svg>
+
+        <tui-svg
+          class="icon-faq"
+          src="tuiIconTrash"
+          (click)="deleteRest(rest.id)"
+        ></tui-svg>
+      </div>
     </div>
     <agm-map style="height: 150px" [latitude]="rest.lat" [longitude]="rest.lng">
       <agm-marker-cluster>
@@ -19,9 +34,35 @@
     <p>{{ rest.average }}</p>
     <p>{{ rest.rating }}</p>
     <div class="reviews" *ngIf="rest.reviews">
-      <span>Отзывы</span>
+      <h3 style="margin-bottom: 20px;">Отзывы</h3>
       <div class="review" *ngFor="let review of rest.reviews">
-        {{ review.content }}
+        <div class="pic">
+          <tui-avatar
+            *ngIf="review.userpic"
+            class="icon-user-avatar"
+            [rounded]="true"
+            text="avatar"
+            size="s"
+            [avatarUrl]="review.userpic || 'tuiIconUser'"
+          ></tui-avatar>
+          <tui-avatar
+            *ngIf="review.userpic == null"
+            class="icon-user-avatar"
+            [rounded]="true"
+            text="avatar"
+            size="s"
+            avatarUrl="tuiIconUser"
+          ></tui-avatar>
+        </div>
+        <div class="review__content">
+          <h4>{{ review.username }}</h4>
+          <p>{{ review.content }}</p>
+        </div>
+        <tui-svg
+        class="icon-faq"
+        src="tuiIconTrash"
+        (click)="deleteReview(review.id)"
+      ></tui-svg>
       </div>
     </div>
   </div>

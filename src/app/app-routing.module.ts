@@ -1,3 +1,4 @@
+import { EditRestaurantComponent } from './restorans/edit-restaurant/edit-restaurant.component';
 import { RestaurantComponent } from './restorans/restaurant/restaurant.component';
 import { Restaurant } from './models/restaurant';
 import { NewCityComponent } from './restorans/new-city/new-city.component';
@@ -87,6 +88,11 @@ const routes: Routes = [
   {
     path: 'restaurants/:id',
     component: RestaurantComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'restaurants/edit/:id',
+    component: EditRestaurantComponent,
     canActivate: [AuthGuard],
   },
   {

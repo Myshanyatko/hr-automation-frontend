@@ -5,12 +5,8 @@
     box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
     width: 600px;
   }
-  .content {
+  .edit-restaurant {
     padding: 20px;
-  }
-  .title-block{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
   }
   .back-and-title {
     display: grid;
@@ -24,21 +20,19 @@
     color: #ff7043;
     cursor: pointer;
   }
-  .icons-faq {
-    padding: 0 5px;
-    text-align: center;
+  .back:hover {
+    color: #f58e6e;
   }
-  .icon-faq {
-    color: #ff7043;
-    padding: 0 5px;
-    cursor: pointer;
+
+  .product-form-item,
+  .save-button {
+    margin-top: 15px;
   }
-  .icon-faq:hover {
-    color: #000;
+  .save-button {
+    display: block;
+    text-align-last: left;
   }
-  .review{
-    display: grid;
-    grid-template-columns: auto 1fr 1fr;
-    grid-gap: 10px;
-    margin-bottom: 10px;
+  .form {
+    margin: 0 35px;
   }
+  

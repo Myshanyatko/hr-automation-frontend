@@ -75,7 +75,7 @@ export class CreateRestaurantComponent implements OnInit {
       this.errors = true;
     } else {
       if (this.loading == false) this.loading = true;
-      let currentCity = 0;
+      let currentCity = 1;
       this.store$
         .select(selectCurrentCity)
         .subscribe((city) => (currentCity = city.id));
@@ -109,5 +109,6 @@ export class CreateRestaurantComponent implements OnInit {
   }
   ngOnDestroy(): void {
     this.loading = false;
+    
   }
 }
