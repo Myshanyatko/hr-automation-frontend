@@ -5,5 +5,6 @@ export interface shortRest{
     rating: number,
     average: number,
     status: number,
-    address: string
+    address: string,
+    reviewCount: number
 }

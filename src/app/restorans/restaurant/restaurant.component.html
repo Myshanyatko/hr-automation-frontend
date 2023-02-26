@@ -23,18 +23,79 @@
         ></tui-svg>
       </div>
     </div>
-    <agm-map style="height: 150px" [latitude]="rest.lat" [longitude]="rest.lng">
-      <agm-marker-cluster>
-        <agm-marker
-          [latitude]="rest.lat"
-          [longitude]="rest.lng"
-        ></agm-marker> </agm-marker-cluster
-    ></agm-map>
-    <p>{{ rest.address }}</p>
-    <p>{{ rest.average }}</p>
-    <p>{{ rest.rating }}</p>
+    <div class="info">
+      <div class="address">
+        <span class="label">Адрес: </span>
+        <span class=""> {{ rest.address }}</span>
+      </div>
+      <div class="average">
+        <span class="label">Средний чек: </span>
+        <span class=""> {{  rest.average !=  0 ?   rest.rating : 'не оценено' }}</span>
+      </div>
+    </div>
+    <div class="map">
+      <agm-map
+        style="height: 150px"
+        [latitude]="rest.lat"
+        [longitude]="rest.lng"
+      >
+        <agm-marker-cluster>
+          <agm-marker
+            [latitude]="rest.lat"
+            [longitude]="rest.lng"
+          ></agm-marker> </agm-marker-cluster
+      ></agm-map>
+    </div>
+
+    <div class="rating-block">
+      <span class="label">Рейтинг: </span>
+      <span class=""> {{ rest.rating !=  0 ?   rest.rating.toFixed(1) : 'не оценено'}}</span>
+
+      <div class="rating">
+        <div class="star-after">
+          <tui-svg
+            *ngFor="let rait of [].constructor(5)"
+            class="star"
+            src="tuiIconStar"
+          ></tui-svg>
+        </div>
+        <div class="stars">
+          <div>
+            <tui-svg
+              *ngFor="
+                let rait of [].constructor(
+                  rest.rating == 5
+                    ? 5
+                    : rest.rating > 4
+                    ? 4
+                    : rest.rating > 3
+                    ? 3
+                    : rest.rating > 2
+                    ? 2
+                    : rest.rating > 1
+                    ? 1
+                    : 0
+                )
+              "
+              class="star"
+              src="tuiIconStarFilled"
+            ></tui-svg>
+          </div>
+          <div
+            class="box"
+            [style.width]="(rest.rating - +rest.rating.toFixed()) * 22 + 'px'"
+          >
+            <tui-svg class="star star1" src="tuiIconStarFilled"></tui-svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ОТЗЫВЫ  -->
+
     <div class="reviews" *ngIf="rest.reviews">
-      <h3 style="margin-bottom: 20px;">Отзывы</h3>
+      <h3 class="reviews__title">Отзывы</h3>
       <div class="review" *ngFor="let review of rest.reviews">
         <div class="pic">
           <tui-avatar
@@ -42,7 +103,7 @@
             class="icon-user-avatar"
             [rounded]="true"
             text="avatar"
-            size="s"
+            size="m"
             [avatarUrl]="review.userpic || 'tuiIconUser'"
           ></tui-avatar>
           <tui-avatar
@@ -50,19 +111,57 @@
             class="icon-user-avatar"
             [rounded]="true"
             text="avatar"
-            size="s"
+            size="m"
             avatarUrl="tuiIconUser"
           ></tui-avatar>
         </div>
         <div class="review__content">
           <h4>{{ review.username }}</h4>
+          <div class="rating">
+            <div class="star-after">
+              <tui-svg
+                *ngFor="let rait of [].constructor(5)"
+                class="star"
+                src="tuiIconStar"
+              ></tui-svg>
+            </div>
+            <div class="stars">
+              <div>
+                <tui-svg
+                  *ngFor="
+                    let rait of [].constructor(
+                      review.rating == 5
+                        ? 5
+                        : rest.rating > 4
+                        ? 4
+                        : rest.rating > 3
+                        ? 3
+                        : rest.rating > 2
+                        ? 2
+                        : rest.rating > 1
+                        ? 1
+                        : 0
+                    )
+                  "
+                  class="star"
+                  src="tuiIconStarFilled"
+                ></tui-svg>
+              </div>
+              <div
+                class="box"
+                [style.width]="(review.rating - +review.rating.toFixed()) * 22 + 'px'"
+              >
+                <tui-svg class="star star1" src="tuiIconStarFilled"></tui-svg>
+              </div>
+            </div>
+          </div>
           <p>{{ review.content }}</p>
         </div>
         <tui-svg
-        class="icon-faq"
-        src="tuiIconTrash"
-        (click)="deleteReview(review.id)"
-      ></tui-svg>
+          class="icon-faq"
+          src="tuiIconTrash"
+          (click)="deleteReview(review.id)"
+        ></tui-svg>
       </div>
     </div>
   </div>

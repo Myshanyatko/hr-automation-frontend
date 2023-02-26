@@ -37,28 +37,14 @@
   <div class="content">
     <div class="city" *ngIf="currentCity$ | async as city">
       <h2>Заведения в городе {{ city.name }}</h2>
-      <button
-        tuiButton
-        type="button"
-        class="city_btn"
-        size="xs"
-        appearance="flat"
-        (click)="showDialog()"
-      >
-        выбрать город
-      </button>
-      <!-- <tui-svg src="tuiIconChevronDown"></tui-svg> -->
+      <div class="map-and-cities">
+        <a tuiLink class="city_btn" (click)="showDialog()"> выбрать город </a>
+        <a tuiLink class="map-btn city_btn" (click)="showDialog()">
+          Показать на карте
+        </a>
+      </div>
     </div>
-    <button
-      tuiButton
-      type="button"
-      class="map-btn"
-      size="xs"
-      appearance="flat"
-      (click)="showDialog()"
-    >
-      Показать на карте
-    </button>
+
     <div *ngIf="filtredRestaurants$ == null">
       <div class="list" *ngIf="builds$ | async as builds">
         <div class="" *ngFor="let build of builds">
@@ -68,11 +54,88 @@
             [routerLink]="['/restaurants/', rest.id]"
           >
             <div class="info">
-              <div class="">
+              <div class="left-block">
+                <div class="name">
+                  <h3>{{ rest.name }}</h3>
+                </div>
+
+                <div class="rating">
+                  <div class="star-after">
+                    <tui-svg
+                      *ngFor="let rait of [].constructor(5)"
+                      class="star"
+                      src="tuiIconStar"
+                    ></tui-svg>
+                  </div>
+                  <div class="stars">
+                    <div>
+                      <tui-svg
+                        *ngFor="
+                          let rait of [].constructor(
+                            rest.rating == 5
+                              ? 5
+                              : rest.rating > 4
+                              ? 4
+                              : rest.rating > 3
+                              ? 3
+                              : rest.rating > 2
+                              ? 2
+                              : rest.rating > 1
+                              ? 1
+                              : 0
+                          )
+                        "
+                        class="star"
+                        src="tuiIconStarFilled"
+                      ></tui-svg>
+                    </div>
+                    <div
+                      class="box"
+                      [style.width]="
+                        (rest.rating - +rest.rating.toFixed()) * 32 + 'px'
+                      "
+                    >
+                      <tui-svg
+                        class="star star1"
+                        src="tuiIconStarFilled"
+                      ></tui-svg>
+                    </div>
+                  </div>
+                  <p class="rating-number">
+                    {{ rest.rating.toFixed(1) }}
+                  </p>
+                </div>
+                <span class="label">{{ rest.status }}</span>
+                <div class="right-block__check">
+                  <span class="label"> </span>
+                  <span> cр. чек: {{ rest.average }}₽</span>
+                </div>
+                <div class="address">
+                  {{ rest.address }}
+                </div>
+              </div>
+              <div class="right-block">
+                <div class="right-block__rating">
+                  <span class="label">{{ rest.reviewCount }} оценок </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- здесь отфильтрованные рестики. Тоже самое, но не упакованы в здания -->
+    <div class="filtred" *ngIf="filtredRestaurants$ | async as rests">
+      <div *ngFor="let rest of rests">
+        <div class="list__restaurant" [routerLink]="['/restaurants/', rest.id]">
+          <div class="info">
+            <div class="left-block">
+              <div class="name">
                 <h3>{{ rest.name }}</h3>
               </div>
 
-              <div class="raiting">
+              <div class="rating">
                 <div class="star-after">
                   <tui-svg
                     *ngFor="let rait of [].constructor(5)"
@@ -85,7 +148,9 @@
                     <tui-svg
                       *ngFor="
                         let rait of [].constructor(
-                          rest.rating > 4
+                          rest.rating == 5
+                            ? 5
+                            : rest.rating > 4
                             ? 4
                             : rest.rating > 3
                             ? 3
@@ -112,94 +177,25 @@
                     ></tui-svg>
                   </div>
                 </div>
-
-                <div class="rating_number">
-                  <!-- <p>{{ rest.rating }}</p> -->
-                </div>
+                <p class="rating-number">
+                  {{ rest.rating.toFixed(1) }}
+                </p>
               </div>
-              <span class="">{{ rest.status }}</span>
+              <span class="label">{{ rest.status }}</span>
+              <div class="right-block__check">
+                <span class="label"> </span>
+                <span> cр. чек: {{ rest.average }}₽</span>
+              </div>
               <div class="address">
-                <!-- <span class="label">адрес: </span> -->
                 {{ rest.address }}
               </div>
-              <!-- <p class="label">средний чек:</p> -->
-              {{ rest.average }}
             </div>
-            <!-- <div class="icons">
-          <tui-svg class="icon" src="tuiIconEdit"></tui-svg>
-
-          <tui-svg class="icon" src="tuiIconTrash"></tui-svg>
-        </div> -->
+            <div class="right-block">
+              <div class="right-block__rating">
+                <span class="label">{{ rest.reviewCount }} оценок </span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="filtred" *ngIf="filtredRestaurants$ | async as rests">
-      <div *ngFor="let rest of rests">
-        <div
-          class="list__restaurant"
-          [routerLink]="['/restaurants/', rest.id]"
-        >
-          <div class="info">
-            <div class="">
-              <h3>{{ rest.name }}</h3>
-            </div>
-
-            <div class="raiting">
-              <div class="star-after">
-                <tui-svg
-                  *ngFor="let rait of [].constructor(5)"
-                  class="star"
-                  src="tuiIconStar"
-                ></tui-svg>
-              </div>
-              <div class="stars">
-                <div>
-                  <tui-svg
-                    *ngFor="
-                      let rait of [].constructor(
-                        rest.rating > 4
-                          ? 4
-                          : rest.rating > 3
-                          ? 3
-                          : rest.rating > 2
-                          ? 2
-                          : rest.rating > 1
-                          ? 1
-                          : 0
-                      )
-                    "
-                    class="star"
-                    src="tuiIconStarFilled"
-                  ></tui-svg>
-                </div>
-                <div
-                  class="box"
-                  [style.width]="
-                    (rest.rating - +rest.rating.toFixed()) * 32 + 'px'
-                  "
-                >
-                  <tui-svg class="star star1" src="tuiIconStarFilled"></tui-svg>
-                </div>
-              </div>
-
-              <div class="rating_number">
-                <!-- <p>{{ rest.rating }}</p> -->
-              </div>
-            </div>
-            <span class="">{{ rest.status }}</span>
-            <div class="address">
-              <!-- <span class="label">адрес: </span> -->
-              {{ rest.address }}
-            </div>
-            <!-- <p class="label">средний чек:</p> -->
-            {{ rest.average }}
-          </div>
-          <!-- <div class="icons">
-        <tui-svg class="icon" src="tuiIconEdit"></tui-svg>
-
-        <tui-svg class="icon" src="tuiIconTrash"></tui-svg>
-      </div> -->
         </div>
       </div>
     </div>
@@ -210,20 +206,27 @@
   [tuiDialogOptions]="{ label: 'Выберите город', size: 's' }"
   [(tuiDialog)]="open"
 >
+  <button
+    routerLink="/restaurants/create-city"
+    size="xs"
+    tuiButton
+    apperance="primary"
+    class="create"
+  >
+    Создать
+  </button>
   <div class="city" *ngFor="let city of cities$ | async as cities">
     <a tuiLink (click)="changeCity(city)" class="a__city">
       {{ city.name }}
     </a>
-    <tui-svg src="tuiIconTrash" (click)="deleteCity(city.id)"> </tui-svg>
+    <a
+      tuiLink
+      icon="tuiIconTrash"
+      (click)="deleteCity(city.id)"
+      class="deleteCity"
+    >
+    </a>
   </div>
-  <button
-    tuiButton
-    routerLink="/restaurants/create-city"
-    size="m"
-    class="create"
-  >
-    Добавить новый город
-  </button>
 </ng-template>
 <!-- <ng-template
   let-observer2

@@ -1,7 +1,6 @@
+import { NewCityComponent } from './restorans/new-city/new-city.component';
 import { EditRestaurantComponent } from './restorans/edit-restaurant/edit-restaurant.component';
 import { RestaurantComponent } from './restorans/restaurant/restaurant.component';
-import { Restaurant } from './models/restaurant';
-import { NewCityComponent } from './restorans/new-city/new-city.component';
 import { CreateRestaurantComponent } from './restorans/create-restaurant/create-restaurant.component';
 import { RestoransComponent } from './restorans/restorans.component';
 import { ProductsOrderedComponent } from './products/products-ordered/products-ordered.component';

@@ -22,7 +22,7 @@
   width: 600px;
 }
 .title {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 agm-map {
   height: 300px;
@@ -31,9 +31,16 @@ agm-map {
 .create-button {
   margin-top: 10px;
 }
+.deleteCity {
+  margin-top: 10px;
+}
 .city {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto 1fr;
+}
+.map-and-cities {
+  display: grid;
+  grid-template-columns: auto;
 }
 .a__city {
   display: block;
@@ -45,41 +52,56 @@ agm-map {
 .map-btn {
   margin-top: 15px;
 }
-.list {
-  margin: 20px 0;
-}
 
 .list__restaurant {
   margin-bottom: 30px;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
   cursor: pointer;
+}
+.info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 20px;
 }
 .name-and-status {
   display: grid;
   grid-template-columns: auto 1fr;
-
   grid-gap: 10px;
+}
+.name {
+  margin-bottom: 7px;
 }
 .address {
   color: #292929;
   text-decoration: solid;
 }
-.raiting {
-  display: grid;
-  align-items: center;
-  grid-template-columns: auto 1fr;
-}
+
 .icon {
-  color: #ff7043;
+  color: darkgray;
   padding: 0 5px;
   cursor: pointer;
 }
 .label {
-  color: darkgray;
+  margin: 25px 0 15px 0;
+  /* color: darkgray; */
   font-style: italic;
 }
+.rating {
+  display: grid;
+  grid-template-columns: 4fr auto;
+  width: 140px;
+}
+
+.rating-number {
+  display: block;
+  align-self: center;
+  font-style: italic;
+}
+.right-block {
+  margin-top: 30px;
+}
+
 .stars {
+  margin-left: -4px;
   display: grid;
   align-items: center;
   grid-template-columns: auto 1fr;
@@ -88,6 +110,7 @@ agm-map {
   color: #ff7043;
 }
 .star-after {
+  margin-left: -4px;
   position: absolute;
 }
 .box {
@@ -96,6 +119,10 @@ agm-map {
 .star1 {
   object-fit: cover;
 }
-.create{
-  margin-top: 20px;
+.create {
+  text-align: right;
+}
+.deleteCity {
+  text-align: right;
+  cursor: pointer;
 }
