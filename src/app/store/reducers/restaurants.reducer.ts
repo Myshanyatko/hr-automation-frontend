@@ -4,8 +4,10 @@ import {
   deleteCitySuccess,
   deleteReviewSuccess,
   setCurrentCity,
+  setEditedRestaurant,
   setFiltredRestaurants,
   setRestaurant,
+  setReviews,
   setStatuses,
 } from './../actions/restaurants.actions';
 import { initialRestaurantsState } from './../state/restaurants.state';
@@ -21,6 +23,12 @@ export const restaurantsReducer = createReducer(
   on(setRestaurants, (state, { builds }) => {
     return { ...state, builds: builds };
   }),
+  on(setReviews, (state, { reviews }) => {
+    return { ...state, currentReviews: reviews };
+  }),
+  on(setEditedRestaurant, (state, { restaurant }) => {
+    return { ...state, editedRest: restaurant };
+  }),
   on(setFiltredRestaurants, (state, { restaurants }) => {
     return { ...state, filtredRestaurants: restaurants };
   }),
@@ -33,9 +41,6 @@ export const restaurantsReducer = createReducer(
   on(setCurrentCity, (state, { city }) => {
     return { ...state, currentCity: city };
   }),
-  on(createRestaurant, (state, { restaurant }) => {
-    return { ...state };
-  }),
   on(setCities, (state, { cities }) => {
     return { ...state, cities: cities };
   }),
@@ -47,15 +52,12 @@ export const restaurantsReducer = createReducer(
     };
   }),
   on(deleteReviewSuccess, (state, { id }) => {
-    if (state.currentRest == null) return state;
+    if (state.currentReviews == null) return state
     return {
       ...state,
-      currentRest: {
-        ...state.currentRest,
-        reviews: [
-          ...state.currentRest.reviews.filter((review) => review.id != id),
-        ],
-      },
+      currentReviews: [
+        ...state.currentReviews.filter((review) => review.id != id),
+      ],
     };
   })
 );

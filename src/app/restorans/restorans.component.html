@@ -38,8 +38,8 @@
     <div class="city" *ngIf="currentCity$ | async as city">
       <h2>Заведения в городе {{ city.name }}</h2>
       <div class="map-and-cities">
-        <a tuiLink class="city_btn" (click)="showDialog()"> выбрать город </a>
-        <a tuiLink class="map-btn city_btn" (click)="showDialog()">
+        <a tuiLink class="city_btn" (click)="showDialog()"> Выбрать город </a>
+        <a tuiLink class="map-btn city_btn" (click)="showMap()">
           Показать на карте
         </a>
       </div>
@@ -74,13 +74,13 @@
                           let rait of [].constructor(
                             rest.rating == 5
                               ? 5
-                              : rest.rating > 4
+                              : rest.rating >= 4
                               ? 4
-                              : rest.rating > 3
+                              : rest.rating >= 3
                               ? 3
-                              : rest.rating > 2
+                              : rest.rating >= 2
                               ? 2
-                              : rest.rating > 1
+                              : rest.rating >= 1
                               ? 1
                               : 0
                           )
@@ -150,13 +150,13 @@
                         let rait of [].constructor(
                           rest.rating == 5
                             ? 5
-                            : rest.rating > 4
+                            : rest.rating >= 4
                             ? 4
-                            : rest.rating > 3
+                            : rest.rating >= 3
                             ? 3
-                            : rest.rating > 2
+                            : rest.rating >= 2
                             ? 2
-                            : rest.rating > 1
+                            : rest.rating >= 1
                             ? 1
                             : 0
                         )
@@ -201,13 +201,15 @@
     </div>
   </div>
 </div>
+
+<!-- выбрать город -->
 <ng-template
   let-observer
   [tuiDialogOptions]="{ label: 'Выберите город', size: 's' }"
   [(tuiDialog)]="open"
 >
   <button
-    routerLink="/restaurants/create-city"
+    routerLink="/create-city"
     size="xs"
     tuiButton
     apperance="primary"
@@ -228,21 +230,38 @@
     </a>
   </div>
 </ng-template>
-<!-- <ng-template
-  let-observer2
-  [tuiDialogOptions]="{ label: 'Заведения в Томске', size: 's' }"
-  [(tuiDialog)]="open"
+
+<!-- показать на карте -->
+<ng-template
+  *ngIf="builds$ | async as builds"
+  let-observer
+  [tuiDialogOptions]="{ label: 'Заведения в Томске', size: 'l' }"
+  [(tuiDialog)]="openMap"
 >
   <agm-map
-    style="height: 300px"
-    [latitude]="markers[0].lat"
-    [longitude]="markers[0].lng"
+    *ngIf="currentCity$ | async as city"
+    style="height: 400px"
+    [latitude]="city.lat"
+    [longitude]="city.lng"
   >
-    <agm-marker-cluster>
+    <agm-marker-cluster
+      *ngFor="let build of builds"
+      (clusterClick)="openInfo()"
+      [zoomOnClick]="false"
+      ><agm-info-window [disableAutoPan]="true" isOpn="true"> rththth</agm-info-window>
       <agm-marker
-        *ngFor="let marker of markers"
-        [latitude]="marker.lat"
-        [longitude]="marker.lng"
-      ></agm-marker> </agm-marker-cluster
-  ></agm-map>
-</ng-template> -->
+        *ngFor="let rest of build.restaurants"
+        [latitude]="build.lat"
+        [longitude]="build.lng"
+      >
+        <agm-info-window [routerLink]="['/restaurants/', rest.id]">
+          <div class="rest-on-map">
+            <h3>{{ rest.name }}</h3>
+            <p>{{ rest.rating }}</p>
+            <p>средний чек: {{ rest.average }}</p>
+          </div>
+        </agm-info-window>
+      </agm-marker>
+    </agm-marker-cluster></agm-map
+  >
+</ng-template>

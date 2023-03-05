@@ -26,6 +26,10 @@
 .map {
   margin-left: 10px;
 }
+.setAddress {
+  margin-left: 10px;
+  color: #ff7043;
+}
 .product-form-item,
 .save-button {
   margin-top: 15px;
@@ -36,4 +40,10 @@
 }
 .form {
   margin: 0 35px;
+}
+.save-coords{
+  margin-top: 15px;
+}
+.map-info{
+  margin: 10px 0;
 }

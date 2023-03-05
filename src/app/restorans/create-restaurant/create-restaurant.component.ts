@@ -2,10 +2,10 @@ import {
   selectStatuses,
   selectCurrentCity,
 } from './../../store/selectors/restaurants.selectors';
-import { Restaurant } from './../../models/restaurant';
 import {
   createRestaurant,
   createRestaurantSuccess,
+  createRestaurantViaCoords,
   getStatuses,
 } from './../../store/actions/restaurants.actions';
 import { HttpClient } from '@angular/common/http';
@@ -14,7 +14,6 @@ import { AppState } from 'src/app/store/state/app.state';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
-import { Subject, Observable } from 'rxjs';
 import {
   FormGroup,
   FormControl,
@@ -22,15 +21,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { selectProductsCategories } from 'src/app/store/selectors/products.selectors';
-import {
-  addNewProduct,
-  addNewProductSuccess,
-  getProductsCategories,
-} from 'src/app/store/actions/products.actions';
-import { Product } from 'src/app/models/product';
-import { MapsAPILoader } from '@agm/core';
+import { apiKey } from 'apiKey';
+import { Observable, Subject } from 'rxjs';
+
 let nextProcessId = 1;
+interface marker {
+  lat: number;
+  lng: number;
+}
 @Component({
   selector: 'app-create-restaurant',
   templateUrl: './create-restaurant.component.html',
@@ -40,28 +38,43 @@ export class CreateRestaurantComponent implements OnInit {
   restaurantForm!: FormGroup;
   errors = false;
   loading = false;
+  open = false;
+  link =
+    'https://maps.googleapis.com/maps/api/js?key=' +
+    apiKey +
+    '&callback=initMap&v=weekly';
+  city$ = this.store$.select(selectCurrentCity);
   statuses$ = this.store$.select(selectStatuses);
+  marker$: Observable<marker> | null = null
+  marker?: marker 
+  addressIsDisabled = false
   readonly control = new FormControl();
   constructor(
     private actions$: Actions,
     private fb: FormBuilder,
     private http: HttpClient,
-    private mapsAPILoader: MapsAPILoader,
     private router: Router,
     private store$: Store<AppState>
-  ) {}
+  ) {
+    this.city$.subscribe((city) =>this.marker = { lat: city.lat, lng: city.lng }
+    
+    );
+  }
 
   ngOnInit(): void {
     this.store$.dispatch(getStatuses());
-
+    this.marker$?.subscribe(
+      (marker) => { 
+      console.log(marker);
+      }
+    )
+ 
     this.restaurantForm = this.fb.group({
       name: ['', [Validators.required]],
       address: ['', [Validators.required]],
       status: ['', [Validators.required]],
     });
     this.statuses$.subscribe((statuses) => {
-      console.log(statuses[0]);
-
       this.restaurantForm.controls['status'].setValue(statuses[0]);
     });
   }
@@ -80,11 +93,7 @@ export class CreateRestaurantComponent implements OnInit {
         .select(selectCurrentCity)
         .subscribe((city) => (currentCity = city.id));
       const processId = nextProcessId + 1;
-      // this.mapsAPILoader.load().then(() => {
-      //   const geocoder = new google.maps.Geocoder();
-      //   geocoder.geocode(
-      //     { address: this.restaurantForm.value.address },
-      //     (res) => {
+   if (!this.addressIsDisabled){
       this.store$.dispatch(
         createRestaurant({
           restaurant: {
@@ -96,7 +105,21 @@ export class CreateRestaurantComponent implements OnInit {
           processId: processId,
         })
       );
-
+    }
+    else if (this.marker != null){
+      this.store$.dispatch(
+        createRestaurantViaCoords({
+          restaurant: {
+            name: this.restaurantForm.value.name,
+            statusId: this.restaurantForm.value.status.id,
+            lat: this.marker?.lat,
+            lng: this.marker?.lng,
+            cityId: currentCity,
+          },
+          processId: processId,
+        })
+      );
+    }
       this.actions$
         .pipe(
           ofType(createRestaurantSuccess),
@@ -109,6 +132,22 @@ export class CreateRestaurantComponent implements OnInit {
   }
   ngOnDestroy(): void {
     this.loading = false;
+  }
+  showDialog() {
+    this.open = true;
+  }
+  markerDragEnd($event: google.maps.MouseEvent) {
+    this.marker = {lat: $event.latLng.lat(), lng: $event.latLng.lng()}
+    console.log(this.marker);
     
+  }
+  saveCoords(){
+    this.open = false
+    this.restaurantForm.controls['address'].setValue(`Введены координаты (${this.marker?.lat}, ${this.marker?.lng})`)
+    this.addressIsDisabled = true
+  }
+  changeAdddressIsDisabled(){
+    this.addressIsDisabled = false
+    this.restaurantForm.controls['address'].setValue('')
   }
 }

@@ -20,6 +20,13 @@ import {
   deleteRestaurantSuccess,
   deleteReview,
   deleteReviewSuccess,
+  getEditedRestaurant,
+  setEditedRestaurant,
+  updateRestaurant,
+  updateRestaurantSuccess,
+  getReviews,
+  setReviews,
+  createRestaurantViaCoords,
 } from './../actions/restaurants.actions';
 import { AlertService } from './../../services/alert.service';
 import { map } from 'rxjs/operators';
@@ -70,6 +77,34 @@ export class RestaurantsEffects {
       )
     )
   );
+  getReviews$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getReviews),
+      mergeMap((res) =>
+        this.restaurantsService.getReviews(res.id).pipe(
+          map((res) => setReviews({ reviews: res })),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  getEditedRestaurant$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getEditedRestaurant),
+      mergeMap((res) =>
+        this.restaurantsService.getEditedRestaurant(res.id).pipe(
+          map((res) => setEditedRestaurant({ restaurant: res })),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
 
   getStatuses$ = createEffect(() =>
     this.actions$.pipe(
@@ -92,8 +127,25 @@ export class RestaurantsEffects {
         this.restaurantsService.createRestaurant(restaurant).pipe(
           map(() => {
             return createRestaurantSuccess({
-              processId: processId,
-              restaurant: restaurant,
+              processId: processId
+            });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  createRestaurantViaRCoords$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createRestaurantViaCoords),
+      mergeMap(({ restaurant, processId }) =>
+        this.restaurantsService.createRestaurantViaCoords(restaurant).pipe(
+          map(() => {
+            return createRestaurantSuccess({
+              processId: processId
             });
           }),
           catchError((err) => {
@@ -110,6 +162,36 @@ export class RestaurantsEffects {
         ofType(createRestaurantSuccess),
         map(() => {
           this.alert.showNotificationSuccess('Ресторан создан').subscribe();
+        })
+      ),
+    { dispatch: false }
+  );
+  editRestaurant$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateRestaurant),
+      
+      mergeMap(({ restaurant, processId }) =>
+        this.restaurantsService.updateRestaurant(restaurant).pipe(
+          map(() => {
+            return updateRestaurantSuccess({
+              processId: processId,
+              restaurant: restaurant,
+            });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  updateRestaurantSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(updateRestaurantSuccess),
+        map(() => {
+          this.alert.showNotificationSuccess('Ресторан изменен').subscribe();
         })
       ),
     { dispatch: false }
@@ -189,7 +271,8 @@ export class RestaurantsEffects {
       mergeMap((res) =>
         this.restaurantsService.deleteRestaurant(res.id).pipe(
           map(
-            () => deleteRestaurantSuccess({ id: res.id, processId: res.processId }),
+            () =>
+              deleteRestaurantSuccess({ id: res.id, processId: res.processId }),
             catchError((err) => {
               this.alert.showNotificationError(err.error).subscribe();
               return EMPTY;

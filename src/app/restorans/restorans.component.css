@@ -62,6 +62,9 @@ agm-map {
   grid-template-columns: auto 1fr;
   grid-gap: 20px;
 }
+.left-block{
+  width: 150px;
+}
 .name-and-status {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -121,6 +124,7 @@ agm-map {
 }
 .create {
   text-align: right;
+  margin-top: 10px;
 }
 .deleteCity {
   text-align: right;

@@ -30,11 +30,11 @@
       </div>
       <div class="average">
         <span class="label">Средний чек: </span>
-        <span class=""> {{  rest.average !=  0 ?   rest.rating : 'не оценено' }}</span>
+        <span class=""> {{  rest.average !=  0 ?   rest.average+'₽' : 'не оценено' }}</span>
       </div>
     </div>
     <div class="map">
-      <agm-map
+      <agm-map  
         style="height: 150px"
         [latitude]="rest.lat"
         [longitude]="rest.lng"
@@ -94,9 +94,9 @@
 
     <!-- ОТЗЫВЫ  -->
 
-    <div class="reviews" *ngIf="rest.reviews">
+    <div class="reviews" *ngIf="reviews$ | async as reviews">
       <h3 class="reviews__title">Отзывы</h3>
-      <div class="review" *ngFor="let review of rest.reviews">
+      <div class="review" *ngFor="let review of reviews">
         <div class="pic">
           <tui-avatar
             *ngIf="review.userpic"
@@ -132,13 +132,13 @@
                     let rait of [].constructor(
                       review.rating == 5
                         ? 5
-                        : rest.rating > 4
+                        : rest.rating >= 4
                         ? 4
-                        : rest.rating > 3
+                        : rest.rating >= 3
                         ? 3
-                        : rest.rating > 2
+                        : rest.rating >= 2
                         ? 2
-                        : rest.rating > 1
+                        : rest.rating >= 1
                         ? 1
                         : 0
                     )

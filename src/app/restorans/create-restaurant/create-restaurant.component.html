@@ -8,17 +8,21 @@
       ></tui-svg>
       <h2 class="title-new-product">Добавление ресторана</h2>
     </div>
-  
-    <form [formGroup]="restaurantForm" (ngSubmit)="saveRestaurant()" class="form">
+
+    <form
+      [formGroup]="restaurantForm"
+      (ngSubmit)="saveRestaurant()"
+      class="form"
+    >
       <tui-select
         class="product-form-item"
         tuiTextfieldSize="l"
         formControlName="status"
-        *ngIf="statuses$ | async as status "
+        *ngIf="statuses$ | async as status"
         [valueContent]="categoryContent"
       >
         Статус заведения
-  
+
         <tui-data-list-wrapper
           *tuiDataList
           [items]="status"
@@ -26,70 +30,76 @@
         ></tui-data-list-wrapper>
       </tui-select>
       <div
-      class="error-message"
-      *ngIf="
-      restaurantForm.get('status')?.invalid &&
-        (restaurantForm.get('status')?.dirty ||
-        restaurantForm.get('status')?.touched ||
-          errors)
-      "
-    >
-      <span>Обязательное поле</span>
-    </div>
+        class="error-message"
+        *ngIf="
+          restaurantForm.get('status')?.invalid &&
+          (restaurantForm.get('status')?.dirty ||
+            restaurantForm.get('status')?.touched ||
+            errors)
+        "
+      >
+        <span>Обязательное поле</span>
+      </div>
       <tui-input formControlName="name" class="product-form-item">
-        название 
+        Название
         <input tuiTextfield type="text" />
       </tui-input>
       <div
         class="error-message"
         *ngIf="
-        restaurantForm.get('name')?.invalid &&
+          restaurantForm.get('name')?.invalid &&
           (restaurantForm.get('name')?.dirty ||
-          restaurantForm.get('name')?.touched ||
+            restaurantForm.get('name')?.touched ||
             errors)
         "
       >
         <span>Обязательное поле</span>
       </div>
-      <tui-input formControlName="address" class="product-form-item">
-        адрес 
+      <tui-input
+        formControlName="address"
+        class="product-form-item"
+        [readOnly]="addressIsDisabled"
+      >
+        Адрес
         <input tuiTextfield type="text" />
       </tui-input>
       <div
         class="error-message"
         *ngIf="
-        restaurantForm.get('address')?.invalid &&
+          restaurantForm.get('address')?.invalid &&
           (restaurantForm.get('address')?.dirty ||
-          restaurantForm.get('address')?.touched ||
+            restaurantForm.get('address')?.touched ||
             errors)
         "
       >
         <span>Обязательное поле</span>
       </div>
-      <a tuiLink class="map">указать на карте</a>
-  
-    
-  
-      
-  
+      <a tuiLink class="map" (click)="showDialog()">указать на карте</a>
+      <a
+        tuiLink
+        class="setAddress"
+        (click)="changeAdddressIsDisabled()"
+        *ngIf="addressIsDisabled"
+        >ввести адрес</a
+      >
+
       <ng-template #categoryContent let-item>
         <div class="category-item">
-          {{ item.name}}
+          {{ item.name }}
         </div>
       </ng-template>
       <div
         class="error-message"
         *ngIf="
-        restaurantForm.get('status')?.invalid &&
+          restaurantForm.get('status')?.invalid &&
           (restaurantForm.get('status')?.dirty ||
-          restaurantForm.get('status')?.touched ||
+            restaurantForm.get('status')?.touched ||
             errors)
         "
       >
         <span>Обязательное поле</span>
       </div>
-  
-      
+
       <button
         tuiButton
         type="submit"
@@ -101,5 +111,29 @@
         Сохранить
       </button>
     </form>
-  </div></div>
-  
+  </div>
+</div>
+
+<ng-template let-observer [(tuiDialog)]="open" *ngIf="city$ | async as city">
+  <div class="map">
+    <h2>Выбор координат на карте</h2>
+    <p class="map-info">Перетащите маркер в местоположение ресторана</p>
+    <agm-map
+      style="height: 250px"
+      [latitude]="city.lat"
+      [longitude]="city.lng"
+      [disableDefaultUI]="false"
+    >
+      <agm-marker
+        *ngIf="marker"
+        [markerDraggable]="true"
+        [latitude]="marker.lat"
+        [longitude]="marker.lng"
+        (dragEnd)="markerDragEnd($event)"
+      ></agm-marker>
+      ></agm-map
+    >
+    <button tuiButton (click)="saveCoords()" appearance="accent" class="save-coords" size="m">Сохранить</button>
+    <!-- <script [src]="link"><google-map ></google-map></script> -->
+  </div>
+</ng-template>

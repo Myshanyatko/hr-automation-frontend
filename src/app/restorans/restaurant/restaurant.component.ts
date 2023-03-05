@@ -1,3 +1,4 @@
+import { selectReviews } from './../../store/selectors/restaurants.selectors';
 import { Actions, ofType } from '@ngrx/effects';
 import { TuiDestroyService } from '@taiga-ui/cdk';
 import { tap, takeUntil, filter } from 'rxjs/operators';
@@ -7,6 +8,7 @@ import {
   deleteRestaurantSuccess,
   deleteReview,
   getRestaurant,
+  getReviews,
 } from './../../store/actions/restaurants.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from './../../store/state/app.state';
@@ -22,6 +24,7 @@ let nextProcessId = 1;
 })
 export class RestaurantComponent implements OnInit {
   restaurant$ = this.store$.select(selectRestaurant);
+  reviews$ = this.store$.select(selectReviews)
   constructor(
     private actions$: Actions,
     private destroy$: TuiDestroyService,
@@ -33,8 +36,12 @@ export class RestaurantComponent implements OnInit {
   ngOnInit(): void {
     this.route.params
       .pipe(
-        tap(({ id }) =>
-          this.store$.dispatch(getRestaurant({ id: Number(id) }))
+        tap(({ id }) =>{
+          const act = getRestaurant({ id: Number(id) })
+           this.store$.dispatch(act)
+           this.store$.dispatch(getReviews({id: Number(id)}))
+        }
+         
         ),
         takeUntil(this.destroy$)
       )

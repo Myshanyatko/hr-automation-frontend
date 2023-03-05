@@ -31,7 +31,8 @@ export class RestoransComponent implements OnInit, OnDestroy {
   cities$ = this.store$.select(selectCities);
   currentCity$ = this.store$.select(selectCurrentCity);
   builds$ = this.store$.select(selectAllRestaurants);
-
+  openMap = false
+  openClusterInfo = false
   filtredRestaurants$: Observable<shortRest[] | null> | null =
     this.store$.select(selectFiltredRestaurants);
   open = false;
@@ -56,6 +57,10 @@ export class RestoransComponent implements OnInit, OnDestroy {
     this.store$.dispatch(getCities());
     this.open = true;
   }
+  showMap() {
+    this.store$.dispatch(getCities());
+    this.openMap = true;
+  }
   changeCity(city: City) {
     this.open = false;
     this.store$.dispatch(setCurrentCity({ city: city }));
@@ -65,6 +70,7 @@ export class RestoransComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.open = false;
+    this.openMap = false
   }
   search() {
     if (this.restForm.value.name != null || this.restForm.value.name != '') {
@@ -73,5 +79,10 @@ export class RestoransComponent implements OnInit, OnDestroy {
         getFiltredRestaurants({ filter: this.restForm.value.name })
       );
     }
+  }
+  openInfo(){
+    console.log('cluster info is opened');
+    
+    this.openClusterInfo = true
   }
 }

@@ -1,3 +1,5 @@
+import { Review } from './../../models/review';
+import { EditedRest } from './../../models/editedRest';
 
 import { Build } from './../../models/build';
 import { RestStatus } from './../../models/restStatus';
@@ -12,6 +14,13 @@ export interface createRest {
   statusId: number;
   cityId: number;
 }
+export interface createRestViaCoords {
+  name: string;
+  lat: number;
+  lng: number;
+  statusId: number;
+  cityId: number;
+}
 export const getRestaurants = createAction(
   '[Restaurants Page] Get Restaurants',
   props<{ cityId: number }>()
@@ -19,6 +28,14 @@ export const getRestaurants = createAction(
 export const setRestaurants = createAction(
   '[Restaurants Page] Set Restaurants',
   props<{ builds: Build[] }>()
+);
+export const getReviews = createAction(
+  '[Restaurant Page] Get Reviews',
+  props<{ id: number }>()
+);
+export const setReviews = createAction(
+  '[Restaurant Page] Set Reviews',
+  props<{ reviews: Review[] }>()
 );
 export const getFiltredRestaurants = createAction(
   '[Restaurants Page] Get Filtred Restaurants',
@@ -36,6 +53,14 @@ export const setRestaurant = createAction(
   '[Restaurants Page] Set Restaurant',
   props<{ restaurant: Restaurant }>()
 );
+export const getEditedRestaurant = createAction(
+  '[Restaurants Page] Get Edited Restaurant',
+  props<{ id: number }>()
+);
+export const setEditedRestaurant = createAction(
+  '[Restaurants Page] Set Edited Restaurant',
+  props<{ restaurant: createRest }>()
+);
 export const getCities = createAction('[Restaurants Page] Get Cities');
 export const setCities = createAction(
   '[Restaurants Page] Set Cities',
@@ -50,17 +75,29 @@ export const createRestaurant = createAction(
   '[Restaurants Page] Create Restaurant',
   props<{ restaurant: createRest; processId: number }>()
 );
+export const createRestaurantViaCoords = createAction(
+  '[Restaurants Page] Create Restaurant',
+  props<{ restaurant: createRestViaCoords; processId: number }>()
+);
 export const createRestaurantSuccess = createAction(
   '[Restaurants Page] Create Restaurant Success',
-  props<{ restaurant: createRest; processId: number }>()
+  props<{ processId: number }>()
 );
 export const createCity = createAction(
   '[Restaurants Page] Create City',
-  props<{ city: City; processId: number }>()
+  props<{ city: string; processId: number }>()
 );
 export const createCitySuccess = createAction(
   '[Restaurants Page] Create City Success',
-  props<{ city: City; processId: number }>()
+  props<{ city: string; processId: number }>()
+);
+export const updateRestaurant = createAction(
+  '[Edit Restaurant Page] Update Restaurant',
+  props<{ restaurant: EditedRest; processId: number }>()
+);
+export const updateRestaurantSuccess = createAction(
+  '[Edit Restaurant Page] Update Restaurant Success',
+  props<{ restaurant: EditedRest; processId: number }>()
 );
 export const setCurrentCity = createAction(
   '[Restaurants Page] Set Current City',
