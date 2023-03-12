@@ -94,6 +94,8 @@ export class CreateRestaurantComponent implements OnInit {
         .subscribe((city) => (currentCity = city.id));
       const processId = nextProcessId + 1;
    if (!this.addressIsDisabled){
+    console.log('1'+this.addressIsDisabled);
+    
       this.store$.dispatch(
         createRestaurant({
           restaurant: {
@@ -107,6 +109,7 @@ export class CreateRestaurantComponent implements OnInit {
       );
     }
     else if (this.marker != null){
+      console.log('2'+this.addressIsDisabled);
       this.store$.dispatch(
         createRestaurantViaCoords({
           restaurant: {

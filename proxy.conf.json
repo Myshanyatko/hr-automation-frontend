@@ -1,6 +1,6 @@
 {
     "/login": {
-      "target": "http://localhost:8080",
+      "target": "https://hr-automation-15997.web.app",
       "secure": false
     }
   }

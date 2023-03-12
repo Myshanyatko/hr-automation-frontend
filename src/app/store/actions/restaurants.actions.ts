@@ -76,7 +76,7 @@ export const createRestaurant = createAction(
   props<{ restaurant: createRest; processId: number }>()
 );
 export const createRestaurantViaCoords = createAction(
-  '[Restaurants Page] Create Restaurant',
+  '[Restaurants Page] Create Restaurant Via Coordinates',
   props<{ restaurant: createRestViaCoords; processId: number }>()
 );
 export const createRestaurantSuccess = createAction(

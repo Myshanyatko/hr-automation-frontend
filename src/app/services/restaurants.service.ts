@@ -42,7 +42,7 @@ export class RestaurantsService {
   }
   createRestaurant(restaurant: createRest) {
     return this.http.post(
-      API + `/add/status/${restaurant.statusId}/city/${restaurant.cityId}`,
+      API + `/add/address/status/${restaurant.statusId}/city/${restaurant.cityId}`,
       {
         name: restaurant.name,
         address: restaurant.address,
@@ -51,7 +51,7 @@ export class RestaurantsService {
   }
   createRestaurantViaCoords(restaurant: createRestViaCoords) {
     return this.http.post(
-      API + `/add/status/${restaurant.statusId}/city/${restaurant.cityId}`,
+      API + `/add/coordinates/status/${restaurant.statusId}/city/${restaurant.cityId}`,
       restaurant
     );
   }

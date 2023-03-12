@@ -61,6 +61,7 @@ export class EditRestaurantComponent implements OnInit {
     } else {
       if (this.loading == false) this.loading = true;
       const processId = nextProcessId + 1;
+      
       this.restaurant$.subscribe((rest) => {
         if (rest != null) {
           const restaurant: EditedRest = {
@@ -73,7 +74,7 @@ export class EditRestaurantComponent implements OnInit {
             updateRestaurant({ restaurant: restaurant, processId: processId })
           );
         }
-      });
+      }).unsubscribe();
       this.actions$
         .pipe(
           ofType(updateRestaurantSuccess),
