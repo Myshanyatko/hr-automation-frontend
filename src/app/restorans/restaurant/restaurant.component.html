@@ -30,26 +30,22 @@
       </div>
       <div class="average">
         <span class="label">Средний чек: </span>
-        <span class=""> {{  rest.average !=  0 ?   rest.average+'₽' : 'не оценено' }}</span>
+        <span class="">
+          {{ rest.average != 0 ? rest.average + "₽" : "не оценено" }}</span
+        >
       </div>
     </div>
     <div class="map">
-      <!-- <agm-map  
-        style="height: 150px"
-        [latitude]="rest.lat"
-        [longitude]="rest.lng"
-      >
-        <agm-marker-cluster>
-          <agm-marker
-            [latitude]="rest.lat"
-            [longitude]="rest.lng"
-          ></agm-marker> </agm-marker-cluster
-      ></agm-map> -->
+      <google-map [center]="{ lat: rest.lat, lng: rest.lng }" height="200px" width="550px">
+        <map-marker [position]="{ lat: rest.lat, lng: rest.lng }"> </map-marker>
+      </google-map>
     </div>
 
     <div class="rating-block">
       <span class="label">Рейтинг: </span>
-      <span class=""> {{ rest.rating !=  0 ?   rest.rating.toFixed(1) : 'не оценено'}}</span>
+      <span class="">
+        {{ rest.rating != 0 ? rest.rating.toFixed(1) : "не оценено" }}</span
+      >
 
       <div class="rating">
         <div class="star-after">
@@ -66,13 +62,13 @@
                 let rait of [].constructor(
                   rest.rating == 5
                     ? 5
-                    : rest.rating > 4
+                    : rest.rating >= 4
                     ? 4
-                    : rest.rating > 3
+                    : rest.rating >= 3
                     ? 3
-                    : rest.rating > 2
+                    : rest.rating >= 2
                     ? 2
-                    : rest.rating > 1
+                    : rest.rating >= 1
                     ? 1
                     : 0
                 )
@@ -83,14 +79,13 @@
           </div>
           <div
             class="box"
-            [style.width]="(rest.rating - +rest.rating.toFixed()) * 22 + 'px'"
+            [style.width]="(rest.rating - +rest.rating.toFixed())> 0 ? (rest.rating - +rest.rating.toFixed()) * 16 + 'px' : (1+(rest.rating - +rest.rating.toFixed())) * 16 + 'px'"
           >
             <tui-svg class="star star1" src="tuiIconStarFilled"></tui-svg>
           </div>
         </div>
       </div>
     </div>
-
 
     <!-- ОТЗЫВЫ  -->
 
@@ -117,7 +112,8 @@
         </div>
         <div class="review__content">
           <h4>{{ review.username }}</h4>
-          <span>чек: {{review.average}}₽  </span>
+          <span>чек: {{ review.average }}₽ </span>
+         
           <div class="rating">
             <div class="star-after">
               <tui-svg
@@ -133,13 +129,13 @@
                     let rait of [].constructor(
                       review.rating == 5
                         ? 5
-                        : rest.rating >= 4
+                        : review.rating >= 4
                         ? 4
-                        : rest.rating >= 3
+                        : review.rating >= 3
                         ? 3
-                        : rest.rating >= 2
+                        : review.rating >= 2
                         ? 2
-                        : rest.rating >= 1
+                        : review.rating >= 1
                         ? 1
                         : 0
                     )
@@ -150,11 +146,14 @@
               </div>
               <div
                 class="box"
-                [style.width]="(review.rating - +review.rating.toFixed()) * 22 + 'px'"
+                [style.width]="
+                  (review.rating - +review.rating.toFixed())> 0 ? (review.rating - +review.rating.toFixed()) * 16 + 'px' : (1+(review.rating - +review.rating.toFixed())) * 16 + 'px'
+                "
               >
                 <tui-svg class="star star1" src="tuiIconStarFilled"></tui-svg>
               </div>
             </div>
+           
           </div>
           <p>{{ review.content }}</p>
         </div>

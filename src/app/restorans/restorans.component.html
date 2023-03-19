@@ -91,9 +91,7 @@
                       </div>
                       <div
                         class="box"
-                        [style.width]="
-                          (rest.rating - +rest.rating.toFixed()) * 32 + 'px'
-                        "
+                        [style.width]="(rest.rating - +rest.rating.toFixed())>= 0 ? (rest.rating - +rest.rating.toFixed()) * 16 + 'px' : (1+(rest.rating - +rest.rating.toFixed())) * 16 + 'px'"
                       >
                         <tui-svg
                           class="star star1"
@@ -109,7 +107,7 @@
                 </div>
                 <span class="label">{{ rest.status }}</span>
                 <div class="right-block__check">
-                  <span> cр. чек: {{ rest.average }}c</span>
+                  <span> cр. чек:  {{ rest.average != 0 ? rest.average + "₽" : "не оценено" }}</span>
                 </div>
                 <div class="address">
                   {{ rest.address }}
@@ -165,7 +163,7 @@
                     <div
                       class="box"
                       [style.width]="
-                        (rest.rating - +rest.rating.toFixed()) * 32 + 'px'
+                      (rest.rating - +rest.rating.toFixed())> 0 ? (rest.rating - +rest.rating.toFixed()) * 16 + 'px' : (1+(rest.rating - +rest.rating.toFixed())) * 16 + 'px'
                       "
                     >
                       <tui-svg
@@ -271,7 +269,7 @@
             {{ restaurant.rating.toFixed(1) }}
           </p>
           <p class="p-rest">
-            <span class="info-window__label">средний чек:</span>
+            <span class="info-window__label">средний чек: ₽</span>
             {{ restaurant.average }}
           </p>
           <p class="p-rest">
@@ -299,7 +297,7 @@
               {{ rest.rating.toFixed(1) }}
             </p>
             <p class="p-rest">
-              <span class="info-window__label">средний чек:</span>
+              <span class="info-window__label">средний чек: ₽</span>
               {{ rest.average }}
             </p>
             <p class="p-rest">
