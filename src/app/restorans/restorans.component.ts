@@ -15,10 +15,11 @@ import {
 } from './../store/actions/restaurants.actions';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Restaurant } from './../models/restaurant';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AppState } from '../store/state/app.state';
 import { selectAllRestaurants } from '../store/selectors/restaurants.selectors';
 import { shortRest } from '../models/shortRest';
+import { MapAnchorPoint, MapInfoWindow, MapMarker, MapMarkerClusterer } from '@angular/google-maps';
 
 @Component({
   selector: 'app-restorans',
@@ -26,17 +27,21 @@ import { shortRest } from '../models/shortRest';
   styleUrls: ['./restorans.component.css'],
 })
 export class RestoransComponent implements OnInit, OnDestroy {
+  @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
+
   restForm!: FormGroup;
   filterForm!: FormGroup;
   cities$ = this.store$.select(selectCities);
   currentCity$ = this.store$.select(selectCurrentCity);
   builds$ = this.store$.select(selectAllRestaurants);
-  openMap = false
-  openClusterInfo = false
+  openMap = false;
+  openClusterInfo = false;
   filtredRestaurants$: Observable<shortRest[] | null> | null =
     this.store$.select(selectFiltredRestaurants);
   open = false;
-  public aa = Math.round(4);
+  markerClustererImagePath =
+    'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
+
   constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -70,7 +75,7 @@ export class RestoransComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.open = false;
-    this.openMap = false
+    this.openMap = false;
   }
   search() {
     if (this.restForm.value.name != null || this.restForm.value.name != '') {
@@ -80,9 +85,14 @@ export class RestoransComponent implements OnInit, OnDestroy {
       );
     }
   }
-  openInfo(){
-    console.log('cluster info is opened');
+  click(){
     
-    this.openClusterInfo = true
+  }
+   openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
+    infoWindow.open(marker);
+}
+  openInfo(infoWindow: MapInfoWindow) {
+    console.log('cluster info is opened');
+    infoWindow.open();
   }
 }

@@ -1,3 +1,4 @@
+import { MapMarker } from '@angular/google-maps';
 import {
   selectStatuses,
   selectCurrentCity,
@@ -45,9 +46,9 @@ export class CreateRestaurantComponent implements OnInit {
     '&callback=initMap&v=weekly';
   city$ = this.store$.select(selectCurrentCity);
   statuses$ = this.store$.select(selectStatuses);
-  marker$: Observable<marker> | null = null
-  marker?: marker 
-  addressIsDisabled = false
+  marker$: Observable<marker> | null = null;
+  marker?: marker;
+  addressIsDisabled = false;
   readonly control = new FormControl();
   constructor(
     private actions$: Actions,
@@ -56,19 +57,17 @@ export class CreateRestaurantComponent implements OnInit {
     private router: Router,
     private store$: Store<AppState>
   ) {
-    this.city$.subscribe((city) =>this.marker = { lat: city.lat, lng: city.lng }
-    
+    this.city$.subscribe(
+      (city) => (this.marker = { lat: city.lat, lng: city.lng })
     );
   }
 
   ngOnInit(): void {
     this.store$.dispatch(getStatuses());
-    this.marker$?.subscribe(
-      (marker) => { 
+    this.marker$?.subscribe((marker) => {
       console.log(marker);
-      }
-    )
- 
+    });
+
     this.restaurantForm = this.fb.group({
       name: ['', [Validators.required]],
       address: ['', [Validators.required]],
@@ -93,36 +92,35 @@ export class CreateRestaurantComponent implements OnInit {
         .select(selectCurrentCity)
         .subscribe((city) => (currentCity = city.id));
       const processId = nextProcessId + 1;
-   if (!this.addressIsDisabled){
-    console.log('1'+this.addressIsDisabled);
-    
-      this.store$.dispatch(
-        createRestaurant({
-          restaurant: {
-            name: this.restaurantForm.value.name,
-            statusId: this.restaurantForm.value.status.id,
-            address: this.restaurantForm.value.address,
-            cityId: currentCity,
-          },
-          processId: processId,
-        })
-      );
-    }
-    else if (this.marker != null){
-      console.log('2'+this.addressIsDisabled);
-      this.store$.dispatch(
-        createRestaurantViaCoords({
-          restaurant: {
-            name: this.restaurantForm.value.name,
-            statusId: this.restaurantForm.value.status.id,
-            lat: this.marker?.lat,
-            lng: this.marker?.lng,
-            cityId: currentCity,
-          },
-          processId: processId,
-        })
-      );
-    }
+      if (!this.addressIsDisabled) {
+        console.log('1' + this.addressIsDisabled);
+
+        this.store$.dispatch(
+          createRestaurant({
+            restaurant: {
+              name: this.restaurantForm.value.name,
+              statusId: this.restaurantForm.value.status.id,
+              address: this.restaurantForm.value.address,
+              cityId: currentCity,
+            },
+            processId: processId,
+          })
+        );
+      } else if (this.marker != null) {
+        console.log('2' + this.addressIsDisabled);
+        this.store$.dispatch(
+          createRestaurantViaCoords({
+            restaurant: {
+              name: this.restaurantForm.value.name,
+              statusId: this.restaurantForm.value.status.id,
+              lat: this.marker?.lat,
+              lng: this.marker?.lng,
+              cityId: currentCity,
+            },
+            processId: processId,
+          })
+        );
+      }
       this.actions$
         .pipe(
           ofType(createRestaurantSuccess),
@@ -139,18 +137,19 @@ export class CreateRestaurantComponent implements OnInit {
   showDialog() {
     this.open = true;
   }
-  markerDragEnd($event: google.maps.MouseEvent) {
-    this.marker = {lat: $event.latLng.lat(), lng: $event.latLng.lng()}
-    console.log(this.marker);
-    
+  markerDragEnd($event: google.maps.MapMouseEvent) {
+    if ($event.latLng == null) return null;
+    else return this.marker = { lat: $event.latLng?.lat(), lng: $event.latLng.lng() };
   }
-  saveCoords(){
-    this.open = false
-    this.restaurantForm.controls['address'].setValue(`Введены координаты (${this.marker?.lat}, ${this.marker?.lng})`)
-    this.addressIsDisabled = true
+  saveCoords() {
+    this.open = false;
+    this.restaurantForm.controls['address'].setValue(
+      `Введены координаты (${this.marker?.lat}, ${this.marker?.lng})`
+    );
+    this.addressIsDisabled = true;
   }
-  changeAdddressIsDisabled(){
-    this.addressIsDisabled = false
-    this.restaurantForm.controls['address'].setValue('')
+  changeAdddressIsDisabled() {
+    this.addressIsDisabled = false;
+    this.restaurantForm.controls['address'].setValue('');
   }
 }

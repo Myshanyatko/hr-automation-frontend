@@ -63,7 +63,7 @@ agm-map {
   grid-gap: 20px;
 }
 .left-block{
-  width: 150px;
+  width: 300px;
 }
 .name-and-status {
   display: grid;
@@ -77,16 +77,19 @@ agm-map {
   color: #292929;
   text-decoration: solid;
 }
-
+.label{
+  font-style: italic;
+}
 .icon {
   color: darkgray;
   padding: 0 5px;
   cursor: pointer;
 }
-.label {
-  margin: 25px 0 15px 0;
-  /* color: darkgray; */
-  font-style: italic;
+.rating-and-reviewCount{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  align-items: center;
 }
 .rating {
   display: grid;
@@ -130,6 +133,22 @@ agm-map {
   text-align: right;
   cursor: pointer;
 }
+.google-map{
+  margin: 0 auto;
+}
 .p-rest{
   margin: 5px 0;
+}
+.rest-in-cluster{
+  display: block;
+}
+.info-window{
+  width: 80px;
+}
+.info-window__rest{
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.info-window__label{
+  color: grey;
 }

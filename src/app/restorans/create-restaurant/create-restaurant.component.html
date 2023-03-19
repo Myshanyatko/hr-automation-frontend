@@ -118,22 +118,26 @@
   <div class="map">
     <h2>Выбор координат на карте</h2>
     <p class="map-info">Перетащите маркер в местоположение ресторана</p>
-    <agm-map
-      style="height: 250px"
-      [latitude]="city.lat"
-      [longitude]="city.lng"
-      [disableDefaultUI]="false"
+    <google-map 
+      [center]="{ lat: city.lat, lng: city.lng }"
+      mapId="DEMO_MAP_ID"
     >
-      <agm-marker
+      <map-marker #mapMarker="mapMarker"
         *ngIf="marker"
-        [markerDraggable]="true"
-        [latitude]="marker.lat"
-        [longitude]="marker.lng"
-        (dragEnd)="markerDragEnd($event)"
-      ></agm-marker>
-      ></agm-map
+        [options]="{draggable: true}"
+        [position]="{ lat: marker.lat, lng: marker.lng }"
+        (mapDragend)="markerDragEnd($any($event))"
+      ></map-marker>
+    </google-map>
+   
+    <button
+      tuiButton
+      (click)="saveCoords()"
+      appearance="accent"
+      class="save-coords"
+      size="m"
     >
-    <button tuiButton (click)="saveCoords()" appearance="accent" class="save-coords" size="m">Сохранить</button>
-    <!-- <script [src]="link"><google-map ></google-map></script> -->
+      Сохранить
+    </button>
   </div>
 </ng-template>

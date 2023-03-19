@@ -1,3 +1,5 @@
+import { GoogleMapsModule } from '@angular/google-maps';
+
 
 import { RestaurantsEffects } from './store/effects/restaurants.effects';
 import { apiKey } from './../../apiKey';
@@ -44,7 +46,7 @@ import {
   TuiFilterModule
 } from '@taiga-ui/kit';
 
-import { AgmMarkerClustererModule } from '@agm/markerclusterer';
+// import { AgmMarkerClustererModule } from '@agm/markerclusterer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { NgModule } from '@angular/core';
@@ -75,7 +77,7 @@ import { ProductNewComponent } from './products/product-new/product-new.componen
 import { ProductEditComponent } from './products/product-edit/product-edit.component';
 import { ProductsOrderedComponent } from './products/products-ordered/products-ordered.component';
 import { RestoransComponent } from './restorans/restorans.component';
-import { AgmCoreModule } from '@agm/core';
+// import { AgmCoreModule } from '@agm/core';
 import { CreateRestaurantComponent } from './restorans/create-restaurant/create-restaurant.component';
 import { NewCityComponent } from './restorans/new-city/new-city.component';
 import { RestaurantComponent } from './restorans/restaurant/restaurant.component';
@@ -107,6 +109,7 @@ import { EditRestaurantComponent } from './restorans/edit-restaurant/edit-restau
     EditRestaurantComponent,
   ],
   imports: [
+    GoogleMapsModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
@@ -144,10 +147,10 @@ import { EditRestaurantComponent } from './restorans/edit-restaurant/edit-restau
     TuiMultiSelectModule,
     TuiFilterModule,
     TuiLinkModule,
-    AgmCoreModule.forRoot({
-      apiKey: apiKey,
-    }),
-    AgmMarkerClustererModule,
+    // AgmCoreModule.forRoot({
+    //   apiKey: apiKey,
+    // }),
+    // AgmMarkerClustererModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([
       USersEffects,
