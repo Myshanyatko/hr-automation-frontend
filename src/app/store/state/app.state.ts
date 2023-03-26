@@ -1,3 +1,4 @@
+import { EventsState, initialEventsState } from './events.state';
 import { RestaurantsState, initialRestaurantsState } from './restaurants.state';
 import { AuthState, initialAuthState } from './auth.state';
 import { ProductsState, initialProductsState } from './products.state';
@@ -8,14 +9,16 @@ export interface AppState {
   faq: FaqState;
   products: ProductsState;
   auth: AuthState;
-  restaurants: RestaurantsState
+  restaurants: RestaurantsState;
+  events: EventsState;
 }
 export const initialAppState: AppState = {
   users: initialUserState,
   faq: initialFaqState,
   products: initialProductsState,
   auth: initialAuthState,
-  restaurants: initialRestaurantsState
+  restaurants: initialRestaurantsState,
+  events: initialEventsState,
 };
 export function getInitialState(): AppState {
   return initialAppState;

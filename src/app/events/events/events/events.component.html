@@ -1,0 +1,49 @@
+<div class="tui-container">
+  <form
+    [formGroup]="eventForm"
+    (ngSubmit)="search()"
+    class="search-and-new-block"
+  >
+    <div class="search-block">
+      <tui-input
+        [tuiTextfieldCleaner]="true"
+        class="search"
+        formControlName="name"
+      >
+        Поиск
+      </tui-input>
+    </div>
+
+    <button
+      tuiIconButton
+      type="submit"
+      icon="tuiIconSearch"
+      appearance="white"
+      size="l"
+      class="search-user-button"
+    ></button>
+
+    <button
+      tuiButton
+      type="button"
+      appearance="accent"
+      class="new-button"
+      size="l"
+      routerLink="/restaurants/create-restaurant"
+    >
+      new
+    </button>
+  </form>
+  <ng-template  #emptyPage><div class="content">Мероприятий пока нет</div></ng-template>
+  <div class="content" *ngIf="events$ | async as events; else emptyPage">
+    <div class="tabs">
+      <a tuiLink (click)="switchEventsClick(true)"> Предстоящие</a>
+      <a tuiLink (click)="switchEventsClick(false)"> Прошедшие</a>
+    </div>
+    <div class="event" *ngFor="let event of events">
+      <h3>{{ event.name }}</h3>
+      <span>{{ event.address }}</span>
+      <span>{{ event.date }}</span>
+    </div>
+  </div>
+</div>

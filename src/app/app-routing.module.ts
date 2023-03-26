@@ -1,3 +1,4 @@
+import { EventsComponent } from './events/events/events/events.component';
 import { NewCityComponent } from './restorans/new-city/new-city.component';
 import { EditRestaurantComponent } from './restorans/edit-restaurant/edit-restaurant.component';
 import { RestaurantComponent } from './restorans/restaurant/restaurant.component';
@@ -98,6 +99,11 @@ const routes: Routes = [
   {
     path: 'create-city',
     component: NewCityComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'events',
+    component: EventsComponent,
     canActivate: [AuthGuard],
   },
 ];

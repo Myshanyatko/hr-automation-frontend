@@ -24,6 +24,10 @@ export class MenuComponent {
       name: 'Рестораны',
       url: 'restaurants',
     },
+    {
+      name: 'События',
+      url: 'events',
+    },
   ];
 
   constructor() {}
