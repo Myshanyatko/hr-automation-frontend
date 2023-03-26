@@ -7,20 +7,20 @@ export class TokenService {
   constructor() {}
 
   getAccessToken(): string | null {
-    return window.sessionStorage.getItem('accessToken');
+    return window.localStorage.getItem('accessToken');
   }
 
   getRefreshToken(): string | null {
-    return window.sessionStorage.getItem('refreshToken');
+    return window.localStorage.getItem('refreshToken');
   }
   getUserId(): any {
-    return Number(window.sessionStorage.getItem('userId'));
+    return Number(window.localStorage.getItem('userId'));
   }
   getUsername(): any {
-    return window.sessionStorage.getItem('username');
+    return window.localStorage.getItem('username');
   }
   getEmail(): string {
-    return String(window.sessionStorage.getItem('email'));
+    return String(window.localStorage.getItem('email'));
   }
   isLoggedIn() {
     return this.getRefreshToken() !== null;

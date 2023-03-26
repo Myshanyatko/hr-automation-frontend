@@ -12,6 +12,6 @@ export class AppComponent implements OnDestroy {
 
   constructor(public router: Router, public tokenService: TokenService) {}
   ngOnDestroy(): void {
-    sessionStorage.clear();
+    localStorage.clear();
   }
 }

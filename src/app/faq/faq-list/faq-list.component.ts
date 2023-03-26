@@ -41,7 +41,7 @@ export class FaqListComponent implements OnInit {
 
   ngOnInit(): void {
     this.faqForm = this.fb.group({
-      name: [sessionStorage.getItem('faqFilter'), []],
+      name: [localStorage.getItem('faqFilter'), []],
     });
     if (this.faqForm.value.name != '' && this.faqForm.value.name != null) {
       this.isFiltered = true;
@@ -61,7 +61,7 @@ export class FaqListComponent implements OnInit {
     this.router.navigate(['/faq/edit-faq/' + id]);
   }
   searchFaq() {
-    sessionStorage.setItem('faqFilter', this.faqForm.value.name);
+    localStorage.setItem('faqFilter', this.faqForm.value.name);
     if (this.faqForm.value.name != '' && this.faqForm.value.name != null) {
       this.loading = true;
       this.isFiltered = true;

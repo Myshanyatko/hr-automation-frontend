@@ -26,8 +26,8 @@ export class USersEffects {
       ofType(getUsers),
       mergeMap((action) => {
         if (
-          sessionStorage.getItem('usersFilter') == null ||
-          sessionStorage.getItem('usersFilter') == ''
+          localStorage.getItem('usersFilter') == null ||
+          localStorage.getItem('usersFilter') == ''
         ) {
           return this.usersService.getUsers(action.pageNumber).pipe(
             map((res) => setUsers({ userList: res.users, pages: res.pages })),
@@ -40,7 +40,7 @@ export class USersEffects {
           return this.usersService
             .getFilteredUsers(
               action.pageNumber,
-              String(sessionStorage.getItem('usersFilter'))
+              String(localStorage.getItem('usersFilter'))
             )
             .pipe(
               map((res) => setUsers({ userList: res.users, pages: res.pages })),

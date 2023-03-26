@@ -256,7 +256,7 @@
       >
         <div
           [routerLink]="['/restaurants/', restaurant.id]"
-          *ngFor="let restaurant of build.restaurants"
+          *ngFor="let restaurant of build.restaurants |  slice:0: 3"
           class="info-window__rest"
         >
           <a tuiLink class="rest-in-cluster">
@@ -277,6 +277,7 @@
             {{ restaurant.address }}
           </p>
         </div>
+        <a tuiLink routerLink="/restaurants" #showAllRests  href (click)="showAllRestaurants(build.address)">Показать все</a>
       </map-info-window>
       <map-marker 
         #marker="mapMarker"

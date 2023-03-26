@@ -36,8 +36,8 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(loginSuccess),
         map((action) => {
-          window.sessionStorage.setItem('email', action.email);
-          window.sessionStorage.setItem('key', String(action.key));
+          window.localStorage.setItem('email', action.email);
+          window.localStorage.setItem('key', String(action.key));
           this.router.navigate(['/key']);
         })
       ),
@@ -48,7 +48,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(logout),
         map(() => {
-          window.sessionStorage.clear();
+          window.localStorage.clear();
           this.router.navigate(['login']);
         })
       ),
@@ -61,8 +61,8 @@ export class AuthEffects {
       mergeMap((action) =>
         this.authService.refreshToken(action.token).pipe(
           map((res) => {
-            window.sessionStorage.setItem('accessToken', res.accessToken);
-            window.sessionStorage.setItem('refreshToken', res.refreshToken);
+            window.localStorage.setItem('accessToken', res.accessToken);
+            window.localStorage.setItem('refreshToken', res.refreshToken);
             return refreshSuccess();
           }),
           catchError(
@@ -96,16 +96,16 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(keySuccess),
         map((res) => {
-          window.sessionStorage.setItem(
+          window.localStorage.setItem(
             'accessToken',
             res.dataUser.accessToken
           );
-          window.sessionStorage.setItem(
+          window.localStorage.setItem(
             'refreshToken',
             res.dataUser.refreshToken
           );
-          window.sessionStorage.setItem('username', res.dataUser.username);
-          window.sessionStorage.setItem('userId', String(res.dataUser.userId));
+          window.localStorage.setItem('username', res.dataUser.username);
+          window.localStorage.setItem('userId', String(res.dataUser.userId));
         })
       ),
     { dispatch: false }

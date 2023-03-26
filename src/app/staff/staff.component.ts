@@ -34,7 +34,7 @@ export class StaffComponent implements OnInit {
 
   ngOnInit(): void {
     this.usersForm = this.fb.group({
-      name: [sessionStorage.getItem('usersFilter'), []],
+      name: [localStorage.getItem('usersFilter'), []],
     });
     this.store$.dispatch(getUsers({ pageNumber: this.index }));
     this.actions$
@@ -46,7 +46,7 @@ export class StaffComponent implements OnInit {
   }
   searchUsers() {
     this.loading = true;
-    sessionStorage.setItem('usersFilter', this.usersForm.value.name);
+    localStorage.setItem('usersFilter', this.usersForm.value.name);
     this.store$.dispatch(getUsers({ pageNumber: this.index }));
     this.actions$
       .pipe(
