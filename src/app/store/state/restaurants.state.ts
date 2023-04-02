@@ -1,6 +1,6 @@
 import { Review } from './../../models/review';
 import { createRest } from './../actions/restaurants.actions';
-import { shortRest } from './../../models/shortRest';
+import { ShortRest } from './../../models/shortRest';
 import { Build } from './../../models/build';
 import { RestStatus } from './../../models/restStatus';
 import { City } from './../../models/city';
@@ -8,7 +8,7 @@ import { Restaurant } from './../../models/restaurant';
 
 export interface RestaurantsState {
   builds: Build[] | null;
-  filtredRestaurants: shortRest[] | null;
+  filtredRestaurants: ShortRest[] | null;
   cities: City[] | null;
   currentCity: City;
   currentRest: Restaurant | null;

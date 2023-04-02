@@ -14,7 +14,6 @@ import { Restaurant } from './../models/restaurant';
 import { Product } from './../models/product';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { shortRest } from '../models/shortRest';
 
 const API = url + 'events';
 interface responseEvents {
@@ -28,12 +27,12 @@ export class EventsService {
   constructor(private http: HttpClient) {}
 
   getUpcomingEvents(pageNumber: number) {
-    return this.http.get<responseEvents>(API + '/get/current', {
+    return this.http.get<ShortEvent[]>(API + '/get/current', {
       params: { pageNumber: pageNumber, size: 20, sortBy: 'id' },
     });
   }
   getPastEvents(pageNumber: number) {
-    return this.http.get<responseEvents>(API+'/get/archive', {
+    return this.http.get<ShortEvent[]>(API+'/get/archive', {
       params: { pageNumber: pageNumber, size: 20, sortBy: 'id' },
     });
   }

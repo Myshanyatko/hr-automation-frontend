@@ -51,7 +51,7 @@
           <div
             class="list__restaurant"
             *ngFor="let rest of build.restaurants"
-            [routerLink]="['/restaurants/', rest.id]"
+            [routerLink]="['/restaurants/restaurant', rest.id]"
           >
             <div class="info">
               <div class="left-block">
@@ -122,7 +122,7 @@
     <!-- здесь отфильтрованные рестики. Тоже самое, но не упакованы в здания -->
     <div class="filtred" *ngIf="filtredRestaurants$ | async as rests">
       <div *ngFor="let rest of rests">
-        <div class="list__restaurant" [routerLink]="['/restaurants/', rest.id]">
+        <div class="list__restaurant" [routerLink]="['/restaurants/restaurant', rest.id]">
           <div class="info">
             <div class="left-block">
               <div class="name">
@@ -255,7 +255,7 @@
         }"
       >
         <div
-          [routerLink]="['/restaurants/', restaurant.id]"
+          [routerLink]="['/restaurants/restaurant', restaurant.id]"
           *ngFor="let restaurant of build.restaurants |  slice:0: 3"
           class="info-window__rest"
         >
@@ -269,15 +269,15 @@
             {{ restaurant.rating.toFixed(1) }}
           </p>
           <p class="p-rest">
-            <span class="info-window__label">средний чек: ₽</span>
-            {{ restaurant.average }}
+            <span class="info-window__label">средний чек: </span>
+            {{ restaurant.average }}₽
           </p>
           <p class="p-rest">
             <span class="info-window__label">адрес:</span>
             {{ restaurant.address }}
           </p>
         </div>
-        <a tuiLink routerLink="/restaurants" #showAllRests  href (click)="showAllRestaurants(build.address)">Показать все</a>
+        <a tuiLink [routerLink]="['/restaurants', {search: build.address}]" #showAllRests  href (click)="showAllRestaurants(build.address)">Показать все</a>
       </map-info-window>
       <map-marker 
         #marker="mapMarker"
@@ -289,22 +289,21 @@
           class="info-window"
           [options]="{ maxWidth: 300 }"
           #infoWindow="mapInfoWindow"
-          [routerLink]="['/restaurants/', rest.id]"
+          [routerLink]="['/restaurants/restaurant', rest.id]"
         >
           <div class="rest-on-map">
-            <h3>{{ rest.name }}</h3>
+           <a tuiLink [routerLink]="['/restaurants/restaurant', rest.id]">  <h3>{{ rest.name }}</h3></a>
             <p class="p-rest">
               <span class="info-window__label">рейтинг:</span>
               {{ rest.rating.toFixed(1) }}
             </p>
             <p class="p-rest">
-              <span class="info-window__label">средний чек: ₽</span>
-              {{ rest.average }}
+              <span class="info-window__label">средний чек: </span>
+              {{ rest.average }}₽
             </p>
             <p class="p-rest">
               <span class="info-window__label">адрес:</span> {{ rest.address }}
             </p>
-            <a tuiLink [routerLink]="['/restaurants/', rest.id]">Подробнее</a>
           </div>
         </map-info-window>
       </map-marker>

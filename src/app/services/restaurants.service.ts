@@ -10,7 +10,7 @@ import { Restaurant } from './../models/restaurant';
 import { Product } from './../models/product';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { shortRest } from '../models/shortRest';
+import { ShortRest } from '../models/shortRest';
 
 const API = url + 'restaurants';
 
@@ -29,7 +29,7 @@ export class RestaurantsService {
     });
   }
   getFiltredRestaurants(filter: string) {
-    return this.http.get<shortRest[]>(API + `/search`, {
+    return this.http.get<ShortRest[]>(API + `/search`, {
       params: { filter: filter, pageNumber: 0, size: 20, sortBy: 'id' },
     });
   }

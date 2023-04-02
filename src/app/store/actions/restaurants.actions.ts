@@ -6,7 +6,7 @@ import { RestStatus } from './../../models/restStatus';
 import { City } from './../../models/city';
 import { Restaurant } from './../../models/restaurant';
 import { createAction, props } from '@ngrx/store';
-import { shortRest } from 'src/app/models/shortRest';
+import { ShortRest } from 'src/app/models/shortRest';
 
 export interface createRest {
   name: string;
@@ -43,7 +43,7 @@ export const getFiltredRestaurants = createAction(
 );
 export const setFiltredRestaurants = createAction(
   '[Restaurants Page] Set Filtred Restaurants',
-  props<{ restaurants: shortRest[] }>()
+  props<{ restaurants: ShortRest[] }>()
 );
 export const getRestaurant = createAction(
   '[Restaurants Page] Get Restaurant',

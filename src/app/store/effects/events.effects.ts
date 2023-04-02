@@ -13,7 +13,7 @@ export class EventsEffects {
       ofType(getUpcomingEvents),
       mergeMap((res) =>
         this.eventsService.getUpcomingEvents(res.pageNumber).pipe(
-          map((res) => setUpcomingEvents({ upcomingEvents: res.events, pages: res.pages })),
+          map((res) => setUpcomingEvents({ upcomingEvents: res, pages: 2})),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
@@ -27,7 +27,7 @@ export class EventsEffects {
       ofType(getPastEvents),
       mergeMap((res) =>
         this.eventsService.getPastEvents(res.pageNumber).pipe(
-          map((res) => setPastEvents({ pastEvents: res.events, pages: res.pages })),
+          map((res) => setPastEvents({ pastEvents:  res, pages: 2 })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;

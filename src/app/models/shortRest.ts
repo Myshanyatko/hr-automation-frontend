@@ -1,5 +1,5 @@
 
-export interface shortRest{
+export interface ShortRest{
     id: number,
     name: string,
     rating: number,

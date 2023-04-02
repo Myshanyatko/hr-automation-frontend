@@ -1,3 +1,6 @@
+import { ShortRest } from './../models/shortRest';
+import { Build } from './../models/build';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { City } from './../models/city';
 import {
@@ -14,61 +17,61 @@ import {
   getFiltredRestaurants,
 } from './../store/actions/restaurants.actions';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Restaurant } from './../models/restaurant';
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  TemplateRef,
-  ElementRef,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AppState } from '../store/state/app.state';
 import { selectAllRestaurants } from '../store/selectors/restaurants.selectors';
-import { shortRest } from '../models/shortRest';
-import {
-  MapAnchorPoint,
-  MapInfoWindow,
-  MapMarker,
-  MapMarkerClusterer,
-} from '@angular/google-maps';
+import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
 @Component({
   selector: 'app-restorans',
   templateUrl: './restorans.component.html',
   styleUrls: ['./restorans.component.css'],
 })
-export class RestoransComponent implements OnInit, OnDestroy {
+export class RestoransComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   restForm!: FormGroup;
   filterForm!: FormGroup;
   cities$ = this.store$.select(selectCities);
   currentCity$ = this.store$.select(selectCurrentCity);
-  builds$ = this.store$.select(selectAllRestaurants);
+  builds$: Observable<Build[] | null> | null = null;
   openMap = false;
   openClusterInfo = false;
-  filtredRestaurants$: Observable<shortRest[] | null> | null =
-    this.store$.select(selectFiltredRestaurants);
+  filtredRestaurants$: Observable<ShortRest[] | null> | null = null;
   open = false;
   markerClustererImagePath =
     'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
 
-  constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private store$: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
-    localStorage.getItem('restFilter')
-      ? (this.filtredRestaurants$ = this.store$.select(
-          selectFiltredRestaurants
-        ))
-      : (this.filtredRestaurants$ = null);
     this.open = false;
     this.openMap = false;
     this.restForm = this.fb.group({
-      name: [localStorage.getItem('restFilter'), []],
+      name: ['', []],
     });
-    this.currentCity$.subscribe((city) =>
-      this.store$.dispatch(getRestaurants({ cityId: city.id }))
-    );
+    this.route.params.subscribe((params) => {
+      if (params['search'] != null) {
+        this.restForm.controls['name'].setValue(params['search']);
+        this.store$.dispatch(
+          getFiltredRestaurants({ filter: params['search'] })
+        );
+        this.filtredRestaurants$ = this.store$.select(selectFiltredRestaurants);
+      } else {
+        (this.builds$ = this.store$.select(selectAllRestaurants)),
+          this.currentCity$.subscribe((city) =>
+            this.store$.dispatch(getRestaurants({ cityId: city.id }))
+          );
+      }
+    });
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    
   }
   showDialog() {
     this.store$.dispatch(getCities());
@@ -90,11 +93,14 @@ export class RestoransComponent implements OnInit, OnDestroy {
     this.openMap = false;
   }
   search() {
-    if (this.restForm.value.name != null || this.restForm.value.name != '') {
-      localStorage.setItem('restFilter', this.restForm.value.name);
-      this.store$.dispatch(
-        getFiltredRestaurants({ filter: this.restForm.value.name })
-      );
+    if (this.restForm.value.name || this.restForm.value.name != '') {
+      this.router.navigate([
+        '/restaurants',
+        { search: this.restForm.value.name },
+      ]);
+      this.builds$ = null;
+    } else {
+      this.router.navigate(['/restaurants']), (this.filtredRestaurants$ = null);
     }
   }
   click() {}

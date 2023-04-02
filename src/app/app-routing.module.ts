@@ -38,6 +38,11 @@ const routes: Routes = [
     component: RestoransComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'restaurants?search=search',
+    component: RestoransComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'faq/faq-new', component: FaqNewComponent, canActivate: [AuthGuard] },
   { path: 'faq', component: FaqListComponent, canActivate: [AuthGuard] },
   {
@@ -91,11 +96,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'restaurants/:id',
+    path: 'restaurants/restaurant/:id',
     component: RestaurantComponent,
     canActivate: [AuthGuard],
   },
-  
+
   {
     path: 'create-city',
     component: NewCityComponent,
