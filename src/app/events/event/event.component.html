@@ -1,0 +1,43 @@
+<div class="tui-container">
+  <div class="content" *ngIf="event$ | async as event">
+    <div class="title-block">
+      <div class="back-and-title">
+        <tui-svg
+          src="tuiIconBackCircleLarge"
+          class="back"
+          routerLink="/events"
+        ></tui-svg>
+      </div>
+      <div class="icons-faq">
+        <tui-svg
+          class="icon-faq"
+          src="tuiIconEdit"
+          [routerLink]="['/events/event/edit/' + event.id]"
+        ></tui-svg>
+
+        <tui-svg class="icon-faq" src="tuiIconTrash"></tui-svg>
+      </div>
+    </div>
+    <div class="event">
+      <img
+        class="event__img"
+        [src]="
+          event.pictureUrl
+            ? event.pictureUrl
+            : 'https://cdn1.ozone.ru/s3/multimedia-d/6494370445.jpg'
+        "
+      />
+      <div class="info">
+        <h2 class="title">{{ event.name }}</h2>
+        <p class="event__p">{{ event.address }}</p>
+        <p class="event__p">
+          {{ event.date | date : "dd.mm.yyyy" }}
+        </p>
+        <p class="event__p">
+          {{ event.date | date : "h:mm" }}
+        </p>
+        <p class="event__p descr">{{ event.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

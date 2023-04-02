@@ -43,7 +43,7 @@
       <button tuiTab (click)="switchEventsClick(false)">Прошедшие</button>
     </tui-tabs>
     <div class="events" *ngIf="events$ | async as events; else emptyPage">
-      <div class="event" *ngFor="let event of events">
+      <div class="event" *ngFor="let event of events" [routerLink]="['/events/event/', event.id]">
         <img
           class="event__img"
           [src]="
@@ -52,11 +52,13 @@
               : 'https://cdn1.ozone.ru/s3/multimedia-d/6494370445.jpg'
           "
         />
-        <div class="event__info">
+        <div class="event__info" >
           <h3>{{ event.name }}</h3>
           <p class="event__p">{{ event.address }}</p>
-          <p class="event__p">{{ event.date | date : "dd.mm.yyyy" }}   {{ event.date | date : "h:mm" }}</p>
-          
+          <p class="event__p">
+            {{ event.date | date : "dd.mm.yyyy" }}
+            {{ event.date | date : "h:mm" }}
+          </p>
         </div>
       </div>
     </div>

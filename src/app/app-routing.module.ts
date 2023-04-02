@@ -1,4 +1,5 @@
-import { EventsComponent } from './events/events/events/events.component';
+import { EventComponent } from './events/event/event.component';
+import { EventsComponent } from './events/events/events.component';
 import { NewCityComponent } from './restorans/new-city/new-city.component';
 import { EditRestaurantComponent } from './restorans/edit-restaurant/edit-restaurant.component';
 import { RestaurantComponent } from './restorans/restaurant/restaurant.component';
@@ -109,6 +110,11 @@ const routes: Routes = [
   {
     path: 'events',
     component: EventsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'events/event/:id',
+    component: EventComponent,
     canActivate: [AuthGuard],
   },
 ];

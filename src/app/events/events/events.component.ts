@@ -1,12 +1,12 @@
 import {
   getUpcomingEvents,
   getPastEvents,
-} from './../../../store/actions/events.actions';
+} from './../../store/actions/events.actions';
 import { AppState } from 'src/app/store/state/app.state';
 import {
   selectUpcomingEvents,
   selectPastEvents,
-} from './../../../store/selectors/events.selectors';
+} from './../../store/selectors/events.selectors';
 
 import { Store } from '@ngrx/store';
 import { FormGroup, FormBuilder } from '@angular/forms';

@@ -1,4 +1,4 @@
-import { setUpcomingEvents, getPastEvents, setPastEvents } from './../actions/events.actions';
+import { setUpcomingEvents, getPastEvents, setPastEvents, getEvent, setEvent } from './../actions/events.actions';
 import { EventsService } from './../../services/events.service';
 import { AlertService } from './../../services/alert.service';
 import { map } from 'rxjs/operators';
@@ -28,6 +28,20 @@ export class EventsEffects {
       mergeMap((res) =>
         this.eventsService.getPastEvents(res.pageNumber).pipe(
           map((res) => setPastEvents({ pastEvents:  res, pages: 2 })),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  getEvent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getEvent),
+      mergeMap((res) =>
+        this.eventsService.getEvent(res.id).pipe(
+          map((res) => setEvent({ event: res })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;

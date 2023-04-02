@@ -18,6 +18,7 @@
 }
 .event {
   width: 220px;
+  cursor: pointer
 }
 .event__img {
   width: 100%;

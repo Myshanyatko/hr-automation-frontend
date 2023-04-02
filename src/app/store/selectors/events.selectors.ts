@@ -11,3 +11,7 @@ export const selectPastEvents = createSelector(
   selectEvents,
   (state: EventsState) => state.pastEvents
 );
+export const selectEvent = createSelector(
+  selectEvents,
+  (state: EventsState) => state.currentEvent
+);

@@ -4,11 +4,13 @@ import { Event } from 'src/app/models/event';
 export interface EventsState {
   upcomingEvents: ShortEvent[] | null;
   pastEvents: ShortEvent[] | null;
-  pages: number
+  pages: number;
+  currentEvent: Event | null;
 }
 
 export const initialEventsState: EventsState = {
   upcomingEvents: null,
   pastEvents: null,
-  pages: 1
+  pages: 1,
+  currentEvent: null,
 };

@@ -81,7 +81,8 @@ import { CreateRestaurantComponent } from './restorans/create-restaurant/create-
 import { NewCityComponent } from './restorans/new-city/new-city.component';
 import { RestaurantComponent } from './restorans/restaurant/restaurant.component';
 import { EditRestaurantComponent } from './restorans/edit-restaurant/edit-restaurant.component';
-import { EventsComponent } from './events/events/events/events.component';
+import { EventsComponent } from './events/events/events.component';
+import { EventComponent } from './events/event/event.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +109,7 @@ import { EventsComponent } from './events/events/events/events.component';
     RestaurantComponent,
     EditRestaurantComponent,
     EventsComponent,
+    EventComponent,
   ],
   imports: [
     GoogleMapsModule,
