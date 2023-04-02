@@ -45,7 +45,8 @@ import {
   TuiMultiSelectModule,
   TuiPaginationModule,
   TuiFilterModule,
-  TuiTabsModule
+  TuiTabsModule,
+  TuiRatingModule
 } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -151,6 +152,7 @@ import { EventComponent } from './events/event/event.component';
     TuiFilterModule,
     TuiTabsModule,
     TuiLinkModule,
+    TuiRatingModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([
       USersEffects,

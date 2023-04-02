@@ -133,3 +133,6 @@
 .info-window__label{
   color: grey;
 }
+.tui-rating{
+  color: var(--tui-accent);
+}

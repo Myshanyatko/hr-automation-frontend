@@ -51,6 +51,9 @@
   grid-template-columns: 4fr auto;
   width: 127px;
 }
+.tui-rating{
+  color: var(--tui-accent);
+}
 .stars {
   display: grid;
   align-items: center;

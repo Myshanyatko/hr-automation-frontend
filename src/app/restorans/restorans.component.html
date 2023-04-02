@@ -59,55 +59,23 @@
                   <h3>{{ rest.name }}</h3>
                 </div>
                 <div class="rating-and-reviewCount">
-                  <div class="rating">
-                    <div class="star-after">
-                      <tui-svg
-                        *ngFor="let rait of [].constructor(5)"
-                        class="star"
-                        src="tuiIconStar"
-                      ></tui-svg>
-                    </div>
-                    <div class="stars">
-                      <div>
-                        <tui-svg
-                          *ngFor="
-                            let rait of [].constructor(
-                              rest.rating == 5
-                                ? 5
-                                : rest.rating >= 4
-                                ? 4
-                                : rest.rating >= 3
-                                ? 3
-                                : rest.rating >= 2
-                                ? 2
-                                : rest.rating >= 1
-                                ? 1
-                                : 0
-                            )
-                          "
-                          class="star"
-                          src="tuiIconStarFilled"
-                        ></tui-svg>
-                      </div>
-                      <div
-                        class="box"
-                        [style.width]="(rest.rating - +rest.rating.toFixed())>= 0 ? (rest.rating - +rest.rating.toFixed()) * 16 + 'px' : (1+(rest.rating - +rest.rating.toFixed())) * 16 + 'px'"
-                      >
-                        <tui-svg
-                          class="star star1"
-                          src="tuiIconStarFilled"
-                        ></tui-svg>
-                      </div>
-                    </div>
-                    <p class="rating-number">
-                      {{ rest.rating.toFixed(1) }}
-                    </p>
-                  </div>
+                  <tui-rating
+                    [(ngModel)]="rest.rating"
+                    [readOnly]="true"
+                    iconNormal="tuiIconStar"
+                    iconFilled="tuiIconStarFilled"
+                    class="tui-rating"
+                  ></tui-rating>
                   <span class="label">{{ rest.reviewCount }} оценок </span>
                 </div>
                 <span class="label">{{ rest.status }}</span>
                 <div class="right-block__check">
-                  <span> cр. чек:  {{ rest.average != 0 ? rest.average + "₽" : "не оценено" }}</span>
+                  <span>
+                    cр. чек:
+                    {{
+                      rest.average != 0 ? rest.average + "₽" : "не оценено"
+                    }}</span
+                  >
                 </div>
                 <div class="address">
                   {{ rest.address }}
@@ -122,7 +90,10 @@
     <!-- здесь отфильтрованные рестики. Тоже самое, но не упакованы в здания -->
     <div class="filtred" *ngIf="filtredRestaurants$ | async as rests">
       <div *ngFor="let rest of rests">
-        <div class="list__restaurant" [routerLink]="['/restaurants/restaurant', rest.id]">
+        <div
+          class="list__restaurant"
+          [routerLink]="['/restaurants/restaurant', rest.id]"
+        >
           <div class="info">
             <div class="left-block">
               <div class="name">
@@ -130,52 +101,13 @@
               </div>
 
               <div class="rating-and-reviewCount">
-                <div class="rating">
-                  <div class="star-after">
-                    <tui-svg
-                      *ngFor="let rait of [].constructor(5)"
-                      class="star"
-                      src="tuiIconStar"
-                    ></tui-svg>
-                  </div>
-                  <div class="stars">
-                    <div>
-                      <tui-svg
-                        *ngFor="
-                          let rait of [].constructor(
-                            rest.rating == 5
-                              ? 5
-                              : rest.rating >= 4
-                              ? 4
-                              : rest.rating >= 3
-                              ? 3
-                              : rest.rating >= 2
-                              ? 2
-                              : rest.rating >= 1
-                              ? 1
-                              : 0
-                          )
-                        "
-                        class="star"
-                        src="tuiIconStarFilled"
-                      ></tui-svg>
-                    </div>
-                    <div
-                      class="box"
-                      [style.width]="
-                      (rest.rating - +rest.rating.toFixed())> 0 ? (rest.rating - +rest.rating.toFixed()) * 16 + 'px' : (1+(rest.rating - +rest.rating.toFixed())) * 16 + 'px'
-                      "
-                    >
-                      <tui-svg
-                        class="star star1"
-                        src="tuiIconStarFilled"
-                      ></tui-svg>
-                    </div>
-                  </div>
-                  <p class="rating-number">
-                    {{ rest.rating.toFixed(1) }}
-                  </p>
-                </div>
+                <tui-rating
+                  [(ngModel)]="rest.rating"
+                  [readOnly]="true"
+                  iconNormal="tuiIconStar"
+                  iconFilled="tuiIconStarFilled"
+                  class="tui-rating"
+                ></tui-rating>
                 <span class="label">{{ rest.reviewCount }} оценок </span>
               </div>
               <span class="label">{{ rest.status }}</span>
@@ -256,7 +188,7 @@
       >
         <div
           [routerLink]="['/restaurants/restaurant', restaurant.id]"
-          *ngFor="let restaurant of build.restaurants |  slice:0: 3"
+          *ngFor="let restaurant of build.restaurants | slice : 0 : 3"
           class="info-window__rest"
         >
           <a tuiLink class="rest-in-cluster">
@@ -277,9 +209,16 @@
             {{ restaurant.address }}
           </p>
         </div>
-        <a tuiLink [routerLink]="['/restaurants', {search: build.address}]" #showAllRests  href (click)="showAllRestaurants(build.address)">Показать все</a>
+        <a
+          tuiLink
+          [routerLink]="['/restaurants', { search: build.address }]"
+          #showAllRests
+          href
+          (click)="showAllRestaurants(build.address)"
+          >Показать все</a
+        >
       </map-info-window>
-      <map-marker 
+      <map-marker
         #marker="mapMarker"
         (mapClick)="openInfoWindow(marker, infoWindow)"
         *ngFor="let rest of build.restaurants"
@@ -292,7 +231,9 @@
           [routerLink]="['/restaurants/restaurant', rest.id]"
         >
           <div class="rest-on-map">
-           <a tuiLink [routerLink]="['/restaurants/restaurant', rest.id]">  <h3>{{ rest.name }}</h3></a>
+            <a tuiLink [routerLink]="['/restaurants/restaurant', rest.id]">
+              <h3>{{ rest.name }}</h3></a
+            >
             <p class="p-rest">
               <span class="info-window__label">рейтинг:</span>
               {{ rest.rating.toFixed(1) }}
