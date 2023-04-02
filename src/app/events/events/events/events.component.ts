@@ -28,7 +28,7 @@ export class EventsComponent implements OnInit {
   eventForm!: FormGroup;
   filterForm!: FormGroup;
   events$ = this.store$.select(selectUpcomingEvents);
-
+  activeItemIndex = 0
   constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
 
   ngOnInit(): void {
