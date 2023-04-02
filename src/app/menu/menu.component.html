@@ -7,9 +7,10 @@
           tuiButton
           [routerLink]="item.url"
           appearance="menu"
+          [ngClass]="{'users': item.name == 'Сотрудники',
+          'events': item.name == 'События'}"
           class="menu-item-button"
           routerLinkActive="accent"
-          
         >
           {{ item.name }}
         </button>

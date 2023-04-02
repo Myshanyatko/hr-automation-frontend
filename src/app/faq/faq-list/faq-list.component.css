@@ -1,13 +1,5 @@
-.tui-container {
-  margin: 35px 0;
-  width: 600px;
-}
-.search-and-new-faq-block {
-  display: grid;
-  grid-template-columns: 400px auto auto;
-  width: 600px;
-}
-.search-faq {
+
+.search {
   border-top-right-radius: 0%;
   border-bottom-right-radius: 0%;
 }
@@ -29,7 +21,7 @@
 }
 .icons-faq {
   padding: 0 5px;
-  text-align: center;
+  text-align: right;
 }
 .icon-faq {
   color: #ff7043;

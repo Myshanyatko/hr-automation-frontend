@@ -27,11 +27,12 @@
                 <h4 class="product-title">{{ product.name }}</h4>
                 <p class="product-code">{{ product.code }}</p>
                 <tui-avatar
+                [text]="product.name"
                 class="icon-user-avatar"
                 [rounded]="true"
                 text="avatar"
                 size="l"
-                [avatarUrl]="product.pictureUrl || 'tuiIconUser'"
+                [avatarUrl]="product.pictureUrl"
               ></tui-avatar>
               </div>
               <div class="icons-faq">

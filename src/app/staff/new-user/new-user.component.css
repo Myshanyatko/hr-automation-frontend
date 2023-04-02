@@ -3,15 +3,14 @@
   background-color: #ffffff;
   border-radius: var(--tui-radius-l);
   box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
-  width: 560px;
-  padding: 20px;
+  
 }
 .back-and-title {
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: 15px;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 }
 .back {
   box-shadow: none;

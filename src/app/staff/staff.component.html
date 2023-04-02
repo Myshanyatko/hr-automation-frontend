@@ -2,12 +2,12 @@
   <form
     [formGroup]="usersForm"
     (ngSubmit)="searchUsers()"
-    class="search-and-new-user-block"
+    class="search-and-new-block"
   >
-    <div class="search-faq-block">
+    <div class="search-block">
       <tui-input
         [tuiTextfieldCleaner]="true"
-        class="search-faq"
+        class="search"
         formControlName="name"
       >
         Поиск
@@ -35,7 +35,7 @@
     </button>
   </form>
 
-  <div class="staff-list-block">
+  <div class="content">
     <tui-loader *ngIf="loading" class="loader"> </tui-loader>
     <div class="" *ngIf="!loading">
       <ul class="staff-list" *ngIf="users$ | async as users">

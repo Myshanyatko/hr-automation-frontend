@@ -12,11 +12,7 @@ import { Store } from '@ngrx/store';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import {
   Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  TemplateRef,
-  ElementRef,
+  OnInit
 } from '@angular/core';
 
 @Component({

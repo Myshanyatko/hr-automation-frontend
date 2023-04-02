@@ -3,7 +3,7 @@
   margin: 35px 0;
   border-radius: var(--tui-radius-l);
   box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
-  width: 600px;
+  width: 800px;
 }
 .content {
   padding: 20px;
@@ -23,6 +23,9 @@
   box-shadow: none;
   color: #ff7043;
   cursor: pointer;
+}
+.restaurant{
+  margin: 0 35px;
 }
 .icons-faq {
   padding: 0 5px;

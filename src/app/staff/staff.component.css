@@ -1,23 +1,7 @@
-.tui-container {
-  margin: 35px 0;
-}
-.search-and-new-user-block {
-  display: grid;
-  grid-template-columns: 400px auto auto;
-  width: 600px;
-  align-items: flex-start;
-}
-.search-faq {
+
+.search {
   border-top-right-radius: 0%;
   border-bottom-right-radius: 0%;
-}
-.staff-list-block {
-  background-color: #fff;
-  border-radius: var(--tui-radius-l);
-  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
-  margin: 15px 0;
-  padding-bottom: 15px;
-  width: 600px;
 }
 .staff-list {
   list-style-type: none;

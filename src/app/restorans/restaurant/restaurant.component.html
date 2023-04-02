@@ -23,6 +23,7 @@
         ></tui-svg>
       </div>
     </div>
+    <div class="restaurant">
     <div class="info">
       <div class="address">
         <span class="label">Адрес: </span>
@@ -36,7 +37,7 @@
       </div>
     </div>
     <div class="map">
-      <google-map [center]="{ lat: rest.lat, lng: rest.lng }" height="200px" width="550px">
+      <google-map [center]="{ lat: rest.lat, lng: rest.lng }" height="280px" width="700px">
         <map-marker [position]="{ lat: rest.lat, lng: rest.lng }"> </map-marker>
       </google-map>
     </div>
@@ -164,5 +165,5 @@
         ></tui-svg>
       </div>
     </div>
-  </div>
+  </div></div>
 </div>

@@ -4,7 +4,7 @@
     border-radius: var(--tui-radius-l);
     box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
     padding: 20px;
-    width: 560px;
+    width: 760px;
   }
  .back-and-title{
     display: grid;

@@ -1,8 +1,11 @@
+.header-block {
+  border-bottom: 1px solid #9b9b9b;
+}
 .header {
   display: grid;
-  grid-template-columns: 4fr 1fr;
-  padding: 5px 345px 5px 200px;
-  border-bottom: 1px solid #9b9b9b;
+  grid-template-columns: 1fr 1fr;
+  width: 80%;
+  margin: 0 auto;
   align-items: center;
   min-height: 60px;
   font: var(--tui-font-text-l);
@@ -33,7 +36,7 @@
   font-size: 16px;
   font-style: normal;
   padding: var(--tui-padding-l);
-  margin: 13px 0;
+  margin: 13px 50px;
 }
 
 .icon {

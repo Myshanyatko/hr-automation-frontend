@@ -6,7 +6,7 @@
       <div class="info">
         <div class="name-and-code">
           <h3>{{ product.name }}</h3>
-          <p>{{ product.code }}</p>
+          <p>артикул: {{ product.code }}</p>
         </div>
         <p class="code">{{ product.quantity }} шт</p>
       </div>
@@ -28,7 +28,6 @@
           [editable]="false"
           [valueContent]="content"
           [(ngModel)]="value"
-      
         >
           Выберите продукт
 
@@ -90,7 +89,7 @@
       >
         Управление продуктами
       </button>
-      <a [download]='today' id="link"></a>
     </div>
+    <a [download]="today" id="link"></a>
   </div>
 </div>

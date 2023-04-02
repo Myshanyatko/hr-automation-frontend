@@ -1,6 +1,6 @@
 .tui-container {
   margin: 35px 0;
-  width: 560px;
+  width: 760px;
   padding: 20px;
   background-color: #fff;
   border-radius: var(--tui-radius-l);
@@ -40,7 +40,7 @@
 }
 .icons-faq {
   padding: 0 5px;
-  text-align: center;
+  text-align: right;;
 }
 .icon-faq {
   color: #ff7043;

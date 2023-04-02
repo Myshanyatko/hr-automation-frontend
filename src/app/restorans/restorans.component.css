@@ -1,32 +1,12 @@
-.tui-container {
-  margin: 35px 0;
-  width: 600px;
-}
-.search-and-new-block {
-  display: grid;
-  grid-template-columns: 400px auto auto;
-  width: 600px;
-  align-items: flex-start;
+.content{
+  padding-top: 30px;
 }
 .search {
   border-top-right-radius: 0%;
   border-bottom-right-radius: 0%;
 }
-.content {
-  background-color: #fff;
-  border-radius: var(--tui-radius-l);
-  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
-  margin: 15px 0;
-  padding: 36px;
-  box-sizing: border-box;
-  width: 600px;
-}
 .title {
   margin-bottom: 15px;
-}
-agm-map {
-  height: 300px;
-  margin: 20px 0;
 }
 .create-button {
   margin-top: 10px;
