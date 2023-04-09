@@ -64,9 +64,6 @@ export class CreateRestaurantComponent implements OnInit {
 
   ngOnInit(): void {
     this.store$.dispatch(getStatuses());
-    this.marker$?.subscribe((marker) => {
-      console.log(marker);
-    });
 
     this.restaurantForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -93,7 +90,6 @@ export class CreateRestaurantComponent implements OnInit {
         .subscribe((city) => (currentCity = city.id));
       const processId = nextProcessId + 1;
       if (!this.addressIsDisabled) {
-        console.log('1' + this.addressIsDisabled);
 
         this.store$.dispatch(
           createRestaurant({

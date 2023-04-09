@@ -1,19 +1,27 @@
-import { setUpcomingEvents, getPastEvents, setPastEvents, getEvent, setEvent } from './../actions/events.actions';
+import {
+  setEvents,
+  getPastEvents,
+  setPastEvents,
+  getEvent,
+  setEvent,
+  createEventSuccess,
+  createEvent,
+} from './../actions/events.actions';
 import { EventsService } from './../../services/events.service';
 import { AlertService } from './../../services/alert.service';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, mergeMap, catchError, EMPTY, tap } from 'rxjs';
-import { getUpcomingEvents } from '../actions/events.actions';
+import { getEvents } from '../actions/events.actions';
 @Injectable()
 export class EventsEffects {
-  getUpcomingEvents$ = createEffect(() =>
+  getEvents$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(getUpcomingEvents),
+      ofType(getEvents),
       mergeMap((res) =>
-        this.eventsService.getUpcomingEvents(res.pageNumber).pipe(
-          map((res) => setUpcomingEvents({ upcomingEvents: res, pages: 2})),
+        this.eventsService.getEvents().pipe(
+          map((res) => setEvents({ events: res, pages: 2 })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
@@ -27,7 +35,7 @@ export class EventsEffects {
       ofType(getPastEvents),
       mergeMap((res) =>
         this.eventsService.getPastEvents(res.pageNumber).pipe(
-          map((res) => setPastEvents({ pastEvents:  res, pages: 2 })),
+          map((res) => setPastEvents({ pastEvents: res, pages: 2 })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
@@ -49,6 +57,33 @@ export class EventsEffects {
         )
       )
     )
+  );
+  createEvent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createEvent),
+      mergeMap(({ event, processId }) =>
+        this.eventsService.createEvent(event).pipe(
+          map(() => {
+            return createEventSuccess({ processId: processId });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  createEventSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(createEventSuccess),
+        map(() =>
+          this.alert.showNotificationSuccess('Событие добавлено').subscribe()
+        )
+      ),
+
+    { dispatch: false }
   );
 
   constructor(

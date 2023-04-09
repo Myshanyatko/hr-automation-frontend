@@ -1,3 +1,4 @@
+import { CreateEventComponent } from './events/create-event/create-event.component';
 import { EventComponent } from './events/event/event.component';
 import { EventsComponent } from './events/events/events.component';
 import { NewCityComponent } from './restorans/new-city/new-city.component';
@@ -115,6 +116,11 @@ const routes: Routes = [
   {
     path: 'events/event/:id',
     component: EventComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'events/create-event',
+    component: CreateEventComponent,
     canActivate: [AuthGuard],
   },
 ];

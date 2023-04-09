@@ -6,8 +6,8 @@ import { Event } from '../models/event';
 
 const API = url + 'events';
 interface responseEvents {
-  events: ShortEvent[],
-  pages: number
+  events: ShortEvent[];
+  pages: number;
 }
 @Injectable({
   providedIn: 'root',
@@ -21,11 +21,29 @@ export class EventsService {
     });
   }
   getPastEvents(pageNumber: number) {
-    return this.http.get<ShortEvent[]>(API+'/get/archive', {
+    return this.http.get<ShortEvent[]>(API + '/get/archive', {
       params: { pageNumber: pageNumber, size: 20, sortBy: 'id' },
     });
   }
   getEvent(id: number) {
-    return this.http.get<Event>(API+`/get/${id}`);
+    return this.http.get<Event>(API + `/get/${id}`);
+  }
+  getEvents() {
+    return this.http.get<ShortEvent[]>(API + '/get', {
+      params: { pageNumber: 0, size: 20, sortBy: 'date' },
+    });
+  }
+  createEvent(event: Event) {
+    console.log('create event service');
+
+    return this.http.post(API + '/add', {
+      name: event.name,
+      description: event.description,
+      cityId: event.cityId,
+      materials: event.materials,
+      date: event.date,
+      online: event.online,
+      address: event.address,
+    });
   }
 }

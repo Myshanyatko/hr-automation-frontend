@@ -3,13 +3,13 @@ import { ShortEvent } from './../../models/shortEvent';
 import { createAction, props } from '@ngrx/store';
 import { Event } from 'src/app/models/event';
 
-export const getUpcomingEvents = createAction(
-  '[Events Page] Get Upcoming Events',
+export const getEvents = createAction(
+  '[Events Page] Get Events',
   props<{ pageNumber: number }>()
 );
-export const setUpcomingEvents = createAction(
-  '[Events Page] Set Upcoming Events',
-  props<{ upcomingEvents: ShortEvent[]; pages: number }>()
+export const setEvents = createAction(
+  '[Events Page] Set Events',
+  props<{ events: ShortEvent[]; pages: number }>()
 );
 
 export const getPastEvents = createAction(
@@ -27,4 +27,12 @@ export const getEvent = createAction(
 export const setEvent = createAction(
   '[Event Page] Set Event',
   props<{ event: Event }>()
+);
+export const createEvent = createAction(
+  '[Create Event Page] Create Event',
+  props<{ event: Event; processId: number }>()
+);
+export const createEventSuccess = createAction(
+  '[Create Event Page] Create Event Success',
+  props<{  processId: number }>()
 );

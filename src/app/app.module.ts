@@ -46,7 +46,8 @@ import {
   TuiPaginationModule,
   TuiFilterModule,
   TuiTabsModule,
-  TuiRatingModule
+  TuiRatingModule,
+  TuiInputDateTimeModule
 } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -84,6 +85,7 @@ import { RestaurantComponent } from './restorans/restaurant/restaurant.component
 import { EditRestaurantComponent } from './restorans/edit-restaurant/edit-restaurant.component';
 import { EventsComponent } from './events/events/events.component';
 import { EventComponent } from './events/event/event.component';
+import { CreateEventComponent } from './events/create-event/create-event.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +113,7 @@ import { EventComponent } from './events/event/event.component';
     EditRestaurantComponent,
     EventsComponent,
     EventComponent,
+    CreateEventComponent,
   ],
   imports: [
     GoogleMapsModule,
@@ -153,6 +156,7 @@ import { EventComponent } from './events/event/event.component';
     TuiTabsModule,
     TuiLinkModule,
     TuiRatingModule,
+    TuiInputDateTimeModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([
       USersEffects,

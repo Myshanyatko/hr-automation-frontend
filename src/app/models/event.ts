@@ -1,9 +1,11 @@
 export interface Event {
   id: number;
   name: string;
-  address: string;
+  address: string | null
   date: Date;
-  description: string;
-  isOnline: boolean;
+  materials: string[] | null;
+  description: string | null;
+  online: boolean;
   pictureUrl: string;
+  cityId: number
 }

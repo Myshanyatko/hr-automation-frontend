@@ -3,9 +3,9 @@ import { createSelector } from '@ngrx/store';
 import { AppState } from './../state/app.state';
 const selectEvents = (state: AppState) => state.events
 
-export const selectUpcomingEvents = createSelector(
+export const selectAllEvents = createSelector(
   selectEvents,
-  (state: EventsState) => state.upcomingEvents
+  (state: EventsState) => state.events
 );
 export const selectPastEvents = createSelector(
   selectEvents,

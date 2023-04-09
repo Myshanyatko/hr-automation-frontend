@@ -63,10 +63,7 @@ html {
 [tuiWrapper][data-appearance="textfield"] {
   box-shadow: 0 0.05rem 0.05rem rgb(0 0 0 / 10%);
 }
-tui-toggle [tuiWrapper][data-appearance="primary"] {
-  background: #ff7043;
-  color: var(--tui-primary-text);
-}
+
 /* оно не работает (((( */
 [data-appearance="menu"] .accent :hover {
   color: #000;
@@ -76,8 +73,7 @@ tui-toggle [tuiWrapper][data-appearance="primary"] {
   padding-left: 5px;
   color: #ff7043;
 }
-tui-pagination [tuiWrapper][data-appearance="primary"],
-[tuiWrapper][data-appearance="secondary"] {
+tui-pagination [tuiWrapper][data-appearance="primary"] {
   background-color: #ff7043;
 }
 tui-pagination [tuiWrapper][data-appearance="flat"] {
