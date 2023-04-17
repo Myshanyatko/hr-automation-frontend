@@ -1,11 +1,12 @@
+import { Material } from './material';
 export interface Event {
   id: number;
   name: string;
   address: string | null
   date: Date;
-  materials: string[] | null;
+  materials: Material[] | null;
   description: string | null;
-  online: boolean;
+  format: 'ONLINE' | 'OFFLINE' | 'COMBINE';
   pictureUrl: string;
   cityId: number
 }

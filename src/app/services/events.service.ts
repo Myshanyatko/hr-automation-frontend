@@ -34,15 +34,13 @@ export class EventsService {
     });
   }
   createEvent(event: Event) {
-    console.log('create event service');
-
     return this.http.post(API + '/add', {
       name: event.name,
       description: event.description,
       cityId: event.cityId,
       materials: event.materials,
       date: event.date,
-      online: event.online,
+      format: event.format,
       address: event.address,
     });
   }

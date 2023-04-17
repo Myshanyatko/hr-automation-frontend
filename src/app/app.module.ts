@@ -1,7 +1,6 @@
 import { EventsEffects } from './store/effects/events.effects';
 import { GoogleMapsModule } from '@angular/google-maps';
 
-
 import { RestaurantsEffects } from './store/effects/restaurants.effects';
 import { apiKey } from './../../apiKey';
 
@@ -25,7 +24,6 @@ import {
   TuiNotificationModule,
   TuiTextfieldControllerModule,
   TuiLoaderModule,
-  
 } from '@taiga-ui/core';
 import {
   TuiInputModule,
@@ -47,7 +45,10 @@ import {
   TuiFilterModule,
   TuiTabsModule,
   TuiRatingModule,
-  TuiInputDateTimeModule
+  TuiInputDateTimeModule,
+  TuiRadioBlockModule,
+  TuiRadioLabeledModule,
+  TuiIslandModule,
 } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -157,6 +158,8 @@ import { CreateEventComponent } from './events/create-event/create-event.compone
     TuiLinkModule,
     TuiRatingModule,
     TuiInputDateTimeModule,
+    TuiRadioLabeledModule,
+    TuiIslandModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([
       USersEffects,
@@ -164,7 +167,7 @@ import { CreateEventComponent } from './events/create-event/create-event.compone
       ProductsEffects,
       AuthEffects,
       RestaurantsEffects,
-      EventsEffects
+      EventsEffects,
     ]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,

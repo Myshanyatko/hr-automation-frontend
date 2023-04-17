@@ -103,7 +103,6 @@ export class CreateRestaurantComponent implements OnInit {
           })
         );
       } else if (this.marker != null) {
-        console.log('2' + this.addressIsDisabled);
         this.store$.dispatch(
           createRestaurantViaCoords({
             restaurant: {
@@ -144,7 +143,7 @@ export class CreateRestaurantComponent implements OnInit {
     );
     this.addressIsDisabled = true;
   }
-  changeAdddressIsDisabled() {
+  changeAddressIsDisabled() {
     this.addressIsDisabled = false;
     this.restaurantForm.controls['address'].setValue('');
   }
