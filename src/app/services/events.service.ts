@@ -3,6 +3,7 @@ import { url } from './url';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Event } from '../models/event';
+import { Filter } from '../models/filterEvents';
 
 const API = url + 'events';
 interface responseEvents {
@@ -28,9 +29,18 @@ export class EventsService {
   getEvent(id: number) {
     return this.http.get<Event>(API + `/get/${id}`);
   }
-  getEvents() {
-    return this.http.get<ShortEvent[]>(API + '/get', {
-      params: { pageNumber: 0, size: 20, sortBy: 'date' },
+  getEvents(filter: Filter, pageNumber: number) {
+    return this.http.get<responseEvents>(API + '/get', {
+      params: {
+        pageNumber: pageNumber,
+        size: 20,
+        sortBy: 'date',
+        name: String(filter.name),
+        fromDate: String(filter.fromDate),
+        toDate: String(filter.toDate),
+        format: String(filter.format),
+        cityId: Number(filter.cityId),
+      },
     });
   }
   createEvent(event: Event) {
@@ -42,6 +52,8 @@ export class EventsService {
       date: event.date,
       format: event.format,
       address: event.address,
+      lat: event.lat,
+      lng: event.lng,
     });
   }
 }

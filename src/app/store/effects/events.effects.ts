@@ -20,8 +20,8 @@ export class EventsEffects {
     this.actions$.pipe(
       ofType(getEvents),
       mergeMap((res) =>
-        this.eventsService.getEvents().pipe(
-          map((res) => setEvents({ events: res, pages: 2 })),
+        this.eventsService.getEvents(res.filter, res.pageNumber).pipe(
+          map((res) => setEvents({ events: res.events, pages: res.pages })),
           catchError((err) => {
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;

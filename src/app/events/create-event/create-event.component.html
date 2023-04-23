@@ -99,7 +99,7 @@
           <tui-radio-labeled
             formControlName="online"
             class="tui-space_bottom-3"
-            item="COMBINE"
+            item="COMBINED"
           >
             Онлайн и оффлайн
           </tui-radio-labeled>
@@ -107,7 +107,7 @@
         <div
           *ngIf="
             eventForm.get('online')?.value == 'OFFLINE' ||
-            eventForm.get('online')?.value == 'COMBINE'
+            eventForm.get('online')?.value == 'COMBINED'
           "
         >
           <tui-input formControlName="address"  [readOnly]="addressIsDisabled" class="product-form-item">
@@ -216,7 +216,7 @@
         tuiLink
         class="product-form-item"
         (click)="showInput()"
-        >Добавить ссылку +</a
+        >Добавить ссылку</a
       >
 
       <button

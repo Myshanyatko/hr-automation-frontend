@@ -109,12 +109,21 @@ export class CreateEventComponent implements OnInit, OnDestroy {
               this.eventForm.value.date[1].hours,
               this.eventForm.value.date[1].minutes
             ),
+            lat:
+              this.marker?.lat && this.addressIsDisabled
+                ? this.marker?.lat
+                : null,
+            lng:
+              this.marker?.lng && this.addressIsDisabled
+                ? this.marker?.lng
+                : null,
             name: this.eventForm.value.name,
             format: this.eventForm.value.online,
             cityId: this.eventForm.value.city.id,
-            address: this.eventForm.value.address
-              ? this.eventForm.value.address
-              : null,
+            address:
+              !this.addressIsDisabled && this.eventForm.value.address
+                ? this.eventForm.value.address
+                : null,
             description: this.eventForm.value.description
               ? this.eventForm.value.description
               : null,

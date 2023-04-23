@@ -1,6 +1,6 @@
 <div class="tui-container">
   <form
-    [formGroup]="eventForm"
+    [formGroup]="filterForm"
     (ngSubmit)="search()"
     class="search-and-new-block"
   >
@@ -36,23 +36,90 @@
   </form>
 
   <div class="content">
-    <form [formGroup]="filterForm">
-      <tui-filter
-        formControlName="filters"
-        size="s"
-        class="filters"
-        [items]="['предстоящие', 'прошедшие']"
-        (toggledItem)="onToggledItemChange($event)"
-      ></tui-filter>
-    </form>
+    <div class="filter">
+      <h3 class="filter-title">Фильтрация</h3>
+      <form [formGroup]="filterForm" class="filterForm">
+        <div class="filter-item">
+          <span class="filter-label">По городу</span>
+          <tui-select
+            class="filter-input"
+            tuiTextfieldSize="s"
+            formControlName="city"
+            *ngIf="cities$ | async as sities"
+            [valueContent]="citiesContent"
+          >
+            Город
 
+            <tui-data-list-wrapper
+              *tuiDataList
+              placeholder="Выберите город мероприятия"
+              [items]="sities"
+              [itemContent]="citiesContent"
+            ></tui-data-list-wrapper>
+          </tui-select>
+          <ng-template #citiesContent let-item>
+            <div class="city-item">
+              {{ item.name }}
+            </div>
+          </ng-template>
+        </div>
+        <div class="filter-item">
+          <span class="filter-label">По дате</span>
+          <tui-select
+            class="filter-input"
+            tuiTextfieldSize="s"
+            formControlName="date"
+            *ngIf="dateItems"
+            [valueContent]="dateContent"
+          >
+            Дата
+
+            <tui-data-list-wrapper
+              *tuiDataList
+              placeholder="Выберите дату мероприятия"
+              [items]="dateItems"
+              [itemContent]="dateContent"
+            ></tui-data-list-wrapper>
+          </tui-select>
+          <ng-template #dateContent let-item>
+            <div class="city-item">
+              {{ item.name }}
+            </div>
+          </ng-template>
+        </div>
+        <div class="filter-item">
+          <span class="filter-label">По формату</span>
+          <tui-select
+            class="filter-input"
+            tuiTextfieldSize="s"
+            formControlName="format"
+            *ngIf="formatItems"
+            [valueContent]="formatContent"
+          >
+            Формат
+
+            <tui-data-list-wrapper
+              *tuiDataList
+              placeholder="Выберите формат мероприятия"
+              [items]="formatItems"
+              [itemContent]="formatContent"
+            ></tui-data-list-wrapper>
+          </tui-select>
+          <ng-template #formatContent let-item>
+            <div class="city-item">
+              {{ item.name }}
+            </div>
+          </ng-template>
+        </div>
+      </form>
+    </div>
     <ng-template #emptyPage
       ><div class="events">Мероприятий пока нет</div></ng-template
     >
     <div class="events" *ngIf="events$ | async as events; else emptyPage">
       <div
         class="event"
-        *ngFor="let event of uncomingEvents$ ? events : events"
+        *ngFor="let event of events"
         [routerLink]="['/events/event/', event.id]"
       >
         <img
@@ -73,5 +140,12 @@
         </div>
       </div>
     </div>
+    <tui-pagination
+      *ngIf="pages$ | async as pages"
+      [length]="pages"
+      [index]="index"
+      class="pagination"
+      (indexChange)="goToPage($event)"
+    ></tui-pagination>
   </div>
 </div>

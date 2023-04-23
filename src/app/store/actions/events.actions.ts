@@ -2,10 +2,11 @@ import { ShortEvent } from './../../models/shortEvent';
 
 import { createAction, props } from '@ngrx/store';
 import { Event } from 'src/app/models/event';
+import { Filter } from 'src/app/models/filterEvents';
 
 export const getEvents = createAction(
   '[Events Page] Get Events',
-  props<{ pageNumber: number }>()
+  props<{ pageNumber: number, filter: Filter }>()
 );
 export const setEvents = createAction(
   '[Events Page] Set Events',

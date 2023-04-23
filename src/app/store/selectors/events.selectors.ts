@@ -15,3 +15,7 @@ export const selectEvent = createSelector(
   selectEvents,
   (state: EventsState) => state.currentEvent
 );
+export const selectPages = createSelector(
+  selectEvents,
+  (state: EventsState) => state.pages
+);

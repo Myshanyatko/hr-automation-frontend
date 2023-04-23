@@ -57,6 +57,5 @@ export class StaffComponent implements OnInit {
   }
   goToPage(index: number) {
     this.store$.dispatch(getUsers({ pageNumber: index }));
-
   }
 }

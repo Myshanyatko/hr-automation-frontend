@@ -14,7 +14,8 @@
 .events {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin-top: 20px;
+  margin-top: 30px;
+  grid-gap: 25px;
 }
 .event {
   width: 220px;
@@ -32,4 +33,22 @@
 }
 .filters{
   margin-top: 20px;
+}
+.filter-island{
+  max-width: 600px;
+}
+.filter-title{
+  margin-top: 20px;
+}
+.filterForm{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  margin-top: 10px;
+}
+.filter-input{
+  margin-top: 7px;
+}
+.filter-label{
+  margin-left: 4px;
 }
