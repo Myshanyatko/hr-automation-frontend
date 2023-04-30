@@ -59,4 +59,7 @@ export class EventsService {
   deleteEvent(id: number) {
     return this.http.delete(API + '/delete/'+id);
   }
+  editEvent(event: Event) {
+    return this.http.put(API + '/update', event);
+  }
 }

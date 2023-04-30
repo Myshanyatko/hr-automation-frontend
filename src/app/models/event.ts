@@ -8,7 +8,8 @@ export interface Event {
   description: string | null;
   format: 'ONLINE' | 'OFFLINE' | 'COMBINED';
   pictureUrl: string;
-  cityId: number;
+  cityId: number | null;
+  city: string | null;
   lat: number | null;
   lng: number | null;
 }

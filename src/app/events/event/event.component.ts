@@ -1,4 +1,5 @@
-import { filter } from 'rxjs/operators';
+import { TuiDestroyService } from '@taiga-ui/cdk';
+import { filter, tap, takeUntil } from 'rxjs/operators';
 import { Actions, ofType } from '@ngrx/effects';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -17,11 +18,13 @@ let nextProcessId = 1;
   selector: 'app-event',
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.css'],
+  providers: [TuiDestroyService],
 })
 export class EventComponent implements OnInit {
   event$ = this.store$.select(selectEvent);
   constructor(
     private actions$: Actions,
+    private destroy$: TuiDestroyService,
     private route: ActivatedRoute,
     private store$: Store<AppState>,
     private router: Router
@@ -29,10 +32,13 @@ export class EventComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params
-      .subscribe((params) =>
-        this.store$.dispatch(getEvent({ id: params['id'] }))
-      )
-      .unsubscribe();
+    .pipe(
+      tap(({ id }) => {
+        this.store$.dispatch(getEvent({ id: Number(id) }));
+      }),
+      takeUntil(this.destroy$)
+    )
+    .subscribe();
   }
 
   deleteEvent() {

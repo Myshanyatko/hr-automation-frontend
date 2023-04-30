@@ -1,3 +1,4 @@
+import { editEvent, editEventSuccess } from 'src/app/store/actions/events.actions';
 import {
   setEvents,
   getPastEvents,
@@ -109,6 +110,33 @@ export class EventsEffects {
         ofType(deleteEventSuccess),
         map(() =>
           this.alert.showNotificationSuccess('Событие удалено').subscribe()
+        )
+      ),
+
+    { dispatch: false }
+  );
+  editEvent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(editEvent),
+      mergeMap(({ event, processId }) =>
+        this.eventsService.editEvent(event).pipe(
+          map(() => {
+            return editEventSuccess({ processId: processId });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  editEventSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(editEventSuccess),
+        map(() =>
+          this.alert.showNotificationSuccess('Событие изменено').subscribe()
         )
       ),
 

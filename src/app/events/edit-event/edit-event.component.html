@@ -1,0 +1,229 @@
+<div class="tui-container">
+    <div class="create-event">
+      <div class="back-and-title">
+        <tui-svg
+          src="tuiIconBackCircleLarge"
+          class="back"
+          routerLink="/events"
+        ></tui-svg>
+        <h2 class="title-new-product">Редактирование события</h2>
+      </div>
+  
+      <form [formGroup]="eventForm" class="form">
+        <div class="grid">
+          <div class="col-1">
+            <div class="name-item">
+              <tui-input formControlName="name" class="product-form-item">
+                Название
+                <input tuiTextfield type="text" />
+              </tui-input>
+              <div
+                class="error-message"
+                *ngIf="
+                  eventForm.get('name')?.invalid &&
+                  (eventForm.get('name')?.dirty ||
+                    eventForm.get('name')?.touched ||
+                    errors)
+                "
+              >
+                <span>Обязательное поле</span>
+              </div>
+            </div>
+            <div class="date">
+              <tui-input-date-time
+                formControlName="date"
+                class="product-form-item"
+              >
+                дата проведения
+              </tui-input-date-time>
+              <div
+                class="error-message"
+                *ngIf="
+                  eventForm.get('date')?.invalid &&
+                  (eventForm.get('date')?.dirty ||
+                    eventForm.get('date')?.touched ||
+                    errors)
+                "
+              >
+                <span>Обязательное поле</span>
+              </div>
+            </div>
+          </div>
+          <tui-text-area formControlName="description" class="product-form-item">
+            Описание мероприятия
+          </tui-text-area>
+  
+          <tui-select
+            class="product-form-item"
+            tuiTextfieldSize="l"
+            formControlName="city"
+            *ngIf="cities$ | async as sities"
+            [valueContent]="citiesContent"
+          >
+            Город
+  
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="sities"
+              [itemContent]="citiesContent"
+            ></tui-data-list-wrapper>
+          </tui-select>
+          <div
+            class="error-message"
+            *ngIf="
+              eventForm.get('city')?.invalid &&
+              (eventForm.get('city')?.dirty ||
+                eventForm.get('city')?.touched ||
+                errors)
+            "
+          >
+            <span>Обязательное поле</span>
+          </div>
+          <div tuiGroup class="product-form-item">
+            <tui-radio-labeled
+              formControlName="online"
+              class="tui-space_bottom-3"
+              item="ONLINE"
+            >
+              Онлайн
+            </tui-radio-labeled>
+  
+            <tui-radio-labeled
+              formControlName="online"
+              class="tui-space_bottom-3"
+              item="OFFLINE"
+            >
+              Оффлайн
+            </tui-radio-labeled>
+  
+            <tui-radio-labeled
+              formControlName="online"
+              class="tui-space_bottom-3"
+              item="COMBINED"
+            >
+              Онлайн и оффлайн
+            </tui-radio-labeled>
+          </div>
+          <div
+            *ngIf="
+              eventForm.get('online')?.value == 'OFFLINE' ||
+              eventForm.get('online')?.value == 'COMBINED'
+            "
+          >
+            <tui-input formControlName="address" class="product-form-item">
+              Адрес
+              <input tuiTextfield type="text" />
+            </tui-input>
+          </div>
+          <div class="col-2">
+            <ng-template #citiesContent let-item>
+              <div class="city-item">
+                {{ item.name }}
+              </div>
+            </ng-template>
+            <tui-input-files
+              class="product-form-item"
+              link="Добавить изображение"
+              label=" "
+              *ngIf="!control.value"
+              accept="image/*"
+              [formControl]="control"
+              (reject)="onReject($event)"
+            ></tui-input-files>
+  
+            <tui-files class="product-form-item">
+              <tui-file
+                *ngIf="loadedFiles$ | async as file"
+                [file]="file"
+                (removed)="removeFile()"
+              ></tui-file>
+  
+              <tui-file
+                *ngIf="rejectedFiles$ | async as file"
+                state="error"
+                [file]="file"
+                (removed)="clearRejected()"
+              ></tui-file>
+  
+              <tui-file
+                *ngIf="loadingFiles$ | async as file"
+                state="loading"
+                [file]="file"
+              ></tui-file>
+            </tui-files>
+          </div>
+        </div>
+        <ng-container formArrayName="materials">
+          <ng-container
+            class="product-form-item"
+            *ngFor="let materialForm of materials.controls; let i = index"
+          >
+            <div class="form-materials product-form-item" [formGroupName]="i">
+              <div class="url">
+                <tui-input tuiTextfieldSize="m" formControlName="url">
+                  Ссылка
+                  <input tuiTextfield type="text" />
+                </tui-input>
+                <div
+                  class="error-message"
+                  *ngIf="
+                    materialForm.get('url')?.invalid &&
+                    (materialForm.get('url')?.dirty ||
+                      materialForm.get('url')?.touched ||
+                      errors)
+                  "
+                >
+                  <span>Обязательное поле</span>
+                </div>
+              </div>
+              <div class="description">
+                <tui-input tuiTextfieldSize="m" formControlName="description">
+                  Описание ссылки
+                  <input tuiTextfield type="text" />
+                </tui-input>
+                <div
+                  class="error-message"
+                  *ngIf="
+                    materialForm.get('description')?.invalid &&
+                    (materialForm.get('description')?.dirty ||
+                      materialForm.get('description')?.touched ||
+                      errors)
+                  "
+                >
+                  <span>Обязательное поле</span>
+                </div>
+              </div>
+              <button
+                tuiIconButton
+                type="button"
+                appearance="secondary"
+                size="m"
+                icon="tuiIconTrash"
+                (click)="deleteLink(i)"
+              ></button>
+            </div>
+          </ng-container>
+        </ng-container>
+        <a
+          tuiLink
+          class="product-form-item"
+          (click)="showInput()"
+          >Добавить ссылку</a
+        >
+  
+        <button
+          tuiButton
+          type="submit"
+          size="m"
+          [showLoader]="loading"
+          appearance="accent"
+          class="save-button"
+          (click)="editEvent()"
+        >
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+  
+ 

@@ -131,6 +131,7 @@ export class CreateEventComponent implements OnInit, OnDestroy {
               ? this.eventForm.value.materials
               : null,
             pictureUrl: '',
+            city: null,
           },
           processId: processId,
         })
