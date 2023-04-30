@@ -56,4 +56,7 @@ export class EventsService {
       lng: event.lng,
     });
   }
+  deleteEvent(id: number) {
+    return this.http.delete(API + '/delete/'+id);
+  }
 }

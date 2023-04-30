@@ -15,7 +15,7 @@
           [routerLink]="['/events/event/edit/' + event.id]"
         ></tui-svg>
 
-        <tui-svg class="icon-faq" src="tuiIconTrash"></tui-svg>
+        <tui-svg class="icon-faq" src="tuiIconTrash" (click)="deleteEvent()"></tui-svg>
       </div>
     </div>
     <div class="event">

@@ -62,15 +62,16 @@ export class EventsComponent implements OnInit {
   ngOnInit(): void {
     this.store$.dispatch(getEvents({ pageNumber: 0, filter: this.filter }));
     this.filterForm = this.fb.group({
-      name: [localStorage.getItem('eventsFilter')],
+      name: [localStorage.getItem('eventsFilter'), { onlySelf: true }],
       city: [],
       date: [this.dateItems[0]],
       format: [this.formatItems[3]],
     });
+    // this.filterForm.get('name')?.setValue(localStorage.getItem('eventsFilter'),{ emitEvent: false })
     this.store$.dispatch(getCities());
 
     this.filterForm.valueChanges.subscribe((value) => {
-      if (!value.name) {
+      
         if (value.city)
           this.filter = { ...this.filter, cityId: Number(value.city.id) };
         else this.filter = { ...this.filter, cityId: null };
@@ -103,7 +104,7 @@ export class EventsComponent implements OnInit {
             filter: this.filter,
           })
         );
-      }
+      
     });
   }
   search() {

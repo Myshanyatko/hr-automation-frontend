@@ -12,5 +12,5 @@ export const initialEventsState: EventsState = {
   events: null,
   pastEvents: null,
   pages: 1,
-  currentEvent: null,
+  currentEvent: null
 };

@@ -37,3 +37,11 @@ export const createEventSuccess = createAction(
   '[Create Event Page] Create Event Success',
   props<{  processId: number }>()
 );
+export const deleteEvent = createAction(
+  '[Event Page] Delete Event',
+  props<{ id: number; processId: number }>()
+);
+export const deleteEventSuccess = createAction(
+  '[Event Page] Delete Event Success',
+  props<{  processId: number }>()
+);

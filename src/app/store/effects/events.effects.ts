@@ -6,6 +6,8 @@ import {
   setEvent,
   createEventSuccess,
   createEvent,
+  deleteEvent,
+  deleteEventSuccess,
 } from './../actions/events.actions';
 import { EventsService } from './../../services/events.service';
 import { AlertService } from './../../services/alert.service';
@@ -80,6 +82,33 @@ export class EventsEffects {
         ofType(createEventSuccess),
         map(() =>
           this.alert.showNotificationSuccess('Событие добавлено').subscribe()
+        )
+      ),
+
+    { dispatch: false }
+  );
+  deleteEvent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteEvent),
+      mergeMap(({ id, processId }) =>
+        this.eventsService.deleteEvent(id).pipe(
+          map(() => {
+            return deleteEventSuccess({ processId: processId });
+          }),
+          catchError((err) => {
+            this.alert.showNotificationError(err.error).subscribe();
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+  deleteEventSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(deleteEventSuccess),
+        map(() =>
+          this.alert.showNotificationSuccess('Событие удалено').subscribe()
         )
       ),
 

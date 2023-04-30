@@ -1,9 +1,17 @@
-import { ActivatedRoute } from '@angular/router';
-import { getEvent } from './../../store/actions/events.actions';
+import { filter } from 'rxjs/operators';
+import { Actions, ofType } from '@ngrx/effects';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  deleteEvent,
+  deleteEventSuccess,
+  getEvent,
+} from './../../store/actions/events.actions';
 import { selectEvent } from './../../store/selectors/events.selectors';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from 'src/app/store/state/app.state';
+
+let nextProcessId = 1;
 
 @Component({
   selector: 'app-event',
@@ -12,7 +20,12 @@ import { AppState } from 'src/app/store/state/app.state';
 })
 export class EventComponent implements OnInit {
   event$ = this.store$.select(selectEvent);
-  constructor(private route: ActivatedRoute, private store$: Store<AppState>) {}
+  constructor(
+    private actions$: Actions,
+    private route: ActivatedRoute,
+    private store$: Store<AppState>,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.route.params
@@ -20,5 +33,25 @@ export class EventComponent implements OnInit {
         this.store$.dispatch(getEvent({ id: params['id'] }))
       )
       .unsubscribe();
+  }
+
+  deleteEvent() {
+    const processId = nextProcessId + 1;
+    this.route.params
+      .subscribe((params) =>
+        this.store$.dispatch(
+          deleteEvent({ id: params['id'], processId: processId })
+        )
+      )
+      .unsubscribe();
+
+    this.actions$
+      .pipe(
+        ofType(deleteEventSuccess),
+        filter((action) => action.processId === processId)
+      )
+      .subscribe(() => {
+        this.router.navigate(['/events']);
+      });
   }
 }
