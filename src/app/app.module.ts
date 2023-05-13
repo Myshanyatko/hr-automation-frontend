@@ -87,6 +87,7 @@ import { EditRestaurantComponent } from './restorans/edit-restaurant/edit-restau
 import { EventsComponent } from './events/events/events.component';
 import { EventComponent } from './events/event/event.component';
 import { CreateEventComponent } from './events/create-event/create-event.component';
+import { EditEventComponent } from './events/edit-event/edit-event.component';
 
 @NgModule({
   declarations: [
@@ -115,6 +116,7 @@ import { CreateEventComponent } from './events/create-event/create-event.compone
     EventsComponent,
     EventComponent,
     CreateEventComponent,
+    EditEventComponent
   ],
   imports: [
     GoogleMapsModule,

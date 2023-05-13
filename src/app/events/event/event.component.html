@@ -15,28 +15,53 @@
           [routerLink]="['/events/event/edit/' + event.id]"
         ></tui-svg>
 
-        <tui-svg class="icon-faq" src="tuiIconTrash" (click)="deleteEvent()"></tui-svg>
+        <tui-svg
+          class="icon-faq"
+          src="tuiIconTrash"
+          (click)="deleteEvent()"
+        ></tui-svg>
       </div>
     </div>
     <div class="event">
-      <img
-        class="event__img"
-        [src]="
-          event.pictureUrl
-            ? event.pictureUrl
-            : 'https://cdn1.ozone.ru/s3/multimedia-d/6494370445.jpg'
-        "
-      />
-      <div class="info">
-        <h2 class="title">{{ event.name }}</h2>
-        <p class="event__p">{{ event.address }}</p>
+      <div class="event-grid">
+        <img
+          class="event__img"
+          [src]="
+            event.pictureUrl
+              ? event.pictureUrl
+              : 'https://cdn1.ozone.ru/s3/multimedia-d/6494370445.jpg'
+          "
+        />
+        <div class="info">
+          <h2 class="title">{{ event.name }}</h2>
+          <div *ngIf="event.address">
+            <p class="info-label">Адрес</p>
+            <p class="event__p">{{ event.address }}</p>
+          </div>
+          <div *ngIf="event.date">
+            <p class="info-label">Дата проведения</p>
+            <span class="event__p">
+              {{ event.date | date : "dd.mm.yyyy" }}
+            </span>
+            <span class="event__p">
+              {{ event.date | date : "h:mm" }}
+            </span>
+          </div>
+          <p class="event__p format" *ngIf="event.format == 'ONLINE'">Онлайн</p>
+        </div>
+      </div>
+      <div *ngIf="event.description">
+        <p class="info-label descr">Описание</p>
         <p class="event__p">
-          {{ event.date | date : "dd.mm.yyyy" }}
+          {{ event.description }}
         </p>
-        <p class="event__p">
-          {{ event.date | date : "h:mm" }}
-        </p>
-        <p class="event__p descr">{{ event.description }}</p>
+      </div>
+
+      <div class="materials" *ngIf="event.materials?.length! > 0">
+        <p class="info-label">Ссылки</p>
+        <div class="material" *ngFor="let mat of event.materials">
+          <a class="event__p" [href]="mat.url" tuiLink>{{ mat.description }}</a>
+        </div>
       </div>
     </div>
   </div>

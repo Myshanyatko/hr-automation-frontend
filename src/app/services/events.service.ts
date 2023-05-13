@@ -30,18 +30,12 @@ export class EventsService {
     return this.http.get<Event>(API + `/get/${id}`);
   }
   getEvents(filter: Filter, pageNumber: number) {
-    return this.http.get<responseEvents>(API + '/get', {
-      params: {
-        pageNumber: pageNumber,
-        size: 20,
-        sortBy: 'date',
-        name: String(filter.name),
-        fromDate: String(filter.fromDate),
-        toDate: String(filter.toDate),
-        format: String(filter.format),
-        cityId: Number(filter.cityId),
-      },
-    });
+    return this.http.post<responseEvents>(
+      API + '/get',
+
+      filter,
+      { params: { pageNumber: pageNumber, size: 20, sortBy: 'date' } }
+    );
   }
   createEvent(event: Event) {
     return this.http.post(API + '/add', {
@@ -57,7 +51,7 @@ export class EventsService {
     });
   }
   deleteEvent(id: number) {
-    return this.http.delete(API + '/delete/'+id);
+    return this.http.delete(API + '/delete/' + id);
   }
   editEvent(event: Event) {
     return this.http.put(API + '/update', event);

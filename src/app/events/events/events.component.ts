@@ -11,7 +11,7 @@ import {
 } from './../../store/selectors/events.selectors';
 
 import { Store } from '@ngrx/store';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -39,17 +39,31 @@ export class EventsComponent implements OnInit {
   };
   dateItems = [
     { name: 'Все', value: { fromDate: null, toDate: null } },
-    { name: 'Предстоящие', value: { fromDate: null, toDate: new Date() } },
+    { name: 'Предстоящие', value: { fromDate: new Date(), toDate: null } },
     { name: 'Прошедшие', value: { fromDate: null, toDate: new Date() } },
     {
       name: 'За последний месяц',
-      value: { fromDate: null, toDate: new Date() },
+      value: {
+        fromDate: new Date(new Date().setMonth(new Date().getMonth() - 1)),
+        toDate: new Date(),
+      },
     },
     {
       name: 'За последние 3 месяца',
-      value: { fromDate: null, toDate: new Date() },
+      value: {
+        fromDate: new Date(new Date().setMonth(new Date().getMonth() - 3)),
+        toDate: new Date(),
+      },
     },
-    { name: 'За последний год', value: { fromDate: null, toDate: new Date() } },
+    {
+      name: 'За последний год',
+      value: {
+        fromDate: new Date(
+          new Date().setFullYear(new Date().getFullYear() - 1)
+        ),
+        toDate: new Date(),
+      },
+    },
   ];
   formatItems = [
     { name: 'Онлайн и оффлан', value: 'COMBINED' },
@@ -57,64 +71,62 @@ export class EventsComponent implements OnInit {
     { name: 'Онлайн', value: 'ONLINE' },
     { name: 'Все', value: null },
   ];
+  name = new FormControl();
+
   constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.store$.dispatch(getEvents({ pageNumber: 0, filter: this.filter }));
+    console.log();
+    this.store$.dispatch(
+      getEvents({ pageNumber: this.index, filter: this.filter })
+    );
+
     this.filterForm = this.fb.group({
-      name: [localStorage.getItem('eventsFilter'), { onlySelf: true }],
       city: [],
       date: [this.dateItems[0]],
       format: [this.formatItems[3]],
     });
-    // this.filterForm.get('name')?.setValue(localStorage.getItem('eventsFilter'),{ emitEvent: false })
     this.store$.dispatch(getCities());
 
     this.filterForm.valueChanges.subscribe((value) => {
-      
-        if (value.city)
-          this.filter = { ...this.filter, cityId: Number(value.city.id) };
-        else this.filter = { ...this.filter, cityId: null };
-        if (value.date != this.dateItems[0])
-          this.filter = {
-            ...this.filter,
-            fromDate: value.date.value.fromDate,
-            toDate: value.date.value.toDate,
-          };
-        else
-          this.filter = {
-            ...this.filter,
-            fromDate: null,
-            toDate: null,
-          };
-        if (value.format != this.formatItems[3])
-          this.filter = {
-            ...this.filter,
-            format: value.format.value,
-          };
-        else
-          this.filter = {
-            ...this.filter,
-            format: null,
-          };
+      if (value.city)
+        this.filter = { ...this.filter, cityId: Number(value.city.id) };
+      else this.filter = { ...this.filter, cityId: null };
+      if (value.date != this.dateItems[0])
+        this.filter = {
+          ...this.filter,
+          fromDate: value.date.value.fromDate,
+          toDate: value.date.value.toDate,
+        };
+      else
+        this.filter = {
+          ...this.filter,
+          fromDate: null,
+          toDate: null,
+        };
+      if (value.format != this.formatItems[3])
+        this.filter = {
+          ...this.filter,
+          format: value.format.value,
+        };
+      else
+        this.filter = {
+          ...this.filter,
+          format: null,
+        };
 
-        this.store$.dispatch(
-          getEvents({
-            pageNumber: 0,
-            filter: this.filter,
-          })
-        );
-      
+      this.store$.dispatch(
+        getEvents({
+          pageNumber: 0,
+          filter: this.filter,
+        })
+      );
     });
   }
   search() {
-    localStorage.setItem(
-      'eventsFilter',
-      this.filterForm.controls['name'].value
-    );
     this.filter = {
       ...this.filter,
-      name: localStorage.getItem('eventsFilter'),
+      name: this.name.value,
     };
     this.store$.dispatch(
       getEvents({
@@ -122,9 +134,6 @@ export class EventsComponent implements OnInit {
         filter: this.filter,
       })
     );
-  }
-  filterApply() {
-    console.log('chaange');
   }
   goToPage(index: number) {
     this.store$.dispatch(getEvents({ pageNumber: index, filter: this.filter }));

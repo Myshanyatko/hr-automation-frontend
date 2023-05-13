@@ -1,55 +1,66 @@
 .tui-container {
-    background-color: #fff;
-    margin: 35px 0;
-    border-radius: var(--tui-radius-l);
-    box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
-    width: 800px;
-  }
-  .content {
-    padding: 20px;
-    padding-bottom: 50px;
-  }
-  .title-block {
-    display: grid;
-    grid-template-columns: 1fr auto;
-  }
-  .back-and-title {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-gap: 15px;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  .back {
-    box-shadow: none;
-    color: #ff7043;
-    cursor: pointer;
-  }
-  .event{
-    margin: 0 35px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-  }
-  .icons-faq {
-    padding: 0 5px;
-    text-align: center;
-  }
-  .icon-faq {
-    color: #ff7043;
-    padding: 0 5px;
-    cursor: pointer;
-  }
-  .icon-faq:hover {
-    color: #000;
-  }
-  .title{
-    margin-bottom: 10px;
-  }
-  .event__img{
-    border-radius: var(--tui-radius-l);
-    width: 300px;
-  }
-  .descr{
-    margin-top: 20px;
-  }
+  background-color: #fff;
+  margin: 35px 0;
+  border-radius: var(--tui-radius-l);
+  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+  width: 800px;
+}
+.content {
+  padding: 20px;
+  padding-bottom: 50px;
+}
+.title-block {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+.back-and-title {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 15px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.back {
+  box-shadow: none;
+  color: #ff7043;
+  cursor: pointer;
+}
+.event {
+  margin: 0 35px;
+}
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+.icons-faq {
+  padding: 0 5px;
+  text-align: center;
+}
+.icon-faq {
+  color: #ff7043;
+  padding: 0 5px;
+  cursor: pointer;
+}
+.icon-faq:hover {
+  color: #000;
+}
+.title {
+  margin-bottom: 10px;
+}
+.event__img {
+  border-radius: var(--tui-radius-l);
+  width: 300px;
+}
+.descr {
+  margin-top: 20px;
+}
+.format {
+  color: #ff7043;
+}
+.info-label {
+  color: #a6a2a2;
+}
+.event__p{
+  margin-bottom: 10px;
+}
