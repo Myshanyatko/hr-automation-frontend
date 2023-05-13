@@ -167,7 +167,10 @@
     #map="googleMap"
     width="750px"
     *ngIf="currentCity$ | async as city"
-    [center]="{ lat: builds[0].lat, lng: builds[0].lng }"
+    [center]="{
+      lat: builds.length != 0 ? builds[0].lat : city.lat,
+      lng: builds.length != 0 ? builds[0].lng : city.lng
+    }"
   >
     <map-marker-clusterer
       #cluster
@@ -202,7 +205,9 @@
           </p>
           <p class="p-rest">
             <span class="info-window__label">средний чек: </span>
-            {{ restaurant.average }}₽
+            {{
+              restaurant.average != 0 ? restaurant.average + "₽" : "не оценено"
+            }}
           </p>
           <p class="p-rest">
             <span class="info-window__label">адрес:</span>

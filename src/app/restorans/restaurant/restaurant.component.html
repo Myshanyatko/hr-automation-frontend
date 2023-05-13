@@ -85,7 +85,7 @@
           </div>
           <div class="review__content">
             <h4>{{ review.username }}</h4>
-            <span>чек: {{ review.average }}₽ </span>
+            <span *ngIf="review.average != 0">чек: {{ review.average }}₽ </span>
             <div class="">
               <tui-rating
                 [(ngModel)]="review.rating"

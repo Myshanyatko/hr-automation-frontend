@@ -32,9 +32,17 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.errors = true;
     } else {
       this.loading = true;
-      this.store$.dispatch(login({ email: this.loginForm.value.email, callback: () => {
-        this.loading = false;
-      }, }));
+      this.store$.dispatch(
+        login({
+          email: this.loginForm.value.email,
+          callback: () => {
+            console.log('caallback');
+
+            this.loading = false;
+            console.log(this.loading);
+          },
+        })
+      );
       this.errors = false;
     }
   }
