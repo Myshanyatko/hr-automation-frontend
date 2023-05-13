@@ -60,7 +60,7 @@ export class FaqNewComponent implements OnInit, OnDestroy {
     if (
       this.faqForm.get('category')?.invalid ||
       this.faqForm.get('title')?.invalid ||
-      this.faqForm.get('description')?.invalid 
+      this.faqForm.get('description')?.invalid
     ) {
       this.errors = true;
     } else {
@@ -73,7 +73,15 @@ export class FaqNewComponent implements OnInit, OnDestroy {
       };
 
       const processId = nextProcessId + 1;
-      this.store$.dispatch(addNewFaq({ faq: this.faq, processId: processId }));
+      this.store$.dispatch(
+        addNewFaq({
+          faq: this.faq,
+          processId: processId,
+          callback: () => {
+            this.loading = false;
+          },
+        })
+      );
       this.errors = false;
       this.actions$
         .pipe(

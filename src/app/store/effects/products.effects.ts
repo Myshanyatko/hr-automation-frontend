@@ -74,7 +74,7 @@ export class ProductsEffects {
   addNewProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addNewProduct),
-      exhaustMap(({ processId, product, photo }) =>
+      exhaustMap(({ processId, product, photo, callback }) =>
         this.productsService.postProduct(product).pipe(
           map((id) => {
             return addNewProductSuccess({
@@ -86,6 +86,7 @@ export class ProductsEffects {
           }),
 
           catchError((err) => {
+            callback();
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -99,17 +100,20 @@ export class ProductsEffects {
         ofType(addNewProductSuccess),
         map((action) => {
           if (action.photo != null)
-            return this.productsService.postPhoto(action.photo, action.id).pipe(
-              map(() => {
-                this.alert
-                  .showNotificationSuccess('Продукт создан')
-                  .subscribe();
-              }),
-              catchError((err) => {
-                this.alert.showNotificationError(err.error).subscribe();
-                return EMPTY;
-              })
-            ).subscribe()
+            return this.productsService
+              .postPhoto(action.photo, action.id)
+              .pipe(
+                map(() => {
+                  this.alert
+                    .showNotificationSuccess('Продукт создан')
+                    .subscribe();
+                }),
+                catchError((err) => {
+                  this.alert.showNotificationError(err.error).subscribe();
+                  return EMPTY;
+                })
+              )
+              .subscribe();
           else
             return this.alert
               .showNotificationSuccess('Продукт создан')
@@ -152,6 +156,7 @@ export class ProductsEffects {
             });
           }),
           catchError((err) => {
+            action.callback();
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -159,34 +164,35 @@ export class ProductsEffects {
       )
     )
   );
-  editProductSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(editProductSuccess),
-        mergeMap((action) =>  
-      {  if (action.photo != null) 
-          return this.productsService.postPhoto(action.photo, action.product.id).pipe(
-            map(() => {
-              this.alert
-                .showNotificationSuccess('Изменения сохранены')
-                .subscribe();
-              return setProduct({
-                product: action.product,
-              });
-            }),
-            catchError((err) => {
-              this.alert.showNotificationError(err.error).subscribe();
-              return EMPTY;
-            })
-          )
-        else  {
-            this.alert.showNotificationSuccess('Изменения сохранены').subscribe();
-            setProduct({
-              product: action.product,
-            });
-            return EMPTY
-          }})
-       
+  editProductSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(editProductSuccess),
+      mergeMap((action) => {
+        if (action.photo != null)
+          return this.productsService
+            .postPhoto(action.photo, action.product.id)
+            .pipe(
+              map(() => {
+                this.alert
+                  .showNotificationSuccess('Изменения сохранены')
+                  .subscribe();
+                return setProduct({
+                  product: action.product,
+                });
+              }),
+              catchError((err) => {
+                this.alert.showNotificationError(err.error).subscribe();
+                return EMPTY;
+              })
+            );
+        else {
+          this.alert.showNotificationSuccess('Изменения сохранены').subscribe();
+          setProduct({
+            product: action.product,
+          });
+          return EMPTY;
+        }
+      })
     )
   );
 
@@ -255,13 +261,14 @@ export class ProductsEffects {
   addOrderedProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addOrderedProduct),
-      exhaustMap(({ idList }) =>
+      exhaustMap(({ idList, callback }) =>
         this.productsService.addOrderedProducts(idList).pipe(
           map(() => {
             return addOrderedProductSuccess();
           }),
 
           catchError((err) => {
+            callback();
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })

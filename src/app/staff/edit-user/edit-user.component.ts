@@ -150,6 +150,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
                     },
                     photo: fd,
                     processId: processId,
+                    callback: () => {
+                      this.loading = false;
+                    },
                   })
                 );
               } else {
@@ -176,6 +179,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
                     },
                     photo: null,
                     processId: processId,
+                    callback: () => {
+                      this.loading = false;
+                    },
                   })
                 );
               }

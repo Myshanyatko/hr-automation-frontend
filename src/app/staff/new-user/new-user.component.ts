@@ -69,9 +69,7 @@ export class NewUserComponent implements OnInit, OnDestroy {
     this.loadingFiles$.next(file);
 
     return timer(1000).pipe(
-      map(() => 
-           file
-      ),
+      map(() => file),
       finalize(() => this.loadingFiles$.next(null))
     );
   }
@@ -125,11 +123,25 @@ export class NewUserComponent implements OnInit, OnDestroy {
         var fd = new FormData();
         fd.append('file', this.control.value);
         this.store$.dispatch(
-          addNewUser({ user: user, photo: fd, processId: processId })
+          addNewUser({
+            user: user,
+            photo: fd,
+            processId: processId,
+            callback: () => {
+              this.loading = false;
+            },
+          })
         );
       } else
         this.store$.dispatch(
-          addNewUser({ user: user, photo: null, processId: processId })
+          addNewUser({
+            user: user,
+            photo: null,
+            processId: processId,
+            callback: () => {
+              this.loading = false;
+            },
+          })
         );
     }
   }

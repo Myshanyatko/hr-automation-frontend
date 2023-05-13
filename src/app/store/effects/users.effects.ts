@@ -97,8 +97,8 @@ export class USersEffects {
               processId: action.processId,
             });
           }),
-
           catchError((err) => {
+            action.callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -109,8 +109,8 @@ export class USersEffects {
   editUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(editUserSuccess),
-      mergeMap((action) =>  
-      {  if (action.photo != null) 
+      mergeMap((action) => {
+        if (action.photo != null)
           return this.usersService.postPhoto(action.photo, action.user.id).pipe(
             map(() => {
               this.alert
@@ -124,15 +124,15 @@ export class USersEffects {
               this.alert.showNotificationError(err.error).subscribe();
               return EMPTY;
             })
-          )
-        else  {
-            this.alert.showNotificationSuccess('Изменения сохранены').subscribe();
-            setUser({
-              user: action.user,
-            });
-            return EMPTY
-          }})
-       
+          );
+        else {
+          this.alert.showNotificationSuccess('Изменения сохранены').subscribe();
+          setUser({
+            user: action.user,
+          });
+          return EMPTY;
+        }
+      })
     )
   );
 
@@ -146,10 +146,11 @@ export class USersEffects {
               user: action.user,
               photo: action.photo,
               processId: action.processId,
-              id: id
+              id: id,
             });
           }),
           catchError((err) => {
+            action.callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -164,17 +165,20 @@ export class USersEffects {
         ofType(addNewUserSuccess),
         map((action) => {
           if (action.photo != null)
-            return this.usersService.postPhoto(action.photo, action.id).pipe(
-              map(() => {
-                this.alert
-                  .showNotificationSuccess('Новый сотрудник добавлен')
-                  .subscribe();
-              }),
-              catchError((err) => {
-                this.alert.showNotificationError(err.message).subscribe();
-                return EMPTY;
-              })
-            ).subscribe()
+            return this.usersService
+              .postPhoto(action.photo, action.id)
+              .pipe(
+                map(() => {
+                  this.alert
+                    .showNotificationSuccess('Новый сотрудник добавлен')
+                    .subscribe();
+                }),
+                catchError((err) => {
+                  this.alert.showNotificationError(err.message).subscribe();
+                  return EMPTY;
+                })
+              )
+              .subscribe();
           else
             return this.alert
               .showNotificationSuccess('Новый сотрудник добавлен')

@@ -2,7 +2,12 @@ import { Product } from './../../models/product';
 import { Actions, ofType } from '@ngrx/effects';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { TuiDay, TuiDestroyService, tuiPure, TuiStringHandler } from '@taiga-ui/cdk';
+import {
+  TuiDay,
+  TuiDestroyService,
+  tuiPure,
+  TuiStringHandler,
+} from '@taiga-ui/cdk';
 import {
   addOrderedProduct,
   addOrderedProductSuccess,
@@ -35,7 +40,12 @@ export class ProductsOrderedComponent implements OnInit {
   errors = false;
   loading = false;
   value: readonly string[] = [];
-  today = `Заказанные продукты на ` + new Date().getDate() + '.'+ (new Date().getMonth()+1) +'.xls'
+  today =
+    `Заказанные продукты на ` +
+    new Date().getDate() +
+    '.' +
+    (new Date().getMonth() + 1) +
+    '.xls';
 
   constructor(
     private actions$: Actions,
@@ -46,7 +56,7 @@ export class ProductsOrderedComponent implements OnInit {
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
-      product: []
+      product: [],
     });
     this.allProducts$.subscribe((products) => {
       if (products != null)
@@ -64,7 +74,14 @@ export class ProductsOrderedComponent implements OnInit {
     } else {
       this.loading = true;
       this.store$.dispatch(
-        addOrderedProduct({idList: this.productForm.value.product.map((product: Product) => product.id)})
+        addOrderedProduct({
+          idList: this.productForm.value.product.map(
+            (product: Product) => product.id
+          ),
+          callback: () => {
+            this.loading = false;
+          },
+        })
       );
       this.actions$
         .pipe(
@@ -101,5 +118,5 @@ export class ProductsOrderedComponent implements OnInit {
 
   get content(): string {
     return `Выбрано ${this.value.length} продуктов`;
-}
+  }
 }

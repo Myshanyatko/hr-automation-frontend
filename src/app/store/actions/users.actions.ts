@@ -29,7 +29,12 @@ export const setUser = createAction(
 //изменить выбранного пользователя
 export const editUser = createAction(
   '[Users Page] Edit User',
-  props<{ user: UserInfo; photo: FormData | null; processId: number }>()
+  props<{
+    user: UserInfo;
+    photo: FormData | null;
+    processId: number;
+    callback: Function;
+  }>()
 );
 export const editUserSuccess = createAction(
   '[Users Page] Edit User Success',
@@ -38,11 +43,21 @@ export const editUserSuccess = createAction(
 //изменить выбранного пользователя
 export const addNewUser = createAction(
   '[Users Page] Add New User',
-  props<{ user: UserInfo; photo: FormData | null; processId: number }>()
+  props<{
+    user: UserInfo;
+    photo: FormData | null;
+    processId: number;
+    callback: Function;
+  }>()
 );
 export const addNewUserSuccess = createAction(
   '[Users Page] Add New User Succes',
-  props<{ user: UserInfo; photo: FormData | null; processId: number, id: number }>()
+  props<{
+    user: UserInfo;
+    photo: FormData | null;
+    processId: number;
+    id: number;
+  }>()
 );
 //удалить выбранного пользователя
 export const deleteUser = createAction(

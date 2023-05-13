@@ -31,7 +31,7 @@ export const setEvent = createAction(
 );
 export const createEvent = createAction(
   '[Create Event Page] Create Event',
-  props<{ event: Event; processId: number }>()
+  props<{ event: Event; processId: number, callback: Function }>()
 );
 export const createEventSuccess = createAction(
   '[Create Event Page] Create Event Success',
@@ -47,7 +47,7 @@ export const deleteEventSuccess = createAction(
 );
 export const editEvent = createAction(
   '[Edit Event Page] Edit Event',
-  props<{ event: Event; processId: number }>()
+  props<{ event: Event; processId: number, callback: Function  }>()
 );
 export const editEventSuccess = createAction(
   '[Edit Event Page] Edit Event Success',

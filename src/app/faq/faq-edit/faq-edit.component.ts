@@ -14,7 +14,11 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
 } from '@angular/core';
-import { getEditedFaq, putFaq, putFaqSuccess } from 'src/app/store/actions/faq.actions';
+import {
+  getEditedFaq,
+  putFaq,
+  putFaqSuccess,
+} from 'src/app/store/actions/faq.actions';
 
 let nextProcessId = 1;
 @Component({
@@ -77,35 +81,39 @@ export class FaqEditComponent implements OnInit, OnDestroy {
         description: this.faqForm.value.description,
       };
       const processId = nextProcessId + 1;
-      this.faq$.pipe(
-        map((faq) => {
-          if (faq != null) {
-            this.store$.dispatch(
-              putFaq({
-                faq: {
-                  id: faq.id,
-                  categoryId: faq.categoryId,
-                  title: this.faqForm.value.title,
-                  description: this.faqForm.value.description,
-                },
-                processId: processId
-              })
-            );
-          }
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe();
+      this.faq$
+        .pipe(
+          map((faq) => {
+            if (faq != null) {
+              this.store$.dispatch(
+                putFaq({
+                  faq: {
+                    id: faq.id,
+                    categoryId: faq.categoryId,
+                    title: this.faqForm.value.title,
+                    description: this.faqForm.value.description,
+                  },
+                  processId: processId,
+                  callback: () => {
+                    this.loading = false;
+                  },
+                })
+              );
+            }
+          }),
+          takeUntil(this.destroy$)
+        )
+        .subscribe();
       this.errors = false;
 
       this.actions$
-      .pipe(
-        ofType(putFaqSuccess),
-        filter((action) => action.processId === processId)
-      )
-      .subscribe(() => {
-        this.router.navigate(['/faq']);
-      });
+        .pipe(
+          ofType(putFaqSuccess),
+          filter((action) => action.processId === processId)
+        )
+        .subscribe(() => {
+          this.router.navigate(['/faq']);
+        });
     }
   }
 

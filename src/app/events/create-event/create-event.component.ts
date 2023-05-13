@@ -1,3 +1,4 @@
+import { AlertService } from './../../services/alert.service';
 import { Router } from '@angular/router';
 import {
   createEvent,
@@ -57,6 +58,7 @@ export class CreateEventComponent implements OnInit, OnDestroy {
   );
   constructor(
     private actions$: Actions,
+    private alertService: AlertService,
     private fb: FormBuilder,
     private store$: Store<AppState>,
     private router: Router
@@ -134,6 +136,9 @@ export class CreateEventComponent implements OnInit, OnDestroy {
             city: null,
           },
           processId: processId,
+          callback: () => {
+            this.loading = false;
+          },
         })
       );
 

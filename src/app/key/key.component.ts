@@ -43,6 +43,9 @@ export class KeyComponent implements OnInit, OnDestroy {
         key({
           key: this.keyForm.value.key,
           email: String(this.tokenService.getEmail()),
+          callback: () => {
+            this.loading = false;
+          },
         })
       );
       this.errors = false;

@@ -64,13 +64,14 @@ export class EventsEffects {
   createEvent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createEvent),
-      mergeMap(({ event, processId }) =>
+      mergeMap(({ event, processId, callback }) =>
         this.eventsService.createEvent(event).pipe(
           map(() => {
             return createEventSuccess({ processId: processId });
           }),
           catchError((err) => {
-            this.alert.showNotificationError(err.error).subscribe();
+            callback()
+            this.alert.showNotificationError2(err.error, processId).subscribe();
             return EMPTY;
           })
         )
@@ -118,12 +119,13 @@ export class EventsEffects {
   editEvent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(editEvent),
-      mergeMap(({ event, processId }) =>
+      mergeMap(({ event, processId, callback }) =>
         this.eventsService.editEvent(event).pipe(
           map(() => {
             return editEventSuccess({ processId: processId });
           }),
           catchError((err) => {
+            callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })

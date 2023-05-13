@@ -32,7 +32,7 @@ export const setProducts = createAction(
 //добавить новоый продукт
 export const addNewProduct = createAction(
   '[Products Page] Add New Product',
-  props<{ product: Product; photo: FormData | null; processId: number }>()
+  props<{ product: Product; photo: FormData | null; processId: number, callback: Function }>()
 );
 export const addNewProductSuccess = createAction(
   '[Products Page] Add New Product Success',
@@ -42,17 +42,16 @@ export const addNewProductSuccess = createAction(
 //заказать продукт
 export const addOrderedProduct = createAction(
   '[Products Page] Add Ordered Product',
-  props<{ idList: number[] }>()
+  props<{ idList: number[], callback: Function }>()
 );
 export const addOrderedProductSuccess = createAction(
   '[Products Page] Add Ordered Product Success'
-  // props<{ product: Product }>()
 );
 
 //добавить новоый продукт
 export const editProduct = createAction(
   '[Products Page] Edit Product',
-  props<{ product: Product; photo: FormData | null, processId: number }>()
+  props<{ product: Product; photo: FormData | null, processId: number, callback: Function }>()
 );
 export const editProductSuccess = createAction(
   '[Products Page] Edit Product Success',

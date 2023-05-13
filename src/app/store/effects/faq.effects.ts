@@ -57,13 +57,14 @@ export class FaqEffects {
   addNewFaq$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addNewFaq),
-      exhaustMap(({ processId, faq }) =>
+      exhaustMap(({ processId, faq, callback }) =>
         this.faqService.postFaq(faq).pipe(
           map(() => {
             return addNewFaqSuccess({ processId: processId, faq: faq });
           }),
 
           catchError((err) => {
+            callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -94,6 +95,7 @@ export class FaqEffects {
             });
           }),
           catchError((err) => {
+            action.callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -154,6 +156,7 @@ export class FaqEffects {
             });
           }),
           catchError((err) => {
+            action.callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })

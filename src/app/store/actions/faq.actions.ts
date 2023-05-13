@@ -18,7 +18,7 @@ export const setCategories = createAction(
 //добавить новоый вопрос
 export const addNewFaq = createAction(
   '[Faq Page] Add New Faq',
-  props<{ faq: Faq; processId: number }>()
+  props<{ faq: Faq; processId: number; callback: Function }>()
 );
 export const addNewFaqSuccess = createAction(
   '[Faq Page] Add New Faq Success',
@@ -27,7 +27,7 @@ export const addNewFaqSuccess = createAction(
 //добавить новую категорию
 export const addNewCategory = createAction(
   '[Faq Page] Add New Categories',
-  props<{ name: string; processId: number }>()
+  props<{ name: string; processId: number; callback: Function }>()
 );
 export const addNewCategorySuccess = createAction(
   '[Faq Page] Add New Category Success',
@@ -55,7 +55,7 @@ export const setEditedFaq = createAction(
 // изменение вопроса
 export const putFaq = createAction(
   '[Faq Page] Put Faq',
-  props<{ faq: Faq; processId: number }>()
+  props<{ faq: Faq; processId: number, callback: Function }>()
 );
 
 export const putFaqSuccess = createAction(

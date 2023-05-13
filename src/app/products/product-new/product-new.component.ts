@@ -113,11 +113,25 @@ export class ProductNewComponent implements OnInit, OnDestroy {
         var fd = new FormData();
         fd.append('file', this.control.value);
         this.store$.dispatch(
-          addNewProduct({ product: product, photo: fd, processId: processId })
+          addNewProduct({
+            product: product,
+            photo: fd,
+            processId: processId,
+            callback: () => {
+              this.loading = false;
+            },
+          })
         );
       } else
         this.store$.dispatch(
-          addNewProduct({ product: product, photo: null, processId: processId })
+          addNewProduct({
+            product: product,
+            photo: null,
+            processId: processId,
+            callback: () => {
+              this.loading = false;
+            },
+          })
         );
       this.actions$
         .pipe(

@@ -21,7 +21,7 @@ let nextProcessId = 1;
 export class NewCategoryComponent implements OnInit, OnDestroy {
   categoryForm!: FormGroup;
   loading = false;
-  
+
   constructor(
     private actions$: Actions,
     private fb: FormBuilder,
@@ -51,6 +51,9 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
       addNewCategory({
         name: this.categoryForm.value.name,
         processId: processId,
+        callback: () => {
+          this.loading = false;
+        },
       })
     );
   }

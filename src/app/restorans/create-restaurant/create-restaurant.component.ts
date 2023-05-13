@@ -100,6 +100,9 @@ export class CreateRestaurantComponent implements OnInit {
               cityId: currentCity,
             },
             processId: processId,
+            callback: () => {
+              this.loading = false;
+            },
           })
         );
       } else if (this.marker != null) {
@@ -113,6 +116,9 @@ export class CreateRestaurantComponent implements OnInit {
               cityId: currentCity,
             },
             processId: processId,
+            callback: () => {
+              this.loading = false;
+            },
           })
         );
       }

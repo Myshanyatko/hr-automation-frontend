@@ -123,7 +123,7 @@ export class RestaurantsEffects {
   createRestaurant$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createRestaurant),
-      mergeMap(({ restaurant, processId }) =>
+      mergeMap(({ restaurant, processId, callback }) =>
         this.restaurantsService.createRestaurant(restaurant).pipe(
           map(() => {
             return createRestaurantSuccess({
@@ -131,6 +131,7 @@ export class RestaurantsEffects {
             });
           }),
           catchError((err) => {
+            callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -141,7 +142,7 @@ export class RestaurantsEffects {
   createRestaurantViaRCoords$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createRestaurantViaCoords),
-      mergeMap(({ restaurant, processId }) =>
+      mergeMap(({ restaurant, processId, callback }) =>
         this.restaurantsService.createRestaurantViaCoords(restaurant).pipe(
           map(() => {
             return createRestaurantSuccess({
@@ -149,6 +150,7 @@ export class RestaurantsEffects {
             });
           }),
           catchError((err) => {
+            callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -170,7 +172,7 @@ export class RestaurantsEffects {
     this.actions$.pipe(
       ofType(updateRestaurant),
       
-      mergeMap(({ restaurant, processId }) =>
+      mergeMap(({ restaurant, processId, callback }) =>
         this.restaurantsService.updateRestaurant(restaurant).pipe(
           map(() => {
             return updateRestaurantSuccess({
@@ -179,6 +181,7 @@ export class RestaurantsEffects {
             });
           }),
           catchError((err) => {
+            callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -199,7 +202,7 @@ export class RestaurantsEffects {
   createCity$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createCity),
-      mergeMap(({ city, processId }) =>
+      mergeMap(({ city, processId, callback }) =>
         this.restaurantsService.createCity(city).pipe(
           map(() => {
             return createCitySuccess({
@@ -208,6 +211,7 @@ export class RestaurantsEffects {
             });
           }),
           catchError((err) => {
+            callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })

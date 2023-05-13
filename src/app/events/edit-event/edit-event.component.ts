@@ -132,8 +132,7 @@ export class EditEventComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe();
-      console.log(this.materials);
-      
+    console.log(this.materials);
   }
 
   get materials() {
@@ -182,9 +181,11 @@ export class EditEventComponent implements OnInit {
                   city: event.city,
                 },
                 processId: processId,
+                callback: () => {
+                  this.loading = false;
+                },
               })
             );
-
             this.actions$
               .pipe(
                 ofType(editEventSuccess),

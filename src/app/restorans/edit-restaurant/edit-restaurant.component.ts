@@ -61,20 +61,28 @@ export class EditRestaurantComponent implements OnInit {
     } else {
       if (this.loading == false) this.loading = true;
       const processId = nextProcessId + 1;
-      
-      this.restaurant$.subscribe((rest) => {
-        if (rest != null) {
-          const restaurant: EditedRest = {
-            id: rest?.id,
-            name: this.restaurantForm.value.name,
-            status: this.restaurantForm.value.status.name,
-            address: this.restaurantForm.value.address,
-          };
-          this.store$.dispatch(
-            updateRestaurant({ restaurant: restaurant, processId: processId })
-          );
-        }
-      }).unsubscribe();
+
+      this.restaurant$
+        .subscribe((rest) => {
+          if (rest != null) {
+            const restaurant: EditedRest = {
+              id: rest?.id,
+              name: this.restaurantForm.value.name,
+              status: this.restaurantForm.value.status.name,
+              address: this.restaurantForm.value.address,
+            };
+            this.store$.dispatch(
+              updateRestaurant({
+                restaurant: restaurant,
+                processId: processId,
+                callback: () => {
+                  this.loading = false;
+                },
+              })
+            );
+          }
+        })
+        .unsubscribe();
       this.actions$
         .pipe(
           ofType(updateRestaurantSuccess),

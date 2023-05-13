@@ -73,11 +73,15 @@ export const setStatuses = createAction(
 );
 export const createRestaurant = createAction(
   '[Restaurants Page] Create Restaurant',
-  props<{ restaurant: createRest; processId: number }>()
+  props<{ restaurant: createRest; processId: number; callback: Function }>()
 );
 export const createRestaurantViaCoords = createAction(
   '[Restaurants Page] Create Restaurant Via Coordinates',
-  props<{ restaurant: createRestViaCoords; processId: number }>()
+  props<{
+    restaurant: createRestViaCoords;
+    processId: number;
+    callback: Function;
+  }>()
 );
 export const createRestaurantSuccess = createAction(
   '[Restaurants Page] Create Restaurant Success',
@@ -85,7 +89,7 @@ export const createRestaurantSuccess = createAction(
 );
 export const createCity = createAction(
   '[Restaurants Page] Create City',
-  props<{ city: string; processId: number }>()
+  props<{ city: string; processId: number; callback: Function }>()
 );
 export const createCitySuccess = createAction(
   '[Restaurants Page] Create City Success',
@@ -93,7 +97,7 @@ export const createCitySuccess = createAction(
 );
 export const updateRestaurant = createAction(
   '[Edit Restaurant Page] Update Restaurant',
-  props<{ restaurant: EditedRest; processId: number }>()
+  props<{ restaurant: EditedRest; processId: number; callback: Function }>()
 );
 export const updateRestaurantSuccess = createAction(
   '[Edit Restaurant Page] Update Restaurant Success',
@@ -117,11 +121,11 @@ export const deleteCitySuccess = createAction(
 );
 export const deleteRestaurantSuccess = createAction(
   '[Restaurants Page] Delete City Restaurant',
-  props<{ id: number ; processId: number}>()
+  props<{ id: number; processId: number }>()
 );
 export const deleteReview = createAction(
   '[Restaurants Page] Delete Review',
-  props<{ id: number}>()
+  props<{ id: number }>()
 );
 export const deleteReviewSuccess = createAction(
   '[Restaurants Page] Delete Review Success',

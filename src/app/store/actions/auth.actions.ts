@@ -5,7 +5,7 @@ import { createAction, props } from '@ngrx/store';
 // отправляем почту
 export const login = createAction(
   '[Auth Page] Login',
-  props<{ email: string }>()
+  props<{ email: string, callback: Function  }>()
 );
 export const loginSuccess = createAction(
   '[Auth Page] Login Success',
@@ -14,7 +14,7 @@ export const loginSuccess = createAction(
 // отправляем key
 export const key = createAction(
   '[Auth Page] Key',
-  props<{ key: number; email: string }>()
+  props<{ key: number; email: string, callback: Function }>()
 );
 export const keySuccess = createAction(
   '[Auth Page] Key Success',

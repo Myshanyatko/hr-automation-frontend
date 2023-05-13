@@ -136,6 +136,9 @@ export class ProductEditComponent implements OnInit, OnDestroy {
                     },
                     processId: processId,
                     photo: fd,
+                    callback: () => {
+                      this.loading = false;
+                    },
                   })
                 );
               } else
@@ -152,6 +155,9 @@ export class ProductEditComponent implements OnInit, OnDestroy {
                     },
                     processId: processId,
                     photo: null,
+                    callback: () => {
+                      this.loading = false;
+                    },
                   })
                 );
             }

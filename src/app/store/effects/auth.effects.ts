@@ -24,6 +24,7 @@ export class AuthEffects {
         this.authService.login(action.email).pipe(
           map((res) => loginSuccess({ email: action.email, key: res })),
           catchError((err) => {
+            action.callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -83,6 +84,7 @@ export class AuthEffects {
         this.authService.key(action.key, action.email).pipe(
           map((res) => keySuccess({ dataUser: res })),
           catchError((err) => {
+            action.callback()
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })

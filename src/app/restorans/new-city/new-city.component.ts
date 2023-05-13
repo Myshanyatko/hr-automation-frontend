@@ -49,6 +49,9 @@ export class NewCityComponent implements OnInit {
         createCity({
           city: this.cityForm.value.name,
           processId: processId,
+          callback: () => {
+            this.loading = false;
+          },
         })
       );
 
