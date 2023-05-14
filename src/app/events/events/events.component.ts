@@ -66,8 +66,8 @@ export class EventsComponent implements OnInit {
     },
   ];
   formatItems = [
-    { name: 'Онлайн и оффлан', value: 'COMBINED' },
-    { name: 'Оффлайн', value: 'OFFLINE' },
+    { name: 'Онлайн и офлайн', value: 'COMBINED' },
+    { name: 'Офлайн', value: 'OFFLINE' },
     { name: 'Онлайн', value: 'ONLINE' },
     { name: 'Все', value: null },
   ];
@@ -123,6 +123,10 @@ export class EventsComponent implements OnInit {
       );
     });
   }
+  isPast(date: Date) {
+    return !(date > new Date());
+  }
+
   search() {
     this.filter = {
       ...this.filter,

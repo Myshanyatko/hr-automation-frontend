@@ -49,6 +49,7 @@ import {
   TuiRadioBlockModule,
   TuiRadioLabeledModule,
   TuiIslandModule,
+  TuiBadgeModule,
 } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -116,7 +117,7 @@ import { EditEventComponent } from './events/edit-event/edit-event.component';
     EventsComponent,
     EventComponent,
     CreateEventComponent,
-    EditEventComponent
+    EditEventComponent,
   ],
   imports: [
     GoogleMapsModule,
@@ -162,6 +163,7 @@ import { EditEventComponent } from './events/edit-event/edit-event.component';
     TuiInputDateTimeModule,
     TuiRadioLabeledModule,
     TuiIslandModule,
+    TuiBadgeModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([
       USersEffects,

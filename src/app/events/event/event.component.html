@@ -34,9 +34,22 @@
         />
         <div class="info">
           <h2 class="title">{{ event.name }}</h2>
-          <div *ngIf="event.address">
+          <tui-badge
+            status="primary"
+            [value]="
+              event.format == 'OFFLINE'
+                ? 'Офлайн'
+                : event.format == 'ONLINE'
+                ? 'Онлайн'
+                : 'Онлайн и офлайн'
+            "
+          ></tui-badge>
+          <div *ngIf="event.address" class="event__p">
             <p class="info-label">Адрес</p>
-            <p class="event__p">{{ event.address }}</p>
+            <p class="event__p" style="margin-bottom: 2px">
+              {{ event.address }}
+            </p>
+            <a tuiLink (click)="showMap()"> Показать на карте </a>
           </div>
           <div *ngIf="event.date">
             <p class="info-label">Дата проведения</p>
@@ -47,7 +60,6 @@
               {{ event.date | date : "h:mm" }}
             </span>
           </div>
-          <p class="event__p format" *ngIf="event.format == 'ONLINE'">Онлайн</p>
         </div>
       </div>
       <div *ngIf="event.description">
@@ -66,3 +78,22 @@
     </div>
   </div>
 </div>
+<ng-template
+  *ngIf="event$ | async as event"
+  let-observer
+  [tuiDialogOptions]="{ size: 'l' }"
+  [(tuiDialog)]="openMap"
+>
+  <google-map
+    class="google-map"
+    #map="googleMap"
+    width="750px"
+    *ngIf="event.lat && event.lng"
+    [center]="{
+      lat: event.lat,
+      lng: event.lng
+    }"
+  >
+    <map-marker [position]="{ lat: event.lat, lng: event.lng }"> </map-marker>
+  </google-map>
+</ng-template>

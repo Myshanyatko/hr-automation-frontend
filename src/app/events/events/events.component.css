@@ -1,4 +1,3 @@
-
 .search {
   border-top-right-radius: 0%;
   border-bottom-right-radius: 0%;
@@ -19,7 +18,7 @@
 }
 .event {
   width: 220px;
-  cursor: pointer
+  cursor: pointer;
 }
 .event__img {
   width: 100%;
@@ -31,24 +30,31 @@
 .event__p {
   color: grey;
 }
-.filters{
+.filters {
   margin-top: 20px;
 }
-.filter-island{
+.filter-island {
   max-width: 600px;
 }
-.filter-title{
+.filter-title {
   margin-top: 20px;
 }
-.filterForm{
+.filterForm {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   margin-top: 10px;
 }
-.filter-input{
+.filter-input {
   margin-top: 7px;
 }
-.filter-label{
+.filter-label {
   margin-left: 4px;
+}
+.event__badge {
+  position: absolute;
+  margin: 10px 10px;
+}
+.isPast {
+  box-shadow: inset 0 0 0 100vw rgba(0, 0, 0, 0.5);
 }

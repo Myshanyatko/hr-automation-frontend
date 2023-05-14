@@ -21,6 +21,7 @@ let nextProcessId = 1;
   providers: [TuiDestroyService],
 })
 export class EventComponent implements OnInit {
+  openMap = false;
   event$ = this.store$.select(selectEvent);
   constructor(
     private actions$: Actions,
@@ -40,7 +41,9 @@ export class EventComponent implements OnInit {
     )
     .subscribe();
   }
-
+  showMap() {
+    this.openMap = true;
+  }
   deleteEvent() {
     const processId = nextProcessId + 1;
     this.route.params

@@ -122,14 +122,23 @@
         *ngFor="let event of events"
         [routerLink]="['/events/event/', event.id]"
       >
-        <img
-          class="event__img"
-          [src]="
-            event.pictureUrl
-              ? event.pictureUrl
-              : 'https://cdn1.ozone.ru/s3/multimedia-d/6494370445.jpg'
-          "
-        />
+        <tui-badge
+          *ngIf="event.format != 'OFFLINE'"
+          status="primary"
+          class="event__badge"
+          [value]="event.format == 'ONLINE' ? 'Онлайн' : 'Онлайн и офлайн'"
+        ></tui-badge>
+        <div>
+          <img
+            [ngClass]="{ isPast: isPast(event.date) }"
+            class="event__img"
+            [src]="
+              event.pictureUrl
+                ? event.pictureUrl
+                : 'https://cdn1.ozone.ru/s3/multimedia-d/6494370445.jpg'
+            "
+          />
+        </div>
         <div class="event__info">
           <h3>{{ event.name }}</h3>
           <p class="event__p">{{ event.address }}</p>
