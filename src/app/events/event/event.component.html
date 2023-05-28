@@ -1,4 +1,5 @@
-<div class="tui-container">
+<tui-loader *ngIf="loading" class="loader-without-back"> </tui-loader>
+<div class="tui-container" *ngIf="!loading && event$">
   <div class="content" *ngIf="event$ | async as event">
     <div class="title-block">
       <div class="back-and-title">

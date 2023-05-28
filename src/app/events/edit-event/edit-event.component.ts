@@ -148,56 +148,110 @@ export class EditEventComponent implements OnInit {
       this.errors = true;
     } else {
       if (this.loading == false) this.loading = true;
-
       const processId = nextProcessId + 1;
-      this.event$
-        .pipe(
-          map((event) => {
-            if (event == null) return;
-            this.store$.dispatch(
-              editEvent({
-                event: {
-                  id: event.id,
-                  date: new Date(
-                    this.eventForm.value.date[0].year,
-                    this.eventForm.value.date[0].month,
-                    this.eventForm.value.date[0].day,
-                    this.eventForm.value.date[1].hours,
-                    this.eventForm.value.date[1].minutes
-                  ),
-                  lat: null,
-                  lng: null,
-                  name: this.eventForm.value.name,
-                  format: this.eventForm.value.online,
-                  cityId: this.eventForm.value.city.id,
-                  address: this.eventForm.value.address,
-                  description: this.eventForm.value.description
-                    ? this.eventForm.value.description
-                    : null,
-                  materials: this.eventForm.value.materials
-                    ? this.eventForm.value.materials
-                    : null,
-                  pictureUrl: '',
-                  city: event.city,
-                },
-                processId: processId,
-                callback: () => {
-                  this.loading = false;
-                },
-              })
-            );
-            this.actions$
-              .pipe(
-                ofType(editEventSuccess),
-                filter((action) => action.processId === processId)
-              )
-              .subscribe(() => {
-                this.router.navigate(['events/event/' + event.id]);
-              });
-          }),
-          takeUntil(this.destroy$)
-        )
-        .subscribe();
+      if (this.control.value != null) {
+        var fd = new FormData();
+        fd.append('file', this.control.value);
+        this.event$
+          .pipe(
+            map((event) => {
+              console.log(event);
+              if (event == null) return;
+              this.store$.dispatch(
+                editEvent({
+                  event: {
+                    id: event.id,
+                    date: new Date(
+                      this.eventForm.value.date[0].year,
+                      this.eventForm.value.date[0].month,
+                      this.eventForm.value.date[0].day,
+                      this.eventForm.value.date[1].hours,
+                      this.eventForm.value.date[1].minutes
+                    ),
+                    lat: null,
+                    lng: null,
+                    name: this.eventForm.value.name,
+                    format: this.eventForm.value.online,
+                    cityId: this.eventForm.value.city.id,
+                    address: this.eventForm.value.address,
+                    description: this.eventForm.value.description
+                      ? this.eventForm.value.description
+                      : null,
+                    materials: this.eventForm.value.materials
+                      ? this.eventForm.value.materials
+                      : null,
+                    pictureUrl: event.pictureUrl,
+                    city: event.city,
+                  },
+                  processId: processId,
+                  photo: fd,
+                  callback: () => {
+                    this.loading = false;
+                  },
+                })
+              );
+              this.actions$
+                .pipe(
+                  ofType(editEventSuccess),
+                  filter((action) => action.processId === processId)
+                )
+                .subscribe(() => {
+                  this.router.navigate(['events/event/' + event.id]);
+                });
+            }),
+            takeUntil(this.destroy$)
+          )
+          .subscribe();
+      } else
+        this.event$
+          .pipe(
+            map((event) => {
+              if (event == null) return;
+              this.store$.dispatch(
+                editEvent({
+                  event: {
+                    id: event.id,
+                    date: new Date(
+                      this.eventForm.value.date[0].year,
+                      this.eventForm.value.date[0].month,
+                      this.eventForm.value.date[0].day,
+                      this.eventForm.value.date[1].hours,
+                      this.eventForm.value.date[1].minutes
+                    ),
+                    lat: null,
+                    lng: null,
+                    name: this.eventForm.value.name,
+                    format: this.eventForm.value.online,
+                    cityId: this.eventForm.value.city.id,
+                    address: this.eventForm.value.address,
+                    description: this.eventForm.value.description
+                      ? this.eventForm.value.description
+                      : null,
+                    materials: this.eventForm.value.materials
+                      ? this.eventForm.value.materials
+                      : null,
+                    pictureUrl: event.pictureUrl,
+                    city: event.city,
+                  },
+                  processId: processId,
+                  photo: null,
+                  callback: () => {
+                    this.loading = false;
+                  },
+                })
+              );
+              this.actions$
+                .pipe(
+                  ofType(editEventSuccess),
+                  filter((action) => action.processId === processId)
+                )
+                .subscribe(() => {
+                  this.router.navigate(['events/event/' + event.id]);
+                });
+            }),
+            takeUntil(this.destroy$)
+          )
+          .subscribe();
     }
   }
   onReject(file: TuiFileLike | readonly TuiFileLike[]): void {

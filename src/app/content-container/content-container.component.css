@@ -1,0 +1,14 @@
+.tui-container {
+  margin: 35px auto;
+  width: 100%;
+}
+.content {
+  background-color: #fff;
+  border-radius: var(--tui-radius-l);
+  box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+  margin: 15px 0;
+  padding: 36px;
+  padding-top: 5px;
+  box-sizing: border-box;
+  width: 100%;
+}

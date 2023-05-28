@@ -1,5 +1,5 @@
 <tui-loader *ngIf="loading" class="loader-without-back"> </tui-loader>
-<div *ngIf=" !loading && user$ " class="tui-container">
+<div *ngIf="!loading && user$" class="tui-container">
   <tui-svg src="tuiIconBackCircleLarge" class="back" (click)="backClicked()">
   </tui-svg>
 

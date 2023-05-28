@@ -87,11 +87,6 @@ tui-pagination [tuiWrapper][data-appearance="flat"] {
   padding: 100px 0;
 }
 
-
-.tui-container {
-  margin: 35px 0;
-  width: 800px;
-}
 .search-and-new-block {
   display: grid;
   grid-template-columns: 70% auto auto;

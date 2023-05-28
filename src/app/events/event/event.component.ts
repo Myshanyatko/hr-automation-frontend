@@ -1,11 +1,12 @@
 import { TuiDestroyService } from '@taiga-ui/cdk';
-import { filter, tap, takeUntil } from 'rxjs/operators';
+import { filter, tap, takeUntil, map } from 'rxjs/operators';
 import { Actions, ofType } from '@ngrx/effects';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   deleteEvent,
   deleteEventSuccess,
   getEvent,
+  setEvent,
 } from './../../store/actions/events.actions';
 import { selectEvent } from './../../store/selectors/events.selectors';
 import { Store } from '@ngrx/store';
@@ -23,6 +24,8 @@ let nextProcessId = 1;
 export class EventComponent implements OnInit {
   openMap = false;
   event$ = this.store$.select(selectEvent);
+  loading = true;
+
   constructor(
     private actions$: Actions,
     private destroy$: TuiDestroyService,
@@ -33,13 +36,20 @@ export class EventComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params
-    .pipe(
-      tap(({ id }) => {
-        this.store$.dispatch(getEvent({ id: Number(id) }));
-      }),
-      takeUntil(this.destroy$)
-    )
-    .subscribe();
+      .pipe(
+        tap(({ id }) => {
+          this.store$.dispatch(getEvent({ id: Number(id) }));
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
+    this.actions$
+      .pipe(
+        ofType(setEvent),
+        map(() => (this.loading = false)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
   showMap() {
     this.openMap = true;

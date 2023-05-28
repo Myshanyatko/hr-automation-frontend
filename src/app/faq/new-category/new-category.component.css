@@ -1,10 +1,8 @@
 .tui-container {
   background-color: #fff;
-  margin: 35px 0;
   border-radius: var(--tui-radius-l);
   box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
-  padding: 20px;
-  width: 500px;
+  padding: 20px 20px 60px 20px;
 }
 .save-category-button,
 .back-category-button,

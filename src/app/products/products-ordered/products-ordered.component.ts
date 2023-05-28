@@ -95,19 +95,35 @@ export class ProductsOrderedComponent implements OnInit {
       this.errors = false;
     }
   }
+  
   submitProducts() {
+    // формирование имени файла с текущей датой
+    this.today =
+      `Заказанные продукты на ` +
+      new Date().getDate() +
+      '.' +
+      (new Date().getMonth() + 1) +
+      '.xls';
+      // кнопка переходит в состояние загрузки
     this.download = true;
-    this.store$.dispatch(getFile());
+    // находим элемент с id "link"
     const element = document.getElementById('link');
+    // получаем файл, помещаем в store
+    this.store$.dispatch(getFile());
+    // "забираем файл" из store
     const file = this.store$.select(selectFile);
-    file
-      .pipe(
+    // подписываемся на поток данных "file"
+    file.pipe(
         tap((file) => {
           if (file != null) {
+            // создаем object URL для файла
             const url = URL.createObjectURL(file);
+            // динамически добавляем атрибут к DOM-элементу
             element?.setAttribute('href', url);
+            // создаем имитацию клика по ссылке
             if (element != null) element.click();
             URL.revokeObjectURL(url);
+            // кнопка переходит в обыычное состояние
             this.download = false;
           }
         }),

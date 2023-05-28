@@ -1,4 +1,7 @@
-import { editEvent, editEventSuccess } from 'src/app/store/actions/events.actions';
+import {
+  editEvent,
+  editEventSuccess,
+} from 'src/app/store/actions/events.actions';
 import {
   setEvents,
   getPastEvents,
@@ -64,13 +67,13 @@ export class EventsEffects {
   createEvent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createEvent),
-      mergeMap(({ event, processId, callback }) =>
+      mergeMap(({ event, processId, callback, photo }) =>
         this.eventsService.createEvent(event).pipe(
-          map(() => {
-            return createEventSuccess({ processId: processId });
+          map((id) => {
+            return createEventSuccess({ processId: processId, photo: photo, id: id });
           }),
           catchError((err) => {
-            callback()
+            callback();
             this.alert.showNotificationError2(err.error, processId).subscribe();
             return EMPTY;
           })
@@ -82,13 +85,31 @@ export class EventsEffects {
     () =>
       this.actions$.pipe(
         ofType(createEventSuccess),
-        map(() =>
-          this.alert.showNotificationSuccess('Событие добавлено').subscribe()
-        )
+        map((action) => {
+          if (action.photo != null)
+            return this.eventsService
+              .postPhoto(action.photo, action.id)
+              .pipe(
+                map(() => {
+                  this.alert
+                    .showNotificationSuccess('Событие создано')
+                    .subscribe();
+                }),
+                catchError((err) => {
+                  this.alert.showNotificationError(err.error).subscribe();
+                  return EMPTY;
+                })
+              )
+              .subscribe();
+          else
+            return this.alert
+              .showNotificationSuccess('Продукт создан')
+              .subscribe();
+        })
       ),
-
     { dispatch: false }
   );
+
   deleteEvent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteEvent),
@@ -119,13 +140,13 @@ export class EventsEffects {
   editEvent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(editEvent),
-      mergeMap(({ event, processId, callback }) =>
+      mergeMap(({ event, processId, callback, photo }) =>
         this.eventsService.editEvent(event).pipe(
           map(() => {
-            return editEventSuccess({ processId: processId });
+            return editEventSuccess({ processId: processId, photo: photo, id: event.id  });
           }),
           catchError((err) => {
-            callback()
+            callback();
             this.alert.showNotificationError(err.error).subscribe();
             return EMPTY;
           })
@@ -137,11 +158,28 @@ export class EventsEffects {
     () =>
       this.actions$.pipe(
         ofType(editEventSuccess),
-        map(() =>
-          this.alert.showNotificationSuccess('Событие изменено').subscribe()
-        )
+        map((action) => {
+          if (action.photo != null)
+            return this.eventsService
+              .postPhoto(action.photo, action.id)
+              .pipe(
+                map(() => {
+                  this.alert
+                    .showNotificationSuccess('Событие изменино')
+                    .subscribe();
+                }),
+                catchError((err) => {
+                  this.alert.showNotificationError(err.error).subscribe();
+                  return EMPTY;
+                })
+              )
+              .subscribe();
+          else
+            return this.alert
+              .showNotificationSuccess('Событие изменино')
+              .subscribe();
+        })
       ),
-
     { dispatch: false }
   );
 

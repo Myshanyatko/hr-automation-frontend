@@ -31,11 +31,11 @@
       size="l"
       routerLink="/events/create-event"
     >
-      new
+      Добавить
     </button>
   </form>
-
-  <div class="content">
+  <tui-loader *ngIf="loading" class="loader"> </tui-loader>
+  <div class="content" *ngIf="!loading">
     <div class="filter">
       <h3 class="filter-title">Фильтрация</h3>
       <form [formGroup]="filterForm" class="filterForm">

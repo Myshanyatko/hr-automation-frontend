@@ -1,9 +1,13 @@
+import { Actions, ofType } from '@ngrx/effects';
 import { Filter } from 'src/app/models/filterEvents';
-import { getCities } from './../../store/actions/restaurants.actions';
+import {
+  getCities,
+  setCities,
+} from './../../store/actions/restaurants.actions';
 import { selectCities } from './../../store/selectors/restaurants.selectors';
 import { ShortEvent } from './../../models/shortEvent';
 import { filter, map } from 'rxjs/operators';
-import { getEvents } from './../../store/actions/events.actions';
+import { getEvents, setEvents } from './../../store/actions/events.actions';
 import { AppState } from 'src/app/store/state/app.state';
 import {
   selectAllEvents,
@@ -72,8 +76,13 @@ export class EventsComponent implements OnInit {
     { name: 'Все', value: null },
   ];
   name = new FormControl();
+  loading = true;
 
-  constructor(private fb: FormBuilder, private store$: Store<AppState>) {}
+  constructor(
+    private actions$: Actions,
+    private fb: FormBuilder,
+    private store$: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
     console.log();
@@ -122,12 +131,19 @@ export class EventsComponent implements OnInit {
         })
       );
     });
+    this.actions$
+      .pipe(
+        ofType(setEvents, setCities),
+        map(() => (this.loading = false))
+      )
+      .subscribe();
   }
   isPast(date: Date) {
     return !(date > new Date());
   }
 
   search() {
+    this.loading = true;
     this.filter = {
       ...this.filter,
       name: this.name.value,
@@ -138,6 +154,12 @@ export class EventsComponent implements OnInit {
         filter: this.filter,
       })
     );
+    this.actions$
+      .pipe(
+        ofType(setEvents),
+        map(() => (this.loading = false))
+      )
+      .subscribe();
   }
   goToPage(index: number) {
     this.store$.dispatch(getEvents({ pageNumber: index, filter: this.filter }));

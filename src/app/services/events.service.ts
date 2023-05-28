@@ -38,7 +38,7 @@ export class EventsService {
     );
   }
   createEvent(event: Event) {
-    return this.http.post(API + '/add', {
+    return this.http.post<number>(API + '/add', {
       name: event.name,
       description: event.description,
       cityId: event.cityId,
@@ -55,5 +55,11 @@ export class EventsService {
   }
   editEvent(event: Event) {
     return this.http.put(API + '/update', event);
+  }
+  postPhoto(fd: FormData, id: number) {
+    return this.http.post(
+      'https://hr-automation-backend.onrender.com/file/event/'+id,
+      fd
+    );
   }
 }

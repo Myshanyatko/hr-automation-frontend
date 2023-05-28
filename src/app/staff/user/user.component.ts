@@ -27,7 +27,7 @@ export class UserComponent implements OnInit {
   public user$: Observable<UserInfo | null> = this.store$.select(selectUser);
   public birthDate$ = this.store$.select(selectUserBirthDate);
   tuiday$?: Observable<TuiDay | null>;
-  loading = true
+  loading = true;
 
   constructor(
     private actions$: Actions,
@@ -40,10 +40,8 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.tuiday$ = this.birthDate$.pipe(
       map((date) => {
-        if(date == null)
-        return null 
-        else
-       return this.fromLocalNativeDate(date)
+        if (date == null) return null;
+        else return this.fromLocalNativeDate(date);
       })
     );
     this.route.params
@@ -54,18 +52,18 @@ export class UserComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe();
-this.actions$.pipe(
-  ofType(setUser),
-  map(() => this.loading = false
-  
-  ),
-  takeUntil(this.destroy$)
-).subscribe()
+    this.actions$
+      .pipe(
+        ofType(setUser),
+        map(() => (this.loading = false)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
- fromLocalNativeDate(date: Date): TuiDay {
-  date = new Date(date)
+  fromLocalNativeDate(date: Date): TuiDay {
+    date = new Date(date);
     return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate());
-}
+  }
   deleteUser(user: UserInfo) {
     this.store$.dispatch(deleteUser({ id: user.id }));
   }

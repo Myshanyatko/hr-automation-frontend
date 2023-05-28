@@ -99,48 +99,94 @@ export class CreateEventComponent implements OnInit, OnDestroy {
       if (this.loading == false) this.loading = true;
 
       const processId = nextProcessId + 1;
-
-      this.store$.dispatch(
-        createEvent({
-          event: {
-            id: 0,
-            date: new Date(
-              this.eventForm.value.date[0].year,
-              this.eventForm.value.date[0].month,
-              this.eventForm.value.date[0].day,
-              this.eventForm.value.date[1].hours,
-              this.eventForm.value.date[1].minutes
-            ),
-            lat:
-              this.marker?.lat && this.addressIsDisabled
-                ? this.marker?.lat
+      if (this.control.value != null) {
+        var fd = new FormData();
+        fd.append('file', this.control.value);
+        this.store$.dispatch(
+          createEvent({
+            event: {
+              id: 0,
+              date: new Date(
+                this.eventForm.value.date[0].year,
+                this.eventForm.value.date[0].month,
+                this.eventForm.value.date[0].day,
+                this.eventForm.value.date[1].hours,
+                this.eventForm.value.date[1].minutes
+              ),
+              lat:
+                this.marker?.lat && this.addressIsDisabled
+                  ? this.marker?.lat
+                  : null,
+              lng:
+                this.marker?.lng && this.addressIsDisabled
+                  ? this.marker?.lng
+                  : null,
+              name: this.eventForm.value.name,
+              format: this.eventForm.value.online,
+              cityId: this.eventForm.value.city.id,
+              address:
+                !this.addressIsDisabled && this.eventForm.value.address
+                  ? this.eventForm.value.address
+                  : null,
+              description: this.eventForm.value.description
+                ? this.eventForm.value.description
                 : null,
-            lng:
-              this.marker?.lng && this.addressIsDisabled
-                ? this.marker?.lng
+              materials: this.eventForm.value.materials
+                ? this.eventForm.value.materials
                 : null,
-            name: this.eventForm.value.name,
-            format: this.eventForm.value.online,
-            cityId: this.eventForm.value.city.id,
-            address:
-              !this.addressIsDisabled && this.eventForm.value.address
-                ? this.eventForm.value.address
+              pictureUrl: '',
+              city: null,
+            },
+            processId: processId,
+            photo: fd,
+            callback: () => {
+              this.loading = false;
+            },
+          })
+        );
+      } else
+        this.store$.dispatch(
+          createEvent({
+            event: {
+              id: 0,
+              date: new Date(
+                this.eventForm.value.date[0].year,
+                this.eventForm.value.date[0].month,
+                this.eventForm.value.date[0].day,
+                this.eventForm.value.date[1].hours,
+                this.eventForm.value.date[1].minutes
+              ),
+              lat:
+                this.marker?.lat && this.addressIsDisabled
+                  ? this.marker?.lat
+                  : null,
+              lng:
+                this.marker?.lng && this.addressIsDisabled
+                  ? this.marker?.lng
+                  : null,
+              name: this.eventForm.value.name,
+              format: this.eventForm.value.online,
+              cityId: this.eventForm.value.city.id,
+              address:
+                !this.addressIsDisabled && this.eventForm.value.address
+                  ? this.eventForm.value.address
+                  : null,
+              description: this.eventForm.value.description
+                ? this.eventForm.value.description
                 : null,
-            description: this.eventForm.value.description
-              ? this.eventForm.value.description
-              : null,
-            materials: this.eventForm.value.materials
-              ? this.eventForm.value.materials
-              : null,
-            pictureUrl: '',
-            city: null,
-          },
-          processId: processId,
-          callback: () => {
-            this.loading = false;
-          },
-        })
-      );
+              materials: this.eventForm.value.materials
+                ? this.eventForm.value.materials
+                : null,
+              pictureUrl: '',
+              city: null,
+            },
+            processId: processId,
+            photo: null,
+            callback: () => {
+              this.loading = false;
+            },
+          })
+        );
 
       this.actions$
         .pipe(
