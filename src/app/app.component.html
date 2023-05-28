@@ -4,7 +4,7 @@
     <app-menu class="app-menu"></app-menu>
 
     <div class="app-content">
-      <router-outlet> </router-outlet>
+      <app-content-container></app-content-container>
     </div>
   </div>
   <router-outlet *ngIf="!tokenService.isLoggedIn()"> </router-outlet>
